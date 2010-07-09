@@ -15,5 +15,12 @@ class StrfryTestCase(unittest.TestCase):
             self.assertAlmostEqual(strfry.jaro_winkler(s1, s2), value,
                                    places=4)
 
+    def test_jaro_winkler_case_sensitive(self):
+        self.assertAlmostEqual(
+            strfry.jaro_winkler("DIXON", "dicksonx", False), 0, places=4)
+        self.assertAlmostEqual(
+            strfry.jaro_winkler("DIXON", "dicksonx", ignore_case=False),
+            0, places=4)
+
 if __name__ == '__main__':
     unittest.main()
