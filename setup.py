@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from setuptools import setup, Extension
-from name_tools import __version__
 
 setup(name="strfry",
       platforms=["any"],
