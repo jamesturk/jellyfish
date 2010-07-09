@@ -15,7 +15,7 @@ static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
         return NULL;
     }
 
-    result = jaro_winkler(s1, s2, ignore_case, true);
+    result = jaro_winkler(s1, s2, ignore_case, false);
 
     return Py_BuildValue("d", result);
 }
