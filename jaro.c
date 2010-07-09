@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "jaro.h"
 
 #define NOTNUM(c)   ((c>57) || (c<48))
 #define INRANGE(c)  ((c>0)  && (c<91))
@@ -20,8 +21,8 @@
    disagreement) to 1.0 (character-by-character agreement).  The returned 
    value is a measure of the similarity of the two strings.
 */
-double jaro_winkler(char *ying, char *yang, int long_tolerance,
-                    int case_insensitive)
+double jaro_winkler(const char *ying, const char *yang, bool ignore_case,
+    bool long_tolerance)
 {
     /* Arguments:
    
@@ -36,7 +37,7 @@ double jaro_winkler(char *ying, char *yang, int long_tolerance,
          test when comparing fixed length fields such as phone and
          social security numbers.
        
-       case_insensitive
+       ignore_case
          ignore case in comparison
     */
     char *ying_cpy=0, *yang_cpy=0, *ying_flag=0, *yang_flag=0;
@@ -79,7 +80,7 @@ double jaro_winkler(char *ying, char *yang, int long_tolerance,
     memset(yang_flag, ' ', yang_length);
     
     // Convert all lower case characters to upper case.
-    if (case_insensitive) {
+    if (ignore_case) {
         for (i = 0;i < ying_length;i++) {
             if (islower(ying_cpy[i])) {
                 ying_cpy[i] -= 32;

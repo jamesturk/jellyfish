@@ -6,7 +6,7 @@ static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
 {
     const char *s1, *s2;
     double result;
-    char ignore_case = 1;
+    bool ignore_case = true;
 
     static char *kwlist[] = {"string1", "string2", "ignore_case", NULL};
 
@@ -15,7 +15,7 @@ static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
         return NULL;
     }
 
-    result = jaro_winkler(s1, s2, 0, ignore_case);
+    result = jaro_winkler(s1, s2, ignore_case, true);
 
     return Py_BuildValue("d", result);
 }
