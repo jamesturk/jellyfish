@@ -1,0 +1,8 @@
+build/
+dist/
+strfry.egg-info/
+*.so
+*.swp
+*.pyc
+*.DS_Store
+*~
