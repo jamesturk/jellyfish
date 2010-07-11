@@ -87,7 +87,7 @@ char* metaphone(const char *str)
                 *r++ = 'K';
             } else if(next == 'h' && (temp = tolower(*(s + 2))) &&
                       !(ISVOWEL(temp))) {
-                s += 2;
+                s++;
                 next = tolower(*(s + 1));
             } else if(next != 'n') {
                 *r++ = 'K';

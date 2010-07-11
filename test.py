@@ -91,6 +91,8 @@ class StrfryTestCase(unittest.TestCase):
                  ("this is a difficult string", "0S IS A TFKLT STRNK"),
                  ("aeromancy", "ERMNS"),
                  ("Antidisestablishmentarianism", "ANTTSSTBLXMNTRNSM"),
+                 ("sunlight labs", "SNLT LBS"),
+                 ("sonlite laabz", "SNLT LBS"),
                  ]
 
         for (s1, code) in cases:
