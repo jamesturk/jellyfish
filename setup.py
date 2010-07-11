@@ -12,4 +12,4 @@ setup(name="strfry",
                    "Topic :: Text Processing :: Linguistic"],
       ext_modules=[Extension("strfry", ['strfrymodule.c', 'jaro.c',
                                         'hamming.c', 'levenshtein.c',
-                                        'soundex.c'])])
+                                        'soundex.c', 'metaphone.c'])])

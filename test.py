@@ -84,5 +84,17 @@ class StrfryTestCase(unittest.TestCase):
         for (s1, code) in cases:
             self.assertEqual(strfry.soundex(s1), code)
 
+    def test_metaphone(self):
+        cases = [("metaphone", 'MTFN'),
+                 ("wHErE", "WR"),
+                 ("shell", "XL"),
+                 ("this is a difficult string", "0S IS A TFKLT STRNK"),
+                 ("aeromancy", "ERMNS"),
+                 ("Antidisestablishmentarianism", "ANTTSSTBLXMNTRNSM"),
+                 ]
+
+        for (s1, code) in cases:
+            self.assertEqual(strfry.metaphone(s1), code)
+
 if __name__ == '__main__':
     unittest.main()

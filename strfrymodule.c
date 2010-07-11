@@ -89,6 +89,23 @@ static PyObject* strfry_soundex(PyObject *self, PyObject *args)
     return ret;
 }
 
+static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
+{
+    const char *str;
+    char *result;
+    PyObject *ret;
+
+    if (!PyArg_ParseTuple(args, "s", &str)) {
+        return NULL;
+    }
+
+    result = metaphone(str);
+    ret = Py_BuildValue("s", result);
+    free(result);
+
+    return ret;
+}
+
 static PyMethodDef StrfryMethods[] = {
     {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS | METH_KEYWORDS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
@@ -109,6 +126,10 @@ static PyMethodDef StrfryMethods[] = {
     {"soundex", strfry_soundex, METH_VARARGS,
      "soundex(string)\n\n"
      "Calculate the soundex code for a given name."},
+
+    {"metaphone", strfry_metaphone, METH_VARARGS,
+     "metaphone(string)\n\n"
+     "Calculate the metaphone representation of a given string."},
 
     {NULL, NULL, 0, NULL}
 };

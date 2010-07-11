@@ -13,4 +13,6 @@ unsigned levenshtein_distance(const char *str1, const char *str2);
 
 char* soundex(const char *str);
 
+char* metaphone(const char *str);
+
 #endif
