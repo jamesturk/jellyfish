@@ -1,7 +1,61 @@
 #include <Python.h>
 #include "strfry.h"
 
-static PyObject *normalize = NULL;
+struct strfry_state {
+    PyObject *unicodedata_normalize;
+};
+
+#if PY_MAJOR_VERSION >= 3
+#define GETSTATE(m) ((struct strfry_state*)PyModule_GetState(m))
+#else
+#define GETSTATE(m) (&_state)
+static struct strfry_state _state;
+#endif
+
+#if PY_MAJOR_VERSION >= 3
+#define UTF8_BYTES(s) (PyBytes_AsString(s))
+#else
+#define UTF8_BYTES(s) (PyString_AS_STRING(s))
+#endif
+
+/* Returns a new reference to a PyString (python < 3) or
+ * PyBytes (python >= 3.0).
+ *
+ * If passed a PyUnicode, the returned object will be NFKD UTF-8.
+ * If passed a PyString or PyBytes no conversion is done.
+ */
+static inline PyObject* normalize(PyObject *mod, PyObject *pystr) {
+    PyObject *unicodedata_normalize;
+    PyObject *normalized;
+    PyObject *utf8;
+
+#if PY_MAJOR_VERSION < 3
+    if (PyString_Check(pystr)) {
+        Py_INCREF(pystr);
+        return pystr;
+    }
+#else
+    if (PyBytes_Check(pystr)) {
+        Py_INCREF(pystr);
+        return pystr;
+    }
+#endif
+
+    if (PyUnicode_Check(pystr)) {
+        unicodedata_normalize = GETSTATE(mod)->unicodedata_normalize;
+        normalized = PyObject_CallFunction(unicodedata_normalize,
+                                           "sO", "NFKD", pystr);
+        if (!normalized) {
+            return NULL;
+        }
+        utf8 = PyUnicode_AsUTF8String(normalized);
+        Py_DECREF(normalized);
+        return utf8;
+    }
+
+    PyErr_SetString(PyExc_TypeError, "expected str or unicode");
+    return NULL;
+}
 
 static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
     PyObject *keywds)
@@ -85,21 +139,11 @@ static PyObject* strfry_soundex(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    if(PyString_Check(pystr)) {
-        result = soundex(PyString_AS_STRING(pystr));
-    } else if(PyUnicode_Check(pystr)) {
-        normalized = PyObject_CallFunction(normalize, "sO", "NFKD", pystr);
-        pystr = PyUnicode_AsUTF8String(normalized);
-        result = soundex((const char*)PyString_AS_STRING(pystr));
-        Py_DECREF(pystr);
-        Py_DECREF(normalized);
-    } else {
-        PyErr_SetString(PyExc_TypeError, "expected a str or unicode");
-        return NULL;
-    }
-
+    normalized = normalize(self, pystr);
+    result = soundex(UTF8_BYTES(normalized));
     ret = Py_BuildValue("s", result);
     free(result);
+    Py_DECREF(normalized);
 
     return ret;
 }
@@ -115,26 +159,16 @@ static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    if (PyString_Check(pystr)) {
-        result = metaphone(PyString_AsString(pystr));
-    } else if (PyUnicode_Check(pystr)) {
-        normalized = PyObject_CallFunction(normalize, "sO", "NFKD", pystr);
-        pystr = PyUnicode_AsUTF8String(normalized);
-        result = metaphone((const char*)PyString_AS_STRING(pystr));
-        Py_DECREF(pystr);
-        Py_DECREF(normalized);
-    } else {
-        PyErr_SetString(PyExc_TypeError, "expected a str or unicode");
-        return NULL;
-    }
-
+    normalized = normalize(self, pystr);
+    result = metaphone((const char*)UTF8_BYTES(normalized));
     ret = Py_BuildValue("s", result);
     free(result);
+    Py_DECREF(normalized);
 
     return ret;
 }
 
-static PyMethodDef StrfryMethods[] = {
+static PyMethodDef strfry_methods[] = {
     {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS | METH_KEYWORDS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
      "Do a Jaro-Winkler string comparison between string1 and string2."},
@@ -162,12 +196,51 @@ static PyMethodDef StrfryMethods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION >= 3
+#define INITERROR return NULL
+
+static struct PyModuleDef moduledef = {
+    PyModuleDef_HEAD_INIT,
+    "strfry",
+    NULL,
+    sizeof(struct strfry_state),
+    strfry_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+};
+
+PyObject* PyInit_strfry(void)
+#else
+
+#define INITERROR return
+
 PyMODINIT_FUNC initstrfry(void)
+#endif
 {
     PyObject *unicodedata;
+
+#if PY_MAJOR_VERSION >= 3
+    PyObject *module = PyModule_Create(&moduledef);
+#else
+    PyObject *module = Py_InitModule("strfry", strfry_methods);
+#endif
+
+    if (module == NULL) {
+        INITERROR;
+    }
+
     unicodedata = PyImport_ImportModule("unicodedata");
-    normalize = PyObject_GetAttrString(unicodedata, "normalize");
+    if (!unicodedata) {
+        INITERROR;
+    }
+
+    GETSTATE(module)->unicodedata_normalize =
+        PyObject_GetAttrString(unicodedata, "normalize");
     Py_DECREF(unicodedata);
 
-    (void)Py_InitModule("strfry", StrfryMethods);
+#if PY_MAJOR_VERSION >= 3
+    return module;
+#endif
 }
