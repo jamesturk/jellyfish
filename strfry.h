@@ -9,4 +9,6 @@ double jaro_distance(const char *str1, const char *str2, bool ignore_case);
 
 unsigned hamming_distance(const char *str1, const char *str2, bool ignore_case);
 
+unsigned levenshtein_distance(const char *str1, const char *str2);
+
 #endif

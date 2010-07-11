@@ -59,5 +59,16 @@ class StrfryTestCase(unittest.TestCase):
         for (s1, s2, value) in cases:
             self.assertEqual(strfry.hamming_distance(s1, s2, False), value)
 
+    def test_levenshtein_distance(self):
+        cases = [("", "", 0),
+                 ("abc", "", 3),
+                 ("bc", "abc", 1),
+                 ("kitten", "sitting", 3),
+                 ("Saturday", "Sunday", 3),
+                 ]
+
+        for (s1, s2, value) in cases:
+            self.assertEqual(strfry.levenshtein_distance(s1, s2), value)
+
 if __name__ == '__main__':
     unittest.main()

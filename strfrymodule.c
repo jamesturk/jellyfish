@@ -39,8 +39,6 @@ static PyObject * strfry_jaro_distance(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-unsigned hamming_distance(const char*, const char*, bool);
-
 static PyObject * strfry_hamming_distance(PyObject *self, PyObject *args,
                                           PyObject *keywds)
 {
@@ -60,6 +58,20 @@ static PyObject * strfry_hamming_distance(PyObject *self, PyObject *args,
     return Py_BuildValue("I", result);
 }
 
+static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
+{
+    const char *s1, *s2;
+    unsigned result;
+
+    if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
+        return NULL;
+    }
+
+    result = levenshtein_distance(s1, s2);
+
+    return Py_BuildValue("I", result);
+}
+
 static PyMethodDef StrfryMethods[] = {
     {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS | METH_KEYWORDS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
@@ -72,6 +84,11 @@ static PyMethodDef StrfryMethods[] = {
     {"hamming_distance", strfry_hamming_distance, METH_VARARGS | METH_KEYWORDS,
      "hamming_distance(string1, string2, ignore_case=True)\n\n"
      "Compute the Hamming distance between string1 and string2."},
+
+    {"levenshtein_distance", strfry_levenshtein_distance,
+     METH_VARARGS | METH_KEYWORDS,
+     "levenshtein_distance(string1, string2)\n\n"
+     "Compute the Levenshtein distance between string1 and string2."},
 
     {NULL, NULL, 0, NULL}
 };

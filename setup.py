@@ -11,4 +11,4 @@ setup(name="strfry",
                    "Programming Language :: Python",
                    "Topic :: Text Processing :: Linguistic"],
       ext_modules=[Extension("strfry", ['strfrymodule.c', 'jaro.c',
-                                        'hamming.c'])])
+                                        'hamming.c', 'levenshtein.c'])])
