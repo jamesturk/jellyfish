@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "jaro.h"
+#include "strfry.h"
 
 #define NOTNUM(c)   ((c>57) || (c<48))
 #define INRANGE(c)  ((c>0)  && (c<91))
