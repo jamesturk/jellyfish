@@ -11,4 +11,6 @@ unsigned hamming_distance(const char *str1, const char *str2, bool ignore_case);
 
 unsigned levenshtein_distance(const char *str1, const char *str2);
 
+char* soundex(const char *str);
+
 #endif

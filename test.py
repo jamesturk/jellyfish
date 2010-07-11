@@ -70,5 +70,19 @@ class StrfryTestCase(unittest.TestCase):
         for (s1, s2, value) in cases:
             self.assertEqual(strfry.levenshtein_distance(s1, s2), value)
 
+    def test_soundex(self):
+        cases = [("Washington", "W252"),
+                 ("Lee", "L000"),
+                 ("Gutierrez", "G362"),
+                 ("Pfister", "P236"),
+                 ("Jackson", "J250"),
+                 ("Tymczak", "T522"),
+                 ("", ""),
+                 ("A", "A000"),
+                 ]
+
+        for (s1, code) in cases:
+            self.assertEqual(strfry.soundex(s1), code)
+
 if __name__ == '__main__':
     unittest.main()

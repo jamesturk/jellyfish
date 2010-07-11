@@ -72,6 +72,23 @@ static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
     return Py_BuildValue("I", result);
 }
 
+static PyObject* strfry_soundex(PyObject *self, PyObject *args)
+{
+    const char *str;
+    char *result;
+    PyObject* ret;
+
+    if (!PyArg_ParseTuple(args, "s", &str)) {
+        return NULL;
+    }
+
+    result = soundex(str);
+    ret = Py_BuildValue("s", result);
+    free(result);
+
+    return ret;
+}
+
 static PyMethodDef StrfryMethods[] = {
     {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS | METH_KEYWORDS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
@@ -85,10 +102,13 @@ static PyMethodDef StrfryMethods[] = {
      "hamming_distance(string1, string2, ignore_case=True)\n\n"
      "Compute the Hamming distance between string1 and string2."},
 
-    {"levenshtein_distance", strfry_levenshtein_distance,
-     METH_VARARGS | METH_KEYWORDS,
+    {"levenshtein_distance", strfry_levenshtein_distance, METH_VARARGS,
      "levenshtein_distance(string1, string2)\n\n"
      "Compute the Levenshtein distance between string1 and string2."},
+
+    {"soundex", strfry_soundex, METH_VARARGS,
+     "soundex(string)\n\n"
+     "Calculate the soundex code for a given name."},
 
     {NULL, NULL, 0, NULL}
 };
