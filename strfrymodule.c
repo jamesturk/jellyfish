@@ -1,6 +1,8 @@
 #include <Python.h>
 #include "strfry.h"
 
+static PyObject *normalize = NULL;
+
 static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
     PyObject *keywds)
 {
@@ -74,15 +76,28 @@ static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
 
 static PyObject* strfry_soundex(PyObject *self, PyObject *args)
 {
-    const char *str;
-    char *result;
+    PyObject *pystr;
+    PyObject *normalized;
     PyObject* ret;
+    char *result;
 
-    if (!PyArg_ParseTuple(args, "s", &str)) {
+    if (!PyArg_ParseTuple(args, "O", &pystr)) {
         return NULL;
     }
 
-    result = soundex(str);
+    if(PyString_Check(pystr)) {
+        result = soundex(PyString_AS_STRING(pystr));
+    } else if(PyUnicode_Check(pystr)) {
+        normalized = PyObject_CallFunction(normalize, "sO", "NFKD", pystr);
+        pystr = PyUnicode_AsUTF8String(normalized);
+        result = soundex((const char*)PyString_AS_STRING(pystr));
+        Py_DECREF(pystr);
+        Py_DECREF(normalized);
+    } else {
+        PyErr_SetString(PyExc_TypeError, "expected a str or unicode");
+        return NULL;
+    }
+
     ret = Py_BuildValue("s", result);
     free(result);
 
@@ -91,15 +106,28 @@ static PyObject* strfry_soundex(PyObject *self, PyObject *args)
 
 static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
 {
-    const char *str;
-    char *result;
+    PyObject *pystr;
+    PyObject *normalized;
     PyObject *ret;
+    char *result;
 
-    if (!PyArg_ParseTuple(args, "s", &str)) {
+    if (!PyArg_ParseTuple(args, "O", &pystr)) {
         return NULL;
     }
 
-    result = metaphone(str);
+    if (PyString_Check(pystr)) {
+        result = metaphone(PyString_AsString(pystr));
+    } else if (PyUnicode_Check(pystr)) {
+        normalized = PyObject_CallFunction(normalize, "sO", "NFKD", pystr);
+        pystr = PyUnicode_AsUTF8String(normalized);
+        result = metaphone((const char*)PyString_AS_STRING(pystr));
+        Py_DECREF(pystr);
+        Py_DECREF(normalized);
+    } else {
+        PyErr_SetString(PyExc_TypeError, "expected a str or unicode");
+        return NULL;
+    }
+
     ret = Py_BuildValue("s", result);
     free(result);
 
@@ -136,5 +164,10 @@ static PyMethodDef StrfryMethods[] = {
 
 PyMODINIT_FUNC initstrfry(void)
 {
+    PyObject *unicodedata;
+    unicodedata = PyImport_ImportModule("unicodedata");
+    normalize = PyObject_GetAttrString(unicodedata, "normalize");
+    Py_DECREF(unicodedata);
+
     (void)Py_InitModule("strfry", StrfryMethods);
 }

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 import strfry
 
@@ -79,6 +80,7 @@ class StrfryTestCase(unittest.TestCase):
                  ("Tymczak", "T522"),
                  ("", ""),
                  ("A", "A000"),
+                 (u"Çáŕẗéř", "C636"),
                  ]
 
         for (s1, code) in cases:
@@ -93,6 +95,7 @@ class StrfryTestCase(unittest.TestCase):
                  ("Antidisestablishmentarianism", "ANTTSSTBLXMNTRNSM"),
                  ("sunlight labs", "SNLT LBS"),
                  ("sonlite laabz", "SNLT LBS"),
+                 (u"Çáŕẗéř", "KRTR"),
                  ]
 
         for (s1, code) in cases:
