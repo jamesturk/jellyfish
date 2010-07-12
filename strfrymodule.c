@@ -62,16 +62,14 @@ static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
 {
     const char *s1, *s2;
     double result;
-    bool ignore_case = true;
 
-    static char *kwlist[] = {"string1", "string2", "ignore_case", NULL};
+    static char *kwlist[] = {"string1", "string2", NULL};
 
-    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss|B", kwlist, &s1, &s2,
-                                     &ignore_case)) {
+    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss", kwlist, &s1, &s2)) {
         return NULL;
     }
 
-    result = jaro_winkler(s1, s2, ignore_case, false);
+    result = jaro_winkler(s1, s2, false);
 
     return Py_BuildValue("d", result);
 }
@@ -81,16 +79,14 @@ static PyObject * strfry_jaro_distance(PyObject *self, PyObject *args,
 {
     const char *s1, *s2;
     double result;
-    bool ignore_case = true;
 
-    static char *kwlist[] = {"string1", "string2", "ignore_case", NULL};
+    static char *kwlist[] = {"string1", "string2", NULL};
 
-    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss|B", kwlist, &s1, &s2,
-                                     &ignore_case)) {
+    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss|B", kwlist, &s1, &s2)) {
         return NULL;
     }
 
-    result = jaro_distance(s1, s2, ignore_case);
+    result = jaro_distance(s1, s2);
 
     return Py_BuildValue("d", result);
 }

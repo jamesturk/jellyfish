@@ -1,13 +1,3 @@
-/* Date of Release:  Jan. 26, 1994
-   Modified: April 24, 1994  Corrected the processing of the single length
-             character strings.
-   Authors:  This function was written using the logic from code written by
-             Bill Winkler, George McLaughlin and Matt Jaro with modifications
-             by Maureen Lynch. 
-   Comment:  This is the official string comparator to be used for matching 
-             during the 1995 Test Census.
-*/
-
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
@@ -17,7 +7,11 @@
 #define NOTNUM(c)   ((c>57) || (c<48))
 #define INRANGE(c)  ((c>0)  && (c<91))
 
-double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
+/* borrowed heavily from strcmp95.c
+ *    http://www.census.gov/geo/msb/stand/strcmp.c
+ */
+
+double _jaro_winkler(const char *ying, const char *yang,
         bool long_tolerance, bool winklerize)
 {
     /* Arguments:
@@ -32,11 +26,8 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
          tolerance when the strings are large.  It is not an appropriate
          test when comparing fixed length fields such as phone and
          social security numbers.
-
-       ignore_case
-         ignore case in comparison
     */
-    char *ying_cpy=0, *yang_cpy=0, *ying_flag=0, *yang_flag=0;
+    char *ying_flag=0, *yang_flag=0;
 
     double weight;
 
@@ -55,12 +46,6 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
         return 0;
     }
 
-    ying_cpy = (char*) malloc(sizeof(char) * (ying_length+1));
-    yang_cpy = (char*) malloc(sizeof(char) * (yang_length+1));
-
-    strncpy(ying_cpy, ying, ying_length+1);
-    strncpy(yang_cpy, yang, yang_length+1);
-
     if (ying_length > yang_length) {
         search_range = ying_length;
         min_len = yang_length;
@@ -70,24 +55,10 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
     }
 
     // Blank out the flags
-    ying_flag = (char*) malloc(sizeof(char) * (ying_length+1));
-    yang_flag = (char*) malloc(sizeof(char) * (yang_length+1));
+    ying_flag = calloc(ying_length+1, sizeof(char));
+    yang_flag = calloc(yang_length+1, sizeof(char));
     memset(ying_flag, ' ', ying_length);
     memset(yang_flag, ' ', yang_length);
-
-    // Convert all lower case characters to upper case.
-    if (ignore_case) {
-        for (i = 0;i < ying_length;i++) {
-            if (islower(ying_cpy[i])) {
-                ying_cpy[i] -= 32;
-            }
-        }
-        for (j = 0;j < yang_length;j++) {
-            if (islower(yang_cpy[j])) {
-                yang_cpy[j] -= 32;
-            }
-        }
-    }
 
     search_range = (search_range/2) - 1;
     if(search_range < 0) {
@@ -100,7 +71,7 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
         lowlim = (i >= search_range) ? i - search_range : 0;
         hilim = (i + search_range <= yang_length-1) ? (i + search_range) : yang_length-1;
         for (j = lowlim; j <= hilim; j++)  {
-            if (yang_flag[j] != '1' && yang_cpy[j] == ying_cpy[i]) {
+            if (yang_flag[j] != '1' && yang[j] == ying[i]) {
                 yang_flag[j] = '1';
                 ying_flag[i] = '1';
                 common_chars++;
@@ -111,6 +82,9 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
 
     // If no characters in common - return
     if (!common_chars) {
+        // free the flag memory
+        free(ying_flag);
+        free(yang_flag);
         return 0;
     }
 
@@ -124,7 +98,7 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
                     break;
                 }
             }
-            if (ying_cpy[i] != yang_cpy[j]) {
+            if (ying[i] != yang[j]) {
                 trans_count++;
             }
         }
@@ -143,7 +117,7 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
 
         // Adjust for having up to the first 4 characters in common
         j = (min_len >= 4) ? 4 : min_len;
-        for (i=0;((i<j)&&(ying_cpy[i]==yang_cpy[i])&&(NOTNUM(ying_cpy[i])));i++); 
+        for (i=0;((i<j)&&(ying[i]==yang[i])&&(NOTNUM(ying[i])));i++); 
         if (i) {
             weight += i * 0.1 * (1.0 - weight);
         }
@@ -153,24 +127,27 @@ double _jaro_winkler(const char *ying, const char *yang, bool ignore_case,
            the agreeing characters must be > .5 of remaining characters.
         */
         if ((long_tolerance) && (min_len>4) && (common_chars>i+1) && (2*common_chars>=min_len+i)) {
-            if (NOTNUM(ying_cpy[0])) {
+            if (NOTNUM(ying[0])) {
                 weight += (double) (1.0-weight) *
                     ((double) (common_chars-i-1) / ((double) (ying_length+yang_length-i*2+2)));
             }
         }
     }
 
+    // free the flag memory
+    free(ying_flag);
+    free(yang_flag);
+
     return weight;
 }
 
 
-double jaro_winkler(const char *ying, const char *yang, bool ignore_case,
-        bool long_tolerance)
+double jaro_winkler(const char *ying, const char *yang, bool long_tolerance)
 {
-    return _jaro_winkler(ying, yang, ignore_case, long_tolerance, true);
+    return _jaro_winkler(ying, yang, long_tolerance, true);
 }
 
-double jaro_distance(const char *ying, const char *yang, bool ignore_case)
+double jaro_distance(const char *ying, const char *yang)
 {
-    return _jaro_winkler(ying, yang, ignore_case, false, false);
+    return _jaro_winkler(ying, yang, false, false);
 }
