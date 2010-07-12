@@ -31,7 +31,7 @@ class StrfryTestCase(unittest.TestCase):
     def test_hamming_distance(self):
         cases = [("", "", 0),
                  ("", "abc", 3),
-                 ("abc", "aBc", 0),
+                 ("abc", "abc", 0),
                  ("acc", "abc", 1),
                  ("abcd", "abc", 1),
                  ("abc", "abcd", 1),
@@ -40,19 +40,6 @@ class StrfryTestCase(unittest.TestCase):
 
         for (s1, s2, value) in cases:
             self.assertEqual(strfry.hamming_distance(s1, s2), value)
-
-    def test_hamming_distance_case_sensitive(self):
-        cases = [("", "", 0),
-                 ("", "abc", 3),
-                 ("abc", "aBc", 1),
-                 ("acc", "abc", 1),
-                 ("abcd", "abc", 1),
-                 ("abc", "Abcd", 2),
-                 ("testing", "this is a test", 13),
-                 ]
-
-        for (s1, s2, value) in cases:
-            self.assertEqual(strfry.hamming_distance(s1, s2, False), value)
 
     def test_levenshtein_distance(self):
         cases = [("", "", 0),

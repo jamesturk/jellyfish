@@ -7,12 +7,15 @@
 #define NOTNUM(c)   ((c>57) || (c<48))
 #define INRANGE(c)  ((c>0)  && (c<91))
 
+#ifndef NaN
+#define NaN (0.0 / 0.0)
+#endif
+
 /* borrowed heavily from strcmp95.c
  *    http://www.census.gov/geo/msb/stand/strcmp.c
  */
-
 double _jaro_winkler(const char *ying, const char *yang,
-        bool long_tolerance, bool winklerize)
+                     bool long_tolerance, bool winklerize)
 {
     /* Arguments:
 
@@ -55,8 +58,17 @@ double _jaro_winkler(const char *ying, const char *yang,
     }
 
     // Blank out the flags
-    ying_flag = calloc(ying_length+1, sizeof(char));
-    yang_flag = calloc(yang_length+1, sizeof(char));
+    ying_flag = (char*)calloc(ying_length + 1, sizeof(char));
+    if (!ying_flag) {
+        return NaN;
+    }
+
+    yang_flag = (char*)calloc(yang_length + 1, sizeof(char));
+    if (!yang_flag) {
+        free(ying_flag);
+        return NaN;
+    }
+
     memset(ying_flag, ' ', ying_length);
     memset(yang_flag, ' ', yang_length);
 
@@ -117,13 +129,13 @@ double _jaro_winkler(const char *ying, const char *yang,
 
         // Adjust for having up to the first 4 characters in common
         j = (min_len >= 4) ? 4 : min_len;
-        for (i=0;((i<j)&&(ying[i]==yang[i])&&(NOTNUM(ying[i])));i++); 
+        for (i=0;((i<j)&&(ying[i]==yang[i])&&(NOTNUM(ying[i])));i++);
         if (i) {
             weight += i * 0.1 * (1.0 - weight);
         }
 
         /* Optionally adjust for long strings. */
-        /* After agreeing beginning chars, at least two more must agree and 
+        /* After agreeing beginning chars, at least two more must agree and
            the agreeing characters must be > .5 of remaining characters.
         */
         if ((long_tolerance) && (min_len>4) && (common_chars>i+1) && (2*common_chars>=min_len+i)) {

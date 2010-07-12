@@ -1,4 +1,5 @@
 #include <Python.h>
+#include <math.h>
 #include "strfry.h"
 
 struct strfry_state {
@@ -13,7 +14,7 @@ static struct strfry_state _state;
 #endif
 
 #if PY_MAJOR_VERSION >= 3
-#define UTF8_BYTES(s) (PyBytes_AsString(s))
+#define UTF8_BYTES(s) (PyBytes_AS_STRING(s))
 #else
 #define UTF8_BYTES(s) (PyString_AS_STRING(s))
 #endif
@@ -63,13 +64,15 @@ static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
     const char *s1, *s2;
     double result;
 
-    static char *kwlist[] = {"string1", "string2", NULL};
-
-    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss", kwlist, &s1, &s2)) {
+    if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
         return NULL;
     }
 
     result = jaro_winkler(s1, s2, false);
+    if (isnan(result)) {
+        PyErr_NoMemory();
+        return NULL;
+    }
 
     return Py_BuildValue("d", result);
 }
@@ -80,13 +83,15 @@ static PyObject * strfry_jaro_distance(PyObject *self, PyObject *args,
     const char *s1, *s2;
     double result;
 
-    static char *kwlist[] = {"string1", "string2", NULL};
-
-    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss|B", kwlist, &s1, &s2)) {
+    if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
         return NULL;
     }
 
     result = jaro_distance(s1, s2);
+    if (isnan(result)) {
+        PyErr_NoMemory();
+        return NULL;
+    }
 
     return Py_BuildValue("d", result);
 }
@@ -96,16 +101,12 @@ static PyObject * strfry_hamming_distance(PyObject *self, PyObject *args,
 {
     const char *s1, *s2;
     unsigned result;
-    bool ignore_case = true;
 
-    static char *kwlist[] = {"string1", "string2", "ignore_case", NULL};
-
-    if (!PyArg_ParseTupleAndKeywords(args, keywds, "ss|B", kwlist, &s1, &s2,
-                                     &ignore_case)) {
+    if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
         return NULL;
     }
 
-    result = hamming_distance(s1, s2, ignore_case);
+    result = hamming_distance(s1, s2);
 
     return Py_BuildValue("I", result);
 }
@@ -120,6 +121,12 @@ static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
     }
 
     result = levenshtein_distance(s1, s2);
+    if (result == -1) {
+        // levenshtein_distance only returns failure code (-1) on
+        // failed malloc
+        PyErr_NoMemory();
+        return NULL;
+    }
 
     return Py_BuildValue("I", result);
 }
@@ -136,10 +143,21 @@ static PyObject* strfry_soundex(PyObject *self, PyObject *args)
     }
 
     normalized = normalize(self, pystr);
+    if (!normalized) {
+        return NULL;
+    }
+
     result = soundex(UTF8_BYTES(normalized));
+    Py_DECREF(normalized);
+
+    if (!result) {
+        // soundex only fails on bad malloc
+        PyErr_NoMemory();
+        return NULL;
+    }
+
     ret = Py_BuildValue("s", result);
     free(result);
-    Py_DECREF(normalized);
 
     return ret;
 }
@@ -156,24 +174,35 @@ static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
     }
 
     normalized = normalize(self, pystr);
+    if (!normalized) {
+        return NULL;
+    }
+
     result = metaphone((const char*)UTF8_BYTES(normalized));
+    Py_DECREF(normalized);
+
+    if (!result) {
+        // metaphone only fails on bad malloc
+        PyErr_NoMemory();
+        return NULL;
+    }
+
     ret = Py_BuildValue("s", result);
     free(result);
-    Py_DECREF(normalized);
 
     return ret;
 }
 
 static PyMethodDef strfry_methods[] = {
-    {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS | METH_KEYWORDS,
+    {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
      "Do a Jaro-Winkler string comparison between string1 and string2."},
 
-    {"jaro_distance", strfry_jaro_distance, METH_VARARGS | METH_KEYWORDS,
+    {"jaro_distance", strfry_jaro_distance, METH_VARARGS,
      "jaro_distance(string1, string2, ignore_case=True)\n\n"
      "Get a Jaro string distance metric for string1 and string2."},
 
-    {"hamming_distance", strfry_hamming_distance, METH_VARARGS | METH_KEYWORDS,
+    {"hamming_distance", strfry_hamming_distance, METH_VARARGS,
      "hamming_distance(string1, string2, ignore_case=True)\n\n"
      "Compute the Hamming distance between string1 and string2."},
 

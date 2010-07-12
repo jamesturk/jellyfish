@@ -17,6 +17,10 @@ char* metaphone(const char *str)
     char *result = calloc(strlen(str) * 2 + 1, sizeof(char));
     char *r;
 
+    if (!result) {
+        return NULL;
+    }
+
     c = tolower(*str);
     if (c) {
         next = tolower(*(str + 1));

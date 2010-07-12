@@ -4,10 +4,14 @@
 
 char* soundex(const char *str)
 {
-    char *result = calloc(5, sizeof(char));
     const char *s;
     char c, prev;
     int i;
+    char *result = calloc(5, sizeof(char));
+
+    if (!result) {
+        return NULL;
+    }
 
     if (!*str) {
         return result;

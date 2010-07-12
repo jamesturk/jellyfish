@@ -5,7 +5,7 @@
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-unsigned levenshtein_distance(const char *s1, const char *s2)
+int levenshtein_distance(const char *s1, const char *s2)
 {
     size_t s1_len = strlen(s1);
     size_t s2_len = strlen(s2);
@@ -16,6 +16,9 @@ unsigned levenshtein_distance(const char *s1, const char *s2)
     unsigned result;
     unsigned d1, d2, d3;
     unsigned *dist = malloc(rows * cols * sizeof(unsigned));
+    if (!dist) {
+        return -1;
+    }
 
     for (i = 0; i < rows; i++) {
         dist[i * cols] = i;

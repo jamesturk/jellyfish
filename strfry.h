@@ -2,13 +2,14 @@
 #define _STRFRY_H_
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 double jaro_winkler(const char *str1, const char *str2, bool long_tolerance);
 double jaro_distance(const char *str1, const char *str2);
 
-unsigned hamming_distance(const char *str1, const char *str2, bool ignore_case);
+size_t hamming_distance(const char *str1, const char *str2);
 
-unsigned levenshtein_distance(const char *str1, const char *str2);
+int levenshtein_distance(const char *str1, const char *str2);
 
 char* soundex(const char *str);
 
