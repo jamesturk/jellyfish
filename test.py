@@ -52,6 +52,17 @@ class StrfryTestCase(unittest.TestCase):
         for (s1, s2, value) in cases:
             self.assertEqual(strfry.levenshtein_distance(s1, s2), value)
 
+    def test_damerau_levenshtein_distance(self):
+        cases = [("", "", 0),
+                 ("abc", "", 3),
+                 ("bc", "abc", 1),
+                 ("abc", "acb", 1),
+                 ]
+
+        for (s1, s2, value) in cases:
+            self.assertEqual(strfry.damerau_levenshtein_distance(s1, s2),
+                             value)
+
     def test_soundex(self):
         cases = [("Washington", "W252"),
                  ("Lee", "L000"),

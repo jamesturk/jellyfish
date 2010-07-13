@@ -12,4 +12,5 @@ setup(name="strfry",
                    "Topic :: Text Processing :: Linguistic"],
       ext_modules=[Extension("strfry", ['strfrymodule.c', 'jaro.c',
                                         'hamming.c', 'levenshtein.c',
+                                        'damerau_levenshtein.c',
                                         'soundex.c', 'metaphone.c'])])

@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-
 int levenshtein_distance(const char *s1, const char *s2)
 {
     size_t s1_len = strlen(s1);

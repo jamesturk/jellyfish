@@ -114,7 +114,7 @@ static PyObject * strfry_hamming_distance(PyObject *self, PyObject *args,
 static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
-    unsigned result;
+    int result;
 
     if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
         return NULL;
@@ -128,7 +128,26 @@ static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    return Py_BuildValue("I", result);
+    return Py_BuildValue("i", result);
+}
+
+static PyObject* strfry_damerau_levenshtein_distance(PyObject *self,
+                                                     PyObject *args)
+{
+    const char *s1, *s2;
+    int result;
+
+    if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
+        return NULL;
+    }
+
+    result = damerau_levenshtein_distance(s1, s2);
+    if (result == -1) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    return Py_BuildValue("i", result);
 }
 
 static PyObject* strfry_soundex(PyObject *self, PyObject *args)
@@ -209,6 +228,11 @@ static PyMethodDef strfry_methods[] = {
     {"levenshtein_distance", strfry_levenshtein_distance, METH_VARARGS,
      "levenshtein_distance(string1, string2)\n\n"
      "Compute the Levenshtein distance between string1 and string2."},
+
+    {"damerau_levenshtein_distance", strfry_damerau_levenshtein_distance,
+     METH_VARARGS,
+     "damerau_levenshtein_distance(string1, string2)\n\n"
+     "Compute the Damerau-Levenshtein distance between string1 and string2."},
 
     {"soundex", strfry_soundex, METH_VARARGS,
      "soundex(string)\n\n"
