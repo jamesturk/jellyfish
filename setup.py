@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, Extension
 
-setup(name="strfry",
+setup(name="jellyfish",
       platforms=["any"],
       classifiers=["Development Status :: 4 - Beta",
                    "Intended Audience :: Developers",
@@ -10,7 +10,7 @@ setup(name="strfry",
                    "Operating System :: OS Independent",
                    "Programming Language :: Python",
                    "Topic :: Text Processing :: Linguistic"],
-      ext_modules=[Extension("strfry", ['strfrymodule.c', 'jaro.c',
+      ext_modules=[Extension("jellyfish", ['jellyfishmodule.c', 'jaro.c',
                                         'hamming.c', 'levenshtein.c',
                                         'damerau_levenshtein.c', 'mra.c',
                                         'soundex.c', 'metaphone.c',

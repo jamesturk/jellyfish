@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
-import strfry
+import jellyfish
 
 
-class StrfryTestCase(unittest.TestCase):
+class JellyfishTestCase(unittest.TestCase):
 
     def test_jaro_winkler(self):
         cases = [("dixon", "dicksonx", 0.8133),
@@ -13,7 +13,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertAlmostEqual(strfry.jaro_winkler(s1, s2), value,
+            self.assertAlmostEqual(jellyfish.jaro_winkler(s1, s2), value,
                                    places=4)
 
 
@@ -25,7 +25,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertAlmostEqual(strfry.jaro_distance(s1, s2), value,
+            self.assertAlmostEqual(jellyfish.jaro_distance(s1, s2), value,
                                    places=3)
 
     def test_hamming_distance(self):
@@ -39,7 +39,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(strfry.hamming_distance(s1, s2), value)
+            self.assertEqual(jellyfish.hamming_distance(s1, s2), value)
 
     def test_levenshtein_distance(self):
         cases = [("", "", 0),
@@ -50,7 +50,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(strfry.levenshtein_distance(s1, s2), value)
+            self.assertEqual(jellyfish.levenshtein_distance(s1, s2), value)
 
     def test_damerau_levenshtein_distance(self):
         cases = [("", "", 0),
@@ -60,7 +60,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(strfry.damerau_levenshtein_distance(s1, s2),
+            self.assertEqual(jellyfish.damerau_levenshtein_distance(s1, s2),
                              value)
 
     def test_soundex(self):
@@ -76,7 +76,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, code) in cases:
-            self.assertEqual(strfry.soundex(s1), code)
+            self.assertEqual(jellyfish.soundex(s1), code)
 
     def test_metaphone(self):
         cases = [("metaphone", 'MTFN'),
@@ -91,7 +91,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, code) in cases:
-            self.assertEqual(strfry.metaphone(s1), code)
+            self.assertEqual(jellyfish.metaphone(s1), code)
 
     def test_nysiis(self):
         cases = [("Worthy", "WARTY"),
@@ -102,7 +102,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2) in cases:
-            self.assertEqual(strfry.nysiis(s1), s2)
+            self.assertEqual(jellyfish.nysiis(s1), s2)
 
     def test_match_rating_codex(self):
         cases = [("Byrne", "BYRN"),
@@ -114,7 +114,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2) in cases:
-            self.assertEqual(strfry.match_rating_codex(s1), s2)
+            self.assertEqual(jellyfish.match_rating_codex(s1), s2)
 
     def test_match_rating_comparison(self):
         cases = [("Bryne", "Boern", True),
@@ -124,7 +124,7 @@ class StrfryTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(strfry.match_rating_comparison(s1, s2), value)
+            self.assertEqual(jellyfish.match_rating_comparison(s1, s2), value)
 
 if __name__ == '__main__':
     unittest.main()

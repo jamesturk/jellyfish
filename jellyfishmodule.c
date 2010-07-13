@@ -1,16 +1,16 @@
 #include <Python.h>
 #include <math.h>
-#include "strfry.h"
+#include "jellyfish.h"
 
-struct strfry_state {
+struct jellyfish_state {
     PyObject *unicodedata_normalize;
 };
 
 #if PY_MAJOR_VERSION >= 3
-#define GETSTATE(m) ((struct strfry_state*)PyModule_GetState(m))
+#define GETSTATE(m) ((struct jellyfish_state*)PyModule_GetState(m))
 #else
 #define GETSTATE(m) (&_state)
-static struct strfry_state _state;
+static struct jellyfish_state _state;
 #endif
 
 #if PY_MAJOR_VERSION >= 3
@@ -58,7 +58,7 @@ static inline PyObject* normalize(PyObject *mod, PyObject *pystr) {
     return NULL;
 }
 
-static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
+static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args,
     PyObject *keywds)
 {
     const char *s1, *s2;
@@ -77,7 +77,7 @@ static PyObject * strfry_jaro_winkler(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-static PyObject * strfry_jaro_distance(PyObject *self, PyObject *args,
+static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args,
     PyObject *keywds)
 {
     const char *s1, *s2;
@@ -96,7 +96,7 @@ static PyObject * strfry_jaro_distance(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-static PyObject * strfry_hamming_distance(PyObject *self, PyObject *args,
+static PyObject * jellyfish_hamming_distance(PyObject *self, PyObject *args,
                                           PyObject *keywds)
 {
     const char *s1, *s2;
@@ -111,7 +111,7 @@ static PyObject * strfry_hamming_distance(PyObject *self, PyObject *args,
     return Py_BuildValue("I", result);
 }
 
-static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
+static PyObject* jellyfish_levenshtein_distance(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     int result;
@@ -131,7 +131,7 @@ static PyObject* strfry_levenshtein_distance(PyObject *self, PyObject *args)
     return Py_BuildValue("i", result);
 }
 
-static PyObject* strfry_damerau_levenshtein_distance(PyObject *self,
+static PyObject* jellyfish_damerau_levenshtein_distance(PyObject *self,
                                                      PyObject *args)
 {
     const char *s1, *s2;
@@ -150,7 +150,7 @@ static PyObject* strfry_damerau_levenshtein_distance(PyObject *self,
     return Py_BuildValue("i", result);
 }
 
-static PyObject* strfry_soundex(PyObject *self, PyObject *args)
+static PyObject* jellyfish_soundex(PyObject *self, PyObject *args)
 {
     PyObject *pystr;
     PyObject *normalized;
@@ -181,7 +181,7 @@ static PyObject* strfry_soundex(PyObject *self, PyObject *args)
     return ret;
 }
 
-static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
+static PyObject* jellyfish_metaphone(PyObject *self, PyObject *args)
 {
     PyObject *pystr;
     PyObject *normalized;
@@ -212,7 +212,7 @@ static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
     return ret;
 }
 
-static PyObject* strfry_match_rating_codex(PyObject *self, PyObject *args)
+static PyObject* jellyfish_match_rating_codex(PyObject *self, PyObject *args)
 {
     const char *str;
     char *result;
@@ -234,7 +234,8 @@ static PyObject* strfry_match_rating_codex(PyObject *self, PyObject *args)
     return ret;
 }
 
-static PyObject* strfry_match_rating_comparison(PyObject *self, PyObject *args)
+static PyObject* jellyfish_match_rating_comparison(PyObject *self,
+                                                   PyObject *args)
 {
     const char *str1, *str2;
     int result;
@@ -256,7 +257,7 @@ static PyObject* strfry_match_rating_comparison(PyObject *self, PyObject *args)
     }
 }
 
-static PyObject* strfry_nysiis(PyObject *self, PyObject *args)
+static PyObject* jellyfish_nysiis(PyObject *self, PyObject *args)
 {
     const char *str;
     char *result;
@@ -278,46 +279,46 @@ static PyObject* strfry_nysiis(PyObject *self, PyObject *args)
     return ret;
 }
 
-static PyMethodDef strfry_methods[] = {
-    {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS,
+static PyMethodDef jellyfish_methods[] = {
+    {"jaro_winkler", jellyfish_jaro_winkler, METH_VARARGS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
      "Do a Jaro-Winkler string comparison between string1 and string2."},
 
-    {"jaro_distance", strfry_jaro_distance, METH_VARARGS,
+    {"jaro_distance", jellyfish_jaro_distance, METH_VARARGS,
      "jaro_distance(string1, string2, ignore_case=True)\n\n"
      "Get a Jaro string distance metric for string1 and string2."},
 
-    {"hamming_distance", strfry_hamming_distance, METH_VARARGS,
+    {"hamming_distance", jellyfish_hamming_distance, METH_VARARGS,
      "hamming_distance(string1, string2, ignore_case=True)\n\n"
      "Compute the Hamming distance between string1 and string2."},
 
-    {"levenshtein_distance", strfry_levenshtein_distance, METH_VARARGS,
+    {"levenshtein_distance", jellyfish_levenshtein_distance, METH_VARARGS,
      "levenshtein_distance(string1, string2)\n\n"
      "Compute the Levenshtein distance between string1 and string2."},
 
-    {"damerau_levenshtein_distance", strfry_damerau_levenshtein_distance,
+    {"damerau_levenshtein_distance", jellyfish_damerau_levenshtein_distance,
      METH_VARARGS,
      "damerau_levenshtein_distance(string1, string2)\n\n"
      "Compute the Damerau-Levenshtein distance between string1 and string2."},
 
-    {"soundex", strfry_soundex, METH_VARARGS,
+    {"soundex", jellyfish_soundex, METH_VARARGS,
      "soundex(string)\n\n"
      "Calculate the soundex code for a given name."},
 
-    {"metaphone", strfry_metaphone, METH_VARARGS,
+    {"metaphone", jellyfish_metaphone, METH_VARARGS,
      "metaphone(string)\n\n"
      "Calculate the metaphone representation of a given string."},
 
-    {"match_rating_codex", strfry_match_rating_codex, METH_VARARGS,
+    {"match_rating_codex", jellyfish_match_rating_codex, METH_VARARGS,
      "match_rating_codex(string)\n\n"
      "Calculate the Match Rating Approach representation of a given string."},
 
-    {"match_rating_comparison", strfry_match_rating_comparison, METH_VARARGS,
+    {"match_rating_comparison", jellyfish_match_rating_comparison, METH_VARARGS,
      "match_rating_comparison(string)\n\n"
      "Compute the Match Rating Approach similarity between string1 and"
      "string2."},
 
-    {"nysiis", strfry_nysiis, METH_VARARGS,
+    {"nysiis", jellyfish_nysiis, METH_VARARGS,
      "nysiis(string)\n\n"
      "Compute the NYSIIS (New York State Identification and Intelligence\n"
      "System) code for a string."},
@@ -332,20 +333,20 @@ static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
     "strfry",
     NULL,
-    sizeof(struct strfry_state),
-    strfry_methods,
+    sizeof(struct jellyfish_state),
+    jellyfish_methods,
     NULL,
     NULL,
     NULL,
     NULL
 };
 
-PyObject* PyInit_strfry(void)
+PyObject* PyInit_jellyfish(void)
 #else
 
 #define INITERROR return
 
-PyMODINIT_FUNC initstrfry(void)
+PyMODINIT_FUNC initjellyfish(void)
 #endif
 {
     PyObject *unicodedata;
@@ -353,7 +354,7 @@ PyMODINIT_FUNC initstrfry(void)
 #if PY_MAJOR_VERSION >= 3
     PyObject *module = PyModule_Create(&moduledef);
 #else
-    PyObject *module = Py_InitModule("strfry", strfry_methods);
+    PyObject *module = Py_InitModule("jellyfish", jellyfish_methods);
 #endif
 
     if (module == NULL) {

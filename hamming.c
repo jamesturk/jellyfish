@@ -1,4 +1,4 @@
-#include "strfry.h"
+#include "jellyfish.h"
 #include <ctype.h>
 
 size_t hamming_distance(const char *s1, const char *s2) {

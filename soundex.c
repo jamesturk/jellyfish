@@ -1,4 +1,4 @@
-#include "strfry.h"
+#include "jellyfish.h"
 #include <ctype.h>
 #include <stdlib.h>
 

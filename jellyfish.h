@@ -1,5 +1,5 @@
-#ifndef _STRFRY_H_
-#define _STRFRY_H_
+#ifndef _JELLYFISH_H_
+#define _JELLYFISH_H_
 
 #include <stdbool.h>
 #include <stdlib.h>

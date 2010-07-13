@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "strfry.h"
+#include "jellyfish.h"
 
 #define NOTNUM(c)   ((c>57) || (c<48))
 #define INRANGE(c)  ((c>0)  && (c<91))

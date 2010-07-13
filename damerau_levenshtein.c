@@ -1,4 +1,4 @@
-#include "strfry.h"
+#include "jellyfish.h"
 #include <string.h>
 
 int damerau_levenshtein_distance(const char *s1, const char *s2)
