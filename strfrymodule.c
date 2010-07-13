@@ -212,6 +212,50 @@ static PyObject* strfry_metaphone(PyObject *self, PyObject *args)
     return ret;
 }
 
+static PyObject* strfry_match_rating_codex(PyObject *self, PyObject *args)
+{
+    const char *str;
+    char *result;
+    PyObject *ret;
+
+    if (!PyArg_ParseTuple(args, "s", &str)) {
+        return NULL;
+    }
+
+    result = match_rating_codex(str);
+    if (!result) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    ret = Py_BuildValue("s", result);
+    free(result);
+
+    return ret;
+}
+
+static PyObject* strfry_match_rating_comparison(PyObject *self, PyObject *args)
+{
+    const char *str1, *str2;
+    int result;
+
+    if (!PyArg_ParseTuple(args, "ss", &str1, &str2)) {
+        return NULL;
+    }
+
+    result = match_rating_comparison(str1, str2);
+    if (result == -1) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    if (result) {
+        return Py_True;
+    } else {
+        return Py_False;
+    }
+}
+
 static PyMethodDef strfry_methods[] = {
     {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
@@ -241,6 +285,15 @@ static PyMethodDef strfry_methods[] = {
     {"metaphone", strfry_metaphone, METH_VARARGS,
      "metaphone(string)\n\n"
      "Calculate the metaphone representation of a given string."},
+
+    {"match_rating_codex", strfry_match_rating_codex, METH_VARARGS,
+     "match_rating_codex(string)\n\n"
+     "Calculate the Match Rating Approach representation of a given string."},
+
+    {"match_rating_comparison", strfry_match_rating_comparison, METH_VARARGS,
+     "match_rating_comparison(string)\n\n",
+     "Compute the Match Rating Approach similarity between string1 and"
+     "string2."},
 
     {NULL, NULL, 0, NULL}
 };

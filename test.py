@@ -93,5 +93,27 @@ class StrfryTestCase(unittest.TestCase):
         for (s1, code) in cases:
             self.assertEqual(strfry.metaphone(s1), code)
 
+    def test_match_rating_codex(self):
+        cases = [("Byrne", "BYRN"),
+                 ("Boern", "BRN"),
+                 ("Smith", "SMTH"),
+                 ("Smyth", "SMYTH"),
+                 ("Catherine", "CTHRN"),
+                 ("Kathryn", "KTHRYN"),
+                 ]
+
+        for (s1, s2) in cases:
+            self.assertEqual(strfry.match_rating_codex(s1), s2)
+
+    def test_match_rating_comparison(self):
+        cases = [("Bryne", "Boern", True),
+                 ("Smith", "Smyth", True),
+                 ("Catherine", "Kathryn", True),
+                 ("Michael", "Mike", False),
+                 ]
+
+        for (s1, s2, value) in cases:
+            self.assertEqual(strfry.match_rating_comparison(s1, s2), value)
+
 if __name__ == '__main__':
     unittest.main()
