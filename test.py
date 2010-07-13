@@ -93,6 +93,17 @@ class StrfryTestCase(unittest.TestCase):
         for (s1, code) in cases:
             self.assertEqual(strfry.metaphone(s1), code)
 
+    def test_nysiis(self):
+        cases = [("Worthy", "WARTY"),
+                 ("Ogata", "OGAT"),
+                 ("montgomery", "MANTGANARY"),
+                 ("Costales", "CASTAL"),
+                 ("Tu", "T"),
+                 ]
+
+        for (s1, s2) in cases:
+            self.assertEqual(strfry.nysiis(s1), s2)
+
     def test_match_rating_codex(self):
         cases = [("Byrne", "BYRN"),
                  ("Boern", "BRN"),

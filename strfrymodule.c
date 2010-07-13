@@ -256,6 +256,28 @@ static PyObject* strfry_match_rating_comparison(PyObject *self, PyObject *args)
     }
 }
 
+static PyObject* strfry_nysiis(PyObject *self, PyObject *args)
+{
+    const char *str;
+    char *result;
+    PyObject *ret;
+
+    if (!PyArg_ParseTuple(args, "s", &str)) {
+        return NULL;
+    }
+
+    result = nysiis(str);
+    if (!result) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    ret = Py_BuildValue("s", result);
+    free(result);
+
+    return ret;
+}
+
 static PyMethodDef strfry_methods[] = {
     {"jaro_winkler", strfry_jaro_winkler, METH_VARARGS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
@@ -291,9 +313,14 @@ static PyMethodDef strfry_methods[] = {
      "Calculate the Match Rating Approach representation of a given string."},
 
     {"match_rating_comparison", strfry_match_rating_comparison, METH_VARARGS,
-     "match_rating_comparison(string)\n\n",
+     "match_rating_comparison(string)\n\n"
      "Compute the Match Rating Approach similarity between string1 and"
      "string2."},
+
+    {"nysiis", strfry_nysiis, METH_VARARGS,
+     "nysiis(string)\n\n"
+     "Compute the NYSIIS (New York State Identification and Intelligence\n"
+     "System) code for a string."},
 
     {NULL, NULL, 0, NULL}
 };

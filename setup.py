@@ -13,4 +13,5 @@ setup(name="strfry",
       ext_modules=[Extension("strfry", ['strfrymodule.c', 'jaro.c',
                                         'hamming.c', 'levenshtein.c',
                                         'damerau_levenshtein.c', 'mra.c',
-                                        'soundex.c', 'metaphone.c'])])
+                                        'soundex.c', 'metaphone.c',
+                                        'nysiis.c'])])

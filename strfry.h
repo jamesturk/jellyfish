@@ -21,6 +21,8 @@ char* soundex(const char *str);
 
 char* metaphone(const char *str);
 
+char *nysiis(const char *str);
+
 char* match_rating_codex(const char *str);
 int match_rating_comparison(const char *str1, const char *str2);
 
