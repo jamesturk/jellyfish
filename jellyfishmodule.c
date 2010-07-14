@@ -279,6 +279,42 @@ static PyObject* jellyfish_nysiis(PyObject *self, PyObject *args)
     return ret;
 }
 
+static PyObject* jellyfish_porter_stem(PyObject *self, PyObject *args)
+{
+    const char *str;
+    char *result;
+    PyObject *ret;
+    struct stemmer *z;
+    int end;
+
+    if (!PyArg_ParseTuple(args, "s", &str)) {
+        return NULL;
+    }
+
+    z = create_stemmer();
+    if (!z) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    result = strdup(str);
+    if (!result) {
+        free_stemmer(z);
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    end = stem(z, result, strlen(result) - 1);
+    result[end + 1] = '\0';
+
+    ret = Py_BuildValue("s", result);
+
+    free(result);
+    free_stemmer(z);
+
+    return ret;
+}
+
 static PyMethodDef jellyfish_methods[] = {
     {"jaro_winkler", jellyfish_jaro_winkler, METH_VARARGS,
      "jaro_winkler(string1, string2, ignore_case=True)\n\n"
@@ -322,6 +358,11 @@ static PyMethodDef jellyfish_methods[] = {
      "nysiis(string)\n\n"
      "Compute the NYSIIS (New York State Identification and Intelligence\n"
      "System) code for a string."},
+
+    {"porter_stem", jellyfish_porter_stem, METH_VARARGS,
+     "porter_stem(string)\n\n"
+     "Return the result of running the Porter stemming algorithm on "
+     "a single-word string."},
 
     {NULL, NULL, 0, NULL}
 };

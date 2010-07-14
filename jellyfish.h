@@ -26,4 +26,9 @@ char *nysiis(const char *str);
 char* match_rating_codex(const char *str);
 int match_rating_comparison(const char *str1, const char *str2);
 
+struct stemmer;
+extern struct stemmer * create_stemmer(void);
+extern void free_stemmer(struct stemmer * z);
+extern int stem(struct stemmer * z, char * b, int k);
+
 #endif

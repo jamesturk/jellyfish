@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import csv
 import unittest
 import jellyfish
 
@@ -125,6 +126,12 @@ class JellyfishTestCase(unittest.TestCase):
 
         for (s1, s2, value) in cases:
             self.assertEqual(jellyfish.match_rating_comparison(s1, s2), value)
+
+    def test_porter_stem(self):
+        with open('porter-test.csv') as f:
+            reader = csv.reader(f)
+            for (a, b) in reader:
+                self.assertEqual(jellyfish.porter_stem(a.lower()), b.lower())
 
 if __name__ == '__main__':
     unittest.main()

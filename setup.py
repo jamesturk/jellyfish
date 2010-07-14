@@ -21,4 +21,4 @@ setup(name="jellyfish",
                                         'hamming.c', 'levenshtein.c',
                                         'damerau_levenshtein.c', 'mra.c',
                                         'soundex.c', 'metaphone.c',
-                                        'nysiis.c'])])
+                                        'nysiis.c', 'porter.c'])])
