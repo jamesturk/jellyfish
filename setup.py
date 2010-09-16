@@ -4,10 +4,10 @@ from setuptools import setup, Extension
 long_description = open('README.rst').read()
 
 setup(name="jellyfish",
-      version=0.1,
+      version="0.1.1",
       platforms=["any"],
-      description=("a library for doing approximate and phonetic matching "
-                   "of strings."),
+      description=("a library for doing approximate and "
+                   "phonetic matching of strings."),
       url="http://github.com/sunlightlabs/jellyfish",
       long_description=long_description,
       classifiers=["Development Status :: 4 - Beta",
@@ -18,7 +18,7 @@ setup(name="jellyfish",
                    "Programming Language :: Python",
                    "Topic :: Text Processing :: Linguistic"],
       ext_modules=[Extension("jellyfish", ['jellyfishmodule.c', 'jaro.c',
-                                        'hamming.c', 'levenshtein.c',
-                                        'damerau_levenshtein.c', 'mra.c',
-                                        'soundex.c', 'metaphone.c',
-                                        'nysiis.c', 'porter.c'])])
+                                           'hamming.c', 'levenshtein.c',
+                                           'damerau_levenshtein.c', 'mra.c',
+                                           'soundex.c', 'metaphone.c',
+                                           'nysiis.c', 'porter.c'])])
