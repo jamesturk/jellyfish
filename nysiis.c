@@ -10,18 +10,18 @@ char *nysiis(const char *str) {
     size_t len = strlen(str);
 
     char c1, c2, c3;
-    char *copy = strdup(str);
+    char *copy = alloca((len + 1) * sizeof(char));
+    memcpy(copy, str, len+1);
     if (!copy) {
         return NULL;
     }
 
     if (!*copy) {
-        return copy;
+        return calloc(1, sizeof(char));
     }
 
-    char *code = malloc(len + 1 * sizeof(char));
+    char *code = calloc(len + 1, sizeof(char));
     if (!code) {
-        free(copy);
         return NULL;
     }
 
@@ -172,8 +172,6 @@ char *nysiis(const char *str) {
     if (*(cp - 1) == 'A') {
         *(cp - 1) = '\0';
     }
-
-    free(copy);
 
     return code;
 }
