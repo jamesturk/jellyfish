@@ -127,6 +127,13 @@ class JellyfishTestCase(unittest.TestCase):
         for (s1, s2, value) in cases:
             self.assertEqual(jellyfish.match_rating_comparison(s1, s2), value)
 
+    def test_match_rating_comparison_segfault(self):
+        import hashlib
+        sha1s = [hashlib.sha1(str(v)).hexdigest() for v in range(100)]
+        # this segfaulted on 0.1.2
+        r = [[jellyfish.match_rating_comparison(h1, h2) for h1 in sha1s]
+             for h2 in sha1s]
+
     def test_porter_stem(self):
         with open('porter-test.csv') as f:
             reader = csv.reader(f)

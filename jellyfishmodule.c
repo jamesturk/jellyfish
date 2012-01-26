@@ -251,9 +251,9 @@ static PyObject* jellyfish_match_rating_comparison(PyObject *self,
     }
 
     if (result) {
-        return Py_True;
+        Py_RETURN_TRUE;
     } else {
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 }
 
@@ -350,7 +350,7 @@ static PyMethodDef jellyfish_methods[] = {
      "Calculate the Match Rating Approach representation of a given string."},
 
     {"match_rating_comparison", jellyfish_match_rating_comparison, METH_VARARGS,
-     "match_rating_comparison(string)\n\n"
+     "match_rating_comparison(string, string)\n\n"
      "Compute the Match Rating Approach similarity between string1 and"
      "string2."},
 

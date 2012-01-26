@@ -37,6 +37,7 @@ int match_rating_comparison(const char *s1, const char *s2) {
 
     i = s1c_len - 1;
     j = s2c_len - 1;
+
     while (i != 0 && j != 0) {
         if (s1_codex[i] == ' ') {
             i--;
@@ -73,8 +74,8 @@ int match_rating_comparison(const char *s1, const char *s2) {
     free(s2_codex);
 
     diff = 6 - diff;
-
     i = s1c_len + s2c_len;
+
     if (i <= 4) {
         return diff >= 5;
     } else if (i <= 7) {
