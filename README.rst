@@ -10,6 +10,8 @@ All code is released under a BSD-style license, see LICENSE for details.
 Written by Michael Stephens <mstephens@sunlightfoundation.com> and James Turk
 <jturk@sunlightfoundation.com>.
 
+Contributions from Peter Scott.
+
 Source is available at http://github.com/sunlightlabs/jellyfish.
 
 Included Algorithms

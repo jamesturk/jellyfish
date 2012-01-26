@@ -4,7 +4,7 @@ from setuptools import setup, Extension
 long_description = open('README.rst').read()
 
 setup(name="jellyfish",
-      version="0.1.3",
+      version="0.2.0",
       platforms=["any"],
       description=("a library for doing approximate and "
                    "phonetic matching of strings."),
