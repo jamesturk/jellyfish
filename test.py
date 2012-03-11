@@ -17,7 +17,6 @@ class JellyfishTestCase(unittest.TestCase):
             self.assertAlmostEqual(jellyfish.jaro_winkler(s1, s2), value,
                                    places=4)
 
-
     def test_jaro_distance(self):
         cases = [("dixon", "dicksonx", 0.767),
                  ("dixon", "dicksonx", 0.767),
@@ -131,8 +130,8 @@ class JellyfishTestCase(unittest.TestCase):
         import hashlib
         sha1s = [hashlib.sha1(str(v)).hexdigest() for v in range(100)]
         # this segfaulted on 0.1.2
-        r = [[jellyfish.match_rating_comparison(h1, h2) for h1 in sha1s]
-             for h2 in sha1s]
+        assert [[jellyfish.match_rating_comparison(h1, h2) for h1 in sha1s]
+                for h2 in sha1s]
 
     def test_porter_stem(self):
         with open('porter-test.csv') as f:
