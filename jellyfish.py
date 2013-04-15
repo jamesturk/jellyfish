@@ -32,8 +32,8 @@ def _levenshtein_distance(s1, s2, damerau=False):
 
             # damerau
             if (damerau and r > 1 and c > 1 and s1[r-1] == s2[c-2]
-                    and s1[r-2] == s2[c-1]):
-                cur[c] = min(cur[c], prevprev[r-2] + edit)
+                    and s1[r-2] == s2[c-1] and s1[r-1] != s2[c-1]):
+                cur[c] = min(cur[c], prevprev[r-2] + 1)
 
     return cur[-1]
 
