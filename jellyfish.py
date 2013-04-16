@@ -169,3 +169,78 @@ def hamming_distance(s1, s2):
     return distance
 
 
+def nysiis(s):
+    s = s.upper()
+    key = []
+
+    # step 1 - prefixes
+    if s.startswith('MAC'):
+        s = 'MCC' + s[3:]
+    elif s.startswith('KN'):
+        s = s[1:]
+    elif s.startswith('K'):
+        s = 'C' + s[1:]
+    elif s.startswith(('PH', 'PF')):
+        s = 'FF' + s[2:]
+    elif s.startswith('SCH'):
+        s = 'SSS' + s[3:]
+
+    # step 2 - suffixes
+    if s.endswith(('IE', 'EE')):
+        s = s[:-2] + 'Y'
+    elif s.endswith(('DT', 'RT', 'RD', 'NT', 'ND')):
+        s = s[:-2] + 'D'
+
+    # step 3 - first character of key comes from name
+    key.append(s[0])
+
+    # step 4 - translate remaining chars
+    i = 0
+    for ch in s[1:]:
+        i += 1
+        if ch == 'E' and s[i+1] == 'V':
+            ch = 'AF'
+        elif ch in 'AEIOU':
+            ch = 'A'
+        elif ch == 'Q':
+            ch = 'G'
+        elif ch == 'Z':
+            ch = 'S'
+        elif ch == 'M':
+            ch = 'N'
+        elif ch == 'K':
+            if i+1 < len(s) and s[i+1] == 'N':
+                ch = 'K'
+            else:
+                ch = 'C'
+        elif ch == 'S' and s[i+1:i+3] == 'CH':
+            ch = 'SSS'
+        elif ch == 'P' and i+1 < len(s) and s[i+1] == 'H':
+            ch = 'FF'
+        elif ch == 'H' and (s[i-1] not in 'AEIOU' or 
+                            (i+1 < len(s) and s[i+1] not in 'AEIOU')):
+            ch = s[i-1]
+        elif ch == 'W' and  s[i-1] in 'AEIOU':
+            ch = s[i-1]
+
+        if ch[-1] != key[-1][-1]:
+            key.append(ch)
+
+
+    key = ''.join(key)
+
+    # step 5 - remove trailing S
+    if key.endswith('S'):
+        key = key[:-1]
+
+    # step 6 - replace AY w/ Y
+    if key.endswith('AY'):
+        key = key[:-2] = 'Y'
+
+    # step 7 - remove trailing A
+    if key.endswith('A'):
+        key = key[:-1]
+
+    # step 8 was already done
+
+    return key
