@@ -1,4 +1,6 @@
+import itertools
 import unicodedata
+
 
 def _normalize(s):
     return unicodedata.normalize('NFKD', unicode(s))
@@ -268,3 +270,45 @@ def match_rating_codex(s):
         return ''.join(codex[:3]+codex[-3:])
     else:
         return ''.join(codex)
+
+
+def match_rating_comparison(s1, s2):
+    codex1 = match_rating_codex(s1)
+    codex2 = match_rating_codex(s2)
+    len1 = len(codex1)
+    len2 = len(codex2)
+    res1 = []
+    res2 = []
+
+    # length differs by 3 or more, no result
+    if abs(len1-len2) >= 3:
+        return None
+
+    # get minimum rating based on sums of codexes
+    lensum = len1 + len2
+    if lensum <= 4:
+        min_rating = 5
+    elif lensum <= 7:
+        min_rating = 4
+    elif lensum <= 11:
+        min_rating = 3
+    else:
+        min_rating = 2
+
+    # strip off common prefixes
+    for c1, c2 in itertools.izip_longest(codex1, codex2):
+        if c1 != c2:
+            if c1:
+                res1.append(c1)
+            if c2:
+                res2.append(c2)
+
+    unmatched_count1 = unmatched_count2 = 0
+    for c1, c2 in itertools.izip_longest(reversed(res1), reversed(res2)):
+        if c1 != c2:
+            if c1:
+                unmatched_count1 += 1
+            if c2:
+                unmatched_count2 += 1
+
+    return (6 - max(unmatched_count1, unmatched_count2)) > min_rating
