@@ -312,3 +312,117 @@ def match_rating_comparison(s1, s2):
                 unmatched_count2 += 1
 
     return (6 - max(unmatched_count1, unmatched_count2)) > min_rating
+
+
+def metaphone(s):
+    result = []
+
+    s = _normalize(s.lower())
+
+    # skip first character if s starts with these
+    if s.startswith(('kn', 'gn', 'pn', 'ac', 'wr' ,'ae')):
+        s = s[1:]
+
+    i = 0
+
+    while i < len(s):
+        c = s[i]
+        next = s[i+1] if i < len(s)-1 else '*****'
+
+        # skip doubles except for cc
+        if c == next and c != 'c':
+            i += 1
+            continue
+
+        if c in 'aeiou':
+            if i == 0 or s[i-1] == ' ':
+                result.append(c)
+        elif c == 'b':
+            if (not (i != 0 and s[i-1] == 'm')) or next:
+                result.append('b')
+        elif c == 'c':
+            if next == 'i' and s[i+2] == 'a' or next == 'h':
+                result.append('x')
+                i += 1
+            elif next in 'iey':
+                result.append('s')
+                i += 1
+            else:
+                result.append('k')
+        elif c == 'd':
+            if next == 'g' and s[i+2] in 'iey':
+                result.append('j')
+                i += 2
+            else:
+                result.append('t')
+        elif c in 'fjlmnr':
+            result.append(c)
+        elif c == 'g':
+            if next in 'iey':
+                result.append('j')
+            elif next not in 'hn':
+                result.append('k')
+            elif next == 'h' and s[i+2] and s[i+2] not in 'aeiou':
+                i += 1
+            elif next != 'n':
+                result.append('k')
+        elif c == 'h':
+            if i == 0 or next in 'aeiou' or s[i-1] in 'aeiou':
+                result.append('h')
+        elif c == 'k':
+            if i == 0 or s[i-1] != 'c':
+                result.append('k')
+        elif c == 'p':
+            if next == 'h':
+                result.append('f')
+                i += 1
+            else:
+                result.append('p')
+        elif c == 'q':
+            result.append('k')
+        elif c == 's':
+            if next == 'h':
+                result.append('x')
+                i += 1
+            elif next == 'i' and s[i+2] in 'oa':
+                result.append('x')
+                i += 2
+            else:
+                result.append('s')
+        elif c == 't':
+            if next == 'i' and s[i+2] in 'oa':
+                result.append('x')
+            elif next == 'h':
+                result.append('0')
+                i += 1
+            elif next != 'c' or s[i+2] != 'h':
+                result.append('t')
+        elif c == 'v':
+            result.append('f')
+        elif c == 'w':
+            if i == 0 and next == 'h':
+                i += 1
+                next = s[i+1]
+            if next in 'aeiou':
+                result.append('w')
+        elif c == 'x':
+            if i == 0:
+                if next == 'h' or (next == 'i' and s[i+2] in 'oa'):
+                    result.append('x')
+                else:
+                    result.append('s')
+            else:
+                result.append('k')
+                result.append('s')
+        elif c == 'y':
+            if next in 'aeiou':
+                result.append('y')
+        elif c == 'z':
+            result.append('s')
+        elif c == ' ':
+            if result[-1] != ' ':
+                result.append(' ')
+
+        i += 1
+
+    return ''.join(result).upper()
