@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import csv
 import unittest
-import jellyfish as jellyfish
+import _jellyfish as jellyfish
 
 
 class JellyfishTestCase(unittest.TestCase):
