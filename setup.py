@@ -37,6 +37,8 @@ class ve_build_ext(build_ext):
 
 
 def run_setup(build_c):
+    kw = {}
+
     if build_c:
         kw = dict(ext_modules=
                   [Extension("jellyfish.cjellyfish",
@@ -70,4 +72,14 @@ def run_setup(build_c):
           **kw)
 
 # run the setup func
-run_setup(not IS_PYPY)
+try:
+    run_setup(not IS_PYPY)
+except BuildFailed:
+    print('*'*75)
+    print('WARNING: C extension could not be compiled, falling back to pure Python.')
+    print('*'*75)
+    run_setup(False)
+    print('*'*75)
+    print('WARNING: C extension could not be compiled, falling back to pure Python.')
+    print('*'*75)
+
