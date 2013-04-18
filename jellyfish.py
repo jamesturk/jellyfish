@@ -1,6 +1,6 @@
 import itertools
 import unicodedata
-
+from porter import Stemmer
 
 def _normalize(s):
     return unicodedata.normalize('NFKD', unicode(s))
@@ -426,3 +426,6 @@ def metaphone(s):
         i += 1
 
     return ''.join(result).upper()
+
+def porter_stem(s):
+    return Stemmer(s).stem()
