@@ -49,7 +49,7 @@ _s4_endings = {
     'n': (['a','n','t'], ['e','m','e','n','t'], ['m','e','n','t'],
           ['e','n','t']),
     # handle 'o' separately
-    'i': (['i','s','m'],),
+    's': (['i','s','m'],),
     't': (['a','t','e'], ['i','t','i']),
     'u': (['o','u','s'],),
     'v': (['i','v','e'],),
@@ -122,8 +122,12 @@ class Stemmer(object):
         return True
 
     def ends(self, s):
+        length = len(s)
         """ True iff 0...k ends with string s """
-        return self.b[self.k-len(s)+1:self.k+1] == s
+        res = (self.b[self.k-length+1:self.k+1] == s)
+        if res:
+            self.j = self.k - length
+        return res
 
     def setto(self, s):
         """ set j+1...k to string s, readjusting k """
@@ -164,7 +168,7 @@ class Stemmer(object):
 
     def step1c(self):
         """ turn terminal y into i if there's a vowel in stem """
-        if self.ends("y") and self.vowel_in_stem():
+        if self.ends(['y']) and self.vowel_in_stem():
             self.b[self.k] = 'i'
 
     def step2and3(self):
@@ -172,7 +176,8 @@ class Stemmer(object):
             if self.ends(end):
                 self.r(repl)
                 break
-        for end, repl in _s3_options.get(self.b[self.k-1], []):
+
+        for end, repl in _s3_options.get(self.b[self.k], []):
             if self.ends(end):
                 self.r(repl)
                 break
@@ -185,7 +190,6 @@ class Stemmer(object):
                     self.ends(['o','u'])
                    ):
                 return
-            return
         else:
             endings = _s4_endings.get(ch, [])
             for end in endings:
@@ -206,11 +210,15 @@ class Stemmer(object):
         if self.b[self.k] == 'l' and self.doublec(self.k) and self.m() > 1:
             self.k -= 1
 
-    def stem(self):
-        self.step1ab()
-        self.step1c()
-        self.step2and3()
-        self.step4()
-        self.step5()
-
+    def result(self):
         return ''.join(self.b[:self.k+1])
+
+    def stem(self):
+        if self.k > 1:
+            self.step1ab()
+            self.step1c()
+            self.step2and3()
+            self.step4()
+            self.step5()
+        return self.result()
+
