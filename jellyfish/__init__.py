@@ -1,4 +1,4 @@
 try:
-    from cjellyfish import *
+    from .cjellyfish import *
 except ImportError:
-    from _jellyfish import *
+    from ._jellyfish import *

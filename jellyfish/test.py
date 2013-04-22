@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import csv
 import unittest
-import _jellyfish as jellyfish
+from . import _jellyfish as jellyfish
 
 
 class JellyfishTestCase(unittest.TestCase):
@@ -128,7 +128,7 @@ class JellyfishTestCase(unittest.TestCase):
 
     def test_match_rating_comparison_segfault(self):
         import hashlib
-        sha1s = [hashlib.sha1(str(v)).hexdigest() for v in range(100)]
+        sha1s = [hashlib.sha1(str(v).encode()).hexdigest() for v in range(100)]
         # this segfaulted on 0.1.2
         assert [[jellyfish.match_rating_comparison(h1, h2) for h1 in sha1s]
                 for h2 in sha1s]
