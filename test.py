@@ -88,6 +88,8 @@ class JellyfishTestCase(unittest.TestCase):
                  ("sunlight labs", "SNLT LBS"),
                  ("sonlite laabz", "SNLT LBS"),
                  (u"Çáŕẗéř", "KRTR"),
+                 ('kentucky', 'KNTK'),
+                 ('KENTUCKY', 'KNTK'),
                  ]
 
         for (s1, code) in cases:

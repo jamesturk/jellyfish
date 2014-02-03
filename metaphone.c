@@ -56,12 +56,12 @@ char* metaphone(const char *str)
             }
             break;
         case 'b':
-            if (!(s > str && *(s - 1) == 'm') || next) {
+            if (!(s > str && tolower(*(s - 1)) == 'm') || next) {
                 *r++ = 'B';
             }
             break;
         case 'c':
-            if ((next == 'i' && *(s + 2) == 'a') || next == 'h') {
+            if ((next == 'i' && tolower(*(s + 2)) == 'a') || next == 'h') {
                 *r++ = 'X';
                 next = tolower(*(++s + 1));
             } else if (next == 'i' || next == 'e' || next == 'y') {
@@ -107,7 +107,7 @@ char* metaphone(const char *str)
             *r++ = 'J';
             break;
         case 'k':
-            if (s == str || *(s - 1) != 'c') {
+            if (s == str || tolower(*(s - 1)) != 'c') {
                 *r++ = 'K';
             }
             break;
