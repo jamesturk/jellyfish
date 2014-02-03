@@ -4,7 +4,7 @@ python:
     - "2.7"
     - "3.3"
 before_script: python setup.py build_ext
-script: python setup.py test
+script: python test.py
 notifications:
     email:
         - jturk@sunlightfoundation.com
