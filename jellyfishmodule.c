@@ -58,8 +58,7 @@ static inline PyObject* normalize(PyObject *mod, PyObject *pystr) {
     return NULL;
 }
 
-static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args,
-    PyObject *keywds)
+static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     double result;
@@ -77,8 +76,7 @@ static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args,
-    PyObject *keywds)
+static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     double result;
@@ -96,8 +94,7 @@ static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-static PyObject * jellyfish_hamming_distance(PyObject *self, PyObject *args,
-                                          PyObject *keywds)
+static PyObject * jellyfish_hamming_distance(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     unsigned result;
