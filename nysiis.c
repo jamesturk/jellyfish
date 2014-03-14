@@ -110,7 +110,7 @@ char *nysiis(const char *str) {
                 *(cp++) = 'S';
                 *(cp++) = 'S';
                 *cp = 'S';
-                //p += 2;
+                p += 2;
             } else {
                 *cp = 'S';
             }
@@ -119,7 +119,7 @@ char *nysiis(const char *str) {
             if (toupper(*(p + 1)) == 'H') {
                 *cp = 'F';
                 *(++cp) = 'F';
-                // p++;
+                p++;
             } else {
                 *cp = 'P';
             }
