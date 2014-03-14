@@ -150,7 +150,7 @@ char *nysiis(const char *str) {
         }
 
         // Step 6
-        if (*cp != *(cp - 1) || cp == code + 1) {
+        if (*cp != *(cp - 1)) {
             cp++;
         }
 

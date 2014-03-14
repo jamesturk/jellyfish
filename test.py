@@ -109,7 +109,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ("Jonathan", "JANATAN"),
                  ("John", "JAN"),
                  ("Teresa", "TARAS"),
-                 #("Theresa", "TARAS"),
+                 ("Theresa", "TARAS"),
                  ("Jessica", "JASAC"),
                  ("Joshua", "JAS"),
                  ("Bosch", "BAS"),
