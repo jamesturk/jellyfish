@@ -81,6 +81,7 @@ char *nysiis(const char *str) {
             if (toupper(*(p + 1)) == 'V') {
                 *cp = 'A';
                 *(++cp) = 'F';
+                ++p;
                 break;
             }
         case 'A':
