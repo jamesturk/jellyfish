@@ -3,8 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#define ISVOWEL(a) ((a) == 'A' || (a) == 'E' || (a) == 'I' || \
-                    (a) == 'O' || (a) == 'U')
+#define ISVOWEL(a) ((a) == 'A' || (a) == 'E' || (a) == 'I' || (a) == 'O' || (a) == 'U')
 
 char *nysiis(const char *str) {
     size_t len = strlen(str);
