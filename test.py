@@ -102,6 +102,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ("Costales", "CASTAL"),
                  ("Tu", "T"),
                  ("martincevic", "MARTANCAFAC"),
+                 ("Johnathan", "JANATAN"),
                  ]
 
         for (s1, s2) in cases:

@@ -129,7 +129,11 @@ char *nysiis(const char *str) {
             c2 = toupper(*(p + 1));
             c3 = toupper(*(p - 1));
             if (!ISVOWEL(c2) || !ISVOWEL(c3)) {
-                *cp = c3;
+                if ISVOWEL(c3) {
+                    *cp = 'A';
+                } else {
+                    *cp = c3;
+                }
             } else {
                 *cp = 'H';
             }
