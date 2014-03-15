@@ -369,7 +369,7 @@ static PyMethodDef jellyfish_methods[] = {
 
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
-    "strfry",
+    "jellyfish.cjellyfish",
     NULL,
     sizeof(struct jellyfish_state),
     jellyfish_methods,
@@ -379,12 +379,12 @@ static struct PyModuleDef moduledef = {
     NULL
 };
 
-PyObject* PyInit_jellyfish(void)
+PyObject* PyInit_cjellyfish(void)
 #else
 
 #define INITERROR return
 
-PyMODINIT_FUNC initjellyfish(void)
+PyMODINIT_FUNC initcjellyfish(void)
 #endif
 {
     PyObject *unicodedata;
@@ -392,7 +392,7 @@ PyMODINIT_FUNC initjellyfish(void)
 #if PY_MAJOR_VERSION >= 3
     PyObject *module = PyModule_Create(&moduledef);
 #else
-    PyObject *module = Py_InitModule("jellyfish", jellyfish_methods);
+    PyObject *module = Py_InitModule("jellyfish.cjellyfish", jellyfish_methods);
 #endif
 
     if (module == NULL) {

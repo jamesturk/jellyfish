@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import csv
 import unittest
-import jellyfish
+import platform
 
 
-class JellyfishTestCase(unittest.TestCase):
+class JellyfishTests(object):
 
     def test_jaro_winkler(self):
         cases = [("dixon", "dicksonx", 0.8133),
@@ -14,8 +14,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertAlmostEqual(jellyfish.jaro_winkler(s1, s2), value,
-                                   places=4)
+            self.assertAlmostEqual(self.jf.jaro_winkler(s1, s2), value, places=4)
 
     def test_jaro_distance(self):
         cases = [("dixon", "dicksonx", 0.767),
@@ -25,8 +24,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertAlmostEqual(jellyfish.jaro_distance(s1, s2), value,
-                                   places=3)
+            self.assertAlmostEqual(self.jf.jaro_distance(s1, s2), value, places=3)
 
     def test_hamming_distance(self):
         cases = [("", "", 0),
@@ -39,7 +37,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(jellyfish.hamming_distance(s1, s2), value)
+            self.assertEqual(self.jf.hamming_distance(s1, s2), value)
 
     def test_levenshtein_distance(self):
         cases = [("", "", 0),
@@ -50,7 +48,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(jellyfish.levenshtein_distance(s1, s2), value)
+            self.assertEqual(self.jf.levenshtein_distance(s1, s2), value)
 
     def test_damerau_levenshtein_distance(self):
         cases = [("", "", 0),
@@ -60,8 +58,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(jellyfish.damerau_levenshtein_distance(s1, s2),
-                             value)
+            self.assertEqual(self.jf.damerau_levenshtein_distance(s1, s2), value)
 
     def test_soundex(self):
         cases = [("Washington", "W252"),
@@ -76,7 +73,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, code) in cases:
-            self.assertEqual(jellyfish.soundex(s1), code)
+            self.assertEqual(self.jf.soundex(s1), code)
 
     def test_metaphone(self):
         cases = [("metaphone", 'MTFN'),
@@ -93,7 +90,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, code) in cases:
-            self.assertEqual(jellyfish.metaphone(s1), code)
+            self.assertEqual(self.jf.metaphone(s1), code)
 
     def test_nysiis(self):
         cases = [("Worthy", "WARTY"),
@@ -117,7 +114,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2) in cases:
-            self.assertEqual(jellyfish.nysiis(s1), s2)
+            self.assertEqual(self.jf.nysiis(s1), s2)
 
     def test_match_rating_codex(self):
         cases = [("Byrne", "BYRN"),
@@ -129,7 +126,7 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2) in cases:
-            self.assertEqual(jellyfish.match_rating_codex(s1), s2)
+            self.assertEqual(self.jf.match_rating_codex(s1), s2)
 
     def test_match_rating_comparison(self):
         cases = [("Bryne", "Boern", True),
@@ -139,20 +136,29 @@ class JellyfishTestCase(unittest.TestCase):
                  ]
 
         for (s1, s2, value) in cases:
-            self.assertEqual(jellyfish.match_rating_comparison(s1, s2), value)
+            self.assertEqual(self.jf.match_rating_comparison(s1, s2), value)
 
     def test_match_rating_comparison_segfault(self):
         import hashlib
         sha1s = [hashlib.sha1(str(v).encode('ascii')).hexdigest() for v in range(100)]
         # this segfaulted on 0.1.2
-        assert [[jellyfish.match_rating_comparison(h1, h2) for h1 in sha1s]
-                for h2 in sha1s]
+        assert [[self.jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
     def test_porter_stem(self):
         with open('porter-test.csv') as f:
             reader = csv.reader(f)
             for (a, b) in reader:
-                self.assertEqual(jellyfish.porter_stem(a.lower()), b.lower())
+                self.assertEqual(self.jf.porter_stem(a.lower()), b.lower())
+
+
+class PyJellyfishTestCase(unittest.TestCase, JellyfishTests):
+    from . import _jellyfish as jf      # noqa
+
+
+if platform.python_implementation() == 'CPython':
+    class CJellyfishTestCase(unittest.TestCase, JellyfishTests):
+        from . import cjellyfish as jf  # noqa
+
 
 if __name__ == '__main__':
     unittest.main()
