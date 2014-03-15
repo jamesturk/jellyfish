@@ -64,7 +64,7 @@ class TestCommand(Command):
         #can be executed, and the parameter '-v -f' can be
         #transfering to unittest properly.
         test_argv = test_argv0 + shlex.split(self.args)
-        unittest.main(module=None, defaultTest='jellyfish.test.JellyfishTestCase', argv=test_argv)
+        unittest.main(module='jellyfish.test', argv=test_argv)
 
 
 def run_setup(build_c):
