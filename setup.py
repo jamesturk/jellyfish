@@ -1,16 +1,16 @@
 #!/usr/bin/env python
+import os
 import sys
 from setuptools import setup, Extension, Command
+from distutils.command.build import build
 from distutils.command.build_ext import build_ext
-from distutils.errors import (CCompilerError, DistutilsExecError,
-                               DistutilsPlatformError)
+from distutils.errors import (CCompilerError, DistutilsExecError, DistutilsPlatformError)
+from distutils import log
 
-long_description = open('README.rst').read()
+# large portions ripped off from simplejson's setup.py
 
-""" ripped off from simplejson's setup.py """
 if sys.platform == 'win32' and sys.version_info > (2, 6):
-   # 2.6's distutils.msvc9compiler can raise an IOError when failing to
-   # find the compiler
+   # 2.6's distutils.msvc9compiler can raise an IOError when failing to find the compiler
    # It can also raise ValueError http://bugs.python.org/issue7511
    ext_errors = (CCompilerError, DistutilsExecError, DistutilsPlatformError,
                  IOError, ValueError)
@@ -36,6 +36,38 @@ class ve_build_ext(build_ext):
             raise BuildFailed()
 
 
+class TestCommand(Command):
+    """Command for running unittests without install."""
+
+    user_options = [("args=", None, '''The command args string passed to
+                                    unittest framework, such as 
+                                     --args="-v -f"''')]
+
+    def initialize_options(self):
+        self.args = ''
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        self.run_command('build')
+        bld = self.distribution.get_command_obj('build')
+        #Add build_lib in to sys.path so that unittest can found DLLs and libs
+        sys.path = [os.path.abspath(bld.build_lib)] + sys.path
+
+        import shlex
+        import unittest
+        test_argv0 = [sys.argv[0] + ' test --args=']
+        #For transfering args to unittest, we have to split args
+        #by ourself, so that command like:
+        #python setup.py test --args="-v -f"
+        #can be executed, and the parameter '-v -f' can be
+        #transfering to unittest properly.
+        test_argv = test_argv0 + shlex.split(self.args)
+        unittest.main(module=None, defaultTest='test.JellyfishTestCase', argv=test_argv)
+
+
 def run_setup(build_c):
     kw = {}
 
@@ -52,8 +84,13 @@ def run_setup(build_c):
                               'cjellyfish/metaphone.c',
                               'cjellyfish/nysiis.c',
                               'cjellyfish/porter.c'])],
-                  cmdclass=dict(build_ext=ve_build_ext)
+                  cmdclass=dict(build_ext=ve_build_ext, test=TestCommand)
                  )
+    else:
+        kw = dict(cmdclass=dict(test=TestCommand))
+
+    with open('README.rst') as readme:
+        long_description = readme.read()
 
     setup(name="jellyfish",
           version="0.3.0",
@@ -71,7 +108,7 @@ def run_setup(build_c):
                        "Topic :: Text Processing :: Linguistic"],
           **kw)
 
-# run the setup func
+
 try:
     run_setup(not IS_PYPY)
 except BuildFailed:
@@ -82,4 +119,3 @@ except BuildFailed:
     print('*'*75)
     print('WARNING: C extension could not be compiled, falling back to pure Python.')
     print('*'*75)
-

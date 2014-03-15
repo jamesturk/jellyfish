@@ -3,8 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#define ISVOWEL(a) ((a) == 'A' || (a) == 'E' || (a) == 'I' || \
-                    (a) == 'O' || (a) == 'U')
+#define ISVOWEL(a) ((a) == 'A' || (a) == 'E' || (a) == 'I' || (a) == 'O' || (a) == 'U')
 
 char *nysiis(const char *str) {
     size_t len = strlen(str);
@@ -81,6 +80,7 @@ char *nysiis(const char *str) {
             if (toupper(*(p + 1)) == 'V') {
                 *cp = 'A';
                 *(++cp) = 'F';
+                ++p;
                 break;
             }
         case 'A':
@@ -110,7 +110,7 @@ char *nysiis(const char *str) {
                 *(cp++) = 'S';
                 *(cp++) = 'S';
                 *cp = 'S';
-                //p += 2;
+                p += 2;
             } else {
                 *cp = 'S';
             }
@@ -119,7 +119,7 @@ char *nysiis(const char *str) {
             if (toupper(*(p + 1)) == 'H') {
                 *cp = 'F';
                 *(++cp) = 'F';
-                // p++;
+                p++;
             } else {
                 *cp = 'P';
             }
@@ -128,7 +128,11 @@ char *nysiis(const char *str) {
             c2 = toupper(*(p + 1));
             c3 = toupper(*(p - 1));
             if (!ISVOWEL(c2) || !ISVOWEL(c3)) {
-                *cp = c3;
+                if ISVOWEL(c3) {
+                    *cp = 'A';
+                } else {
+                    *cp = c3;
+                }
             } else {
                 *cp = 'H';
             }
@@ -146,7 +150,7 @@ char *nysiis(const char *str) {
         }
 
         // Step 6
-        if (*cp != *(cp - 1) || cp == code + 1) {
+        if (*cp != *(cp - 1)) {
             cp++;
         }
 

@@ -4,7 +4,6 @@ python:
     - "2.7"
     - "3.3"
     - "pypy"
-before_script: python setup.py build_ext
 script: python setup.py test
 notifications:
     email:

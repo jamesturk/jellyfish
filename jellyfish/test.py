@@ -88,6 +88,8 @@ class JellyfishTestCase(unittest.TestCase):
                  ("sunlight labs", "SNLT LBS"),
                  ("sonlite laabz", "SNLT LBS"),
                  (u"Çáŕẗéř", "KRTR"),
+                 ('kentucky', 'KNTK'),
+                 ('KENTUCKY', 'KNTK'),
                  ]
 
         for (s1, code) in cases:
@@ -99,6 +101,19 @@ class JellyfishTestCase(unittest.TestCase):
                  ("montgomery", "MANTGANARY"),
                  ("Costales", "CASTAL"),
                  ("Tu", "T"),
+                 ("martincevic", "MARTANCAFAC"),
+                 ("Catherine", "CATARAN"),
+                 ("Katherine", "CATARAN"),
+                 ("Katerina", "CATARAN"),
+                 ("Johnathan", "JANATAN"),
+                 ("Jonathan", "JANATAN"),
+                 ("John", "JAN"),
+                 ("Teresa", "TARAS"),
+                 ("Theresa", "TARAS"),
+                 ("Jessica", "JASAC"),
+                 ("Joshua", "JAS"),
+                 ("Bosch", "BAS"),
+                 ("Lapher", "LAFAR"),
                  ]
 
         for (s1, s2) in cases:
@@ -128,7 +143,11 @@ class JellyfishTestCase(unittest.TestCase):
 
     def test_match_rating_comparison_segfault(self):
         import hashlib
+<<<<<<< HEAD:jellyfish/test.py
         sha1s = [hashlib.sha1(str(v).encode()).hexdigest() for v in range(100)]
+=======
+        sha1s = [hashlib.sha1(str(v).encode('ascii')).hexdigest() for v in range(100)]
+>>>>>>> master:test.py
         # this segfaulted on 0.1.2
         assert [[jellyfish.match_rating_comparison(h1, h2) for h1 in sha1s]
                 for h2 in sha1s]

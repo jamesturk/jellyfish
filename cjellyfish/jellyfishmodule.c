@@ -58,8 +58,7 @@ static inline PyObject* normalize(PyObject *mod, PyObject *pystr) {
     return NULL;
 }
 
-static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args,
-    PyObject *keywds)
+static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     double result;
@@ -77,8 +76,7 @@ static PyObject * jellyfish_jaro_winkler(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args,
-    PyObject *keywds)
+static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     double result;
@@ -96,8 +94,7 @@ static PyObject * jellyfish_jaro_distance(PyObject *self, PyObject *args,
     return Py_BuildValue("d", result);
 }
 
-static PyObject * jellyfish_hamming_distance(PyObject *self, PyObject *args,
-                                          PyObject *keywds)
+static PyObject * jellyfish_hamming_distance(PyObject *self, PyObject *args)
 {
     const char *s1, *s2;
     unsigned result;
@@ -317,15 +314,15 @@ static PyObject* jellyfish_porter_stem(PyObject *self, PyObject *args)
 
 static PyMethodDef jellyfish_methods[] = {
     {"jaro_winkler", jellyfish_jaro_winkler, METH_VARARGS,
-     "jaro_winkler(string1, string2, ignore_case=True)\n\n"
+     "jaro_winkler(string1, string2)\n\n"
      "Do a Jaro-Winkler string comparison between string1 and string2."},
 
     {"jaro_distance", jellyfish_jaro_distance, METH_VARARGS,
-     "jaro_distance(string1, string2, ignore_case=True)\n\n"
+     "jaro_distance(string1, string2)\n\n"
      "Get a Jaro string distance metric for string1 and string2."},
 
     {"hamming_distance", jellyfish_hamming_distance, METH_VARARGS,
-     "hamming_distance(string1, string2, ignore_case=True)\n\n"
+     "hamming_distance(string1, string2)\n\n"
      "Compute the Hamming distance between string1 and string2."},
 
     {"levenshtein_distance", jellyfish_levenshtein_distance, METH_VARARGS,
