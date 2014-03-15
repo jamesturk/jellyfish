@@ -40,8 +40,7 @@ class TestCommand(Command):
     """Command for running unittests without install."""
 
     user_options = [("args=", None, '''The command args string passed to
-                                    unittest framework, such as 
-                                     --args="-v -f"''')]
+                                    unittest framework, such as --args="-v -f"''')]
 
     def initialize_options(self):
         self.args = ''
@@ -65,7 +64,7 @@ class TestCommand(Command):
         #can be executed, and the parameter '-v -f' can be
         #transfering to unittest properly.
         test_argv = test_argv0 + shlex.split(self.args)
-        unittest.main(module=None, defaultTest='test.JellyfishTestCase', argv=test_argv)
+        unittest.main(module=None, defaultTest='jellyfish.test.JellyfishTestCase', argv=test_argv)
 
 
 def run_setup(build_c):

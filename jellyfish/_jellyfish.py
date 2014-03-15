@@ -198,11 +198,13 @@ def nysiis(s):
     key.append(s[0])
 
     # step 4 - translate remaining chars
-    i = 0
-    for ch in s[1:]:
-        i += 1
-        if ch == 'E' and s[i+1] == 'V':
+    i = 1
+    len_s = len(s)
+    while i < len_s:
+        ch = s[i]
+        if ch == 'E' and i+1 < len_s and s[i+1] == 'V':
             ch = 'AF'
+            i += 1
         elif ch in 'AEIOU':
             ch = 'A'
         elif ch == 'Q':
@@ -217,17 +219,23 @@ def nysiis(s):
             else:
                 ch = 'C'
         elif ch == 'S' and s[i+1:i+3] == 'CH':
-            ch = 'SSS'
+            ch = 'SS'
+            i += 2
         elif ch == 'P' and i+1 < len(s) and s[i+1] == 'H':
-            ch = 'FF'
-        elif ch == 'H' and (s[i-1] not in 'AEIOU' or 
-                            (i+1 < len(s) and s[i+1] not in 'AEIOU')):
-            ch = s[i-1]
+            ch = 'F'
+            i += 1
+        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and s[i+1] not in 'AEIOU')):
+            if s[i-1] in 'AEIOU':
+                ch = 'A'
+            else:
+                ch = s[i-1]
         elif ch == 'W' and  s[i-1] in 'AEIOU':
             ch = s[i-1]
 
         if ch[-1] != key[-1][-1]:
             key.append(ch)
+
+        i += 1
 
 
     key = ''.join(key)
