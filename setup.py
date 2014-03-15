@@ -59,7 +59,7 @@ with open('README.rst') as readme:
     long_description = readme.read()
 
 setup(name='jellyfish',
-      version='0.2.1',
+      version='0.2.2',
       platforms=['any'],
       description=("a library for doing approximate and "
                    "phonetic matching of strings."),
