@@ -152,12 +152,12 @@ class JellyfishTests(object):
 
 
 class PyJellyfishTestCase(unittest.TestCase, JellyfishTests):
-    from . import _jellyfish as jf
+    from . import _jellyfish as jf      # noqa
 
 
 if platform.python_implementation() == 'CPython':
     class CJellyfishTestCase(unittest.TestCase, JellyfishTests):
-        from . import cjellyfish as jf
+        from . import cjellyfish as jf  # noqa
 
 
 if __name__ == '__main__':

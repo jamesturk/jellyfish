@@ -1,10 +1,11 @@
-import itertools
 import unicodedata
 from .compat import _unicode, _range, _zip_longest
 from .porter import Stemmer
 
+
 def _normalize(s):
     return unicodedata.normalize('NFKD', _unicode(s))
+
 
 def _levenshtein_distance(s1, s2, damerau=False):
     if s1 == s2:
@@ -33,6 +34,7 @@ def _levenshtein_distance(s1, s2, damerau=False):
                 cur[c] = min(cur[c], prevprev[r-2] + 1)
 
     return cur[-1]
+
 
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     ying_len = len(ying)
@@ -94,12 +96,12 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
         # optionally adjust for long strings
         # after agreeing beginning chars, at least two or more must agree and
         # agreed characters must be > half of remaining characters
-        if (long_tolerance and min_len > 4 and common_chars > i+1 and 
+        if (long_tolerance and min_len > 4 and common_chars > i+1 and
                 2 * common_chars >= min_len + i):
-            weight += ((1.0 - weight) * (float(common_chars-i-1) /
-                                         float(ying_len+yang_len-i*2+2)))
+            weight += ((1.0 - weight) * (float(common_chars-i-1) / float(ying_len+yang_len-i*2+2)))
 
     return weight
+
 
 def levenshtein_distance(s1, s2):
     return _levenshtein_distance(s1, s2, False)
@@ -128,8 +130,7 @@ def soundex(s):
                     ('dt', '3'),
                     ('l', '4'),
                     ('mn', '5'),
-                    ('r', '6')
-                   )
+                    ('r', '6'))
     result = [s[0]]
     count = 1
 
@@ -229,14 +230,13 @@ def nysiis(s):
                 ch = 'A'
             else:
                 ch = s[i-1]
-        elif ch == 'W' and  s[i-1] in 'AEIOU':
+        elif ch == 'W' and s[i-1] in 'AEIOU':
             ch = s[i-1]
 
         if ch[-1] != key[-1][-1]:
             key.append(ch)
 
         i += 1
-
 
     key = ''.join(key)
 
@@ -266,10 +266,7 @@ def match_rating_codex(s):
         # not a space OR
         # starting character & vowel
         # or consonant not preceded by same consonant
-        if (c != ' ' and
-            (i == 0 and c in 'AEIOU') or
-            (c not in 'AEIOU' and c != prev)
-            ):
+        if (c != ' ' and (i == 0 and c in 'AEIOU') or (c not in 'AEIOU' and c != prev)):
             codex.append(c)
 
         prev = c
@@ -329,7 +326,7 @@ def metaphone(s):
     s = _normalize(s.lower())
 
     # skip first character if s starts with these
-    if s.startswith(('kn', 'gn', 'pn', 'ac', 'wr' ,'ae')):
+    if s.startswith(('kn', 'gn', 'pn', 'ac', 'wr', 'ae')):
         s = s[1:]
 
     i = 0
@@ -435,6 +432,7 @@ def metaphone(s):
         i += 1
 
     return ''.join(result).upper()
+
 
 def porter_stem(s):
     return Stemmer(s).stem()

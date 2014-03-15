@@ -6,3 +6,4 @@ jellyfish.egg-info/
 *.pyc
 *.DS_Store
 *~
+.tox/
