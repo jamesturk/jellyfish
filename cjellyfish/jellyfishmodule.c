@@ -369,7 +369,7 @@ static PyMethodDef jellyfish_methods[] = {
 
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
-    "cjellyfish",
+    "jellyfish.cjellyfish",
     NULL,
     sizeof(struct jellyfish_state),
     jellyfish_methods,
@@ -392,7 +392,7 @@ PyMODINIT_FUNC initcjellyfish(void)
 #if PY_MAJOR_VERSION >= 3
     PyObject *module = PyModule_Create(&moduledef);
 #else
-    PyObject *module = Py_InitModule("cjellyfish", jellyfish_methods);
+    PyObject *module = Py_InitModule("jellyfish.cjellyfish", jellyfish_methods);
 #endif
 
     if (module == NULL) {

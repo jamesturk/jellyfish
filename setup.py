@@ -83,7 +83,8 @@ def run_setup(build_c):
                               'cjellyfish/metaphone.c',
                               'cjellyfish/nysiis.c',
                               'cjellyfish/porter.c'])],
-                  cmdclass=dict(build_ext=ve_build_ext, test=TestCommand)
+                  cmdclass=dict(build_ext=ve_build_ext, test=TestCommand),
+                  packages=['jellyfish'],
                  )
     else:
         kw = dict(cmdclass=dict(test=TestCommand))
