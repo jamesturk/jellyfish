@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import csv
 import unittest
+import platform
 
 
 class JellyfishTests(object):
@@ -154,8 +155,9 @@ class PyJellyfishTestCase(unittest.TestCase, JellyfishTests):
     from . import _jellyfish as jf
 
 
-class CJellyfishTestCase(unittest.TestCase, JellyfishTests):
-    from . import cjellyfish as jf
+if platform.python_implementation() == 'CPython':
+    class CJellyfishTestCase(unittest.TestCase, JellyfishTests):
+        from . import cjellyfish as jf
 
 
 if __name__ == '__main__':
