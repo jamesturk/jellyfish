@@ -9,7 +9,7 @@ int damerau_levenshtein_distance(const char *s1, const char *s2)
     size_t cols = s2_len + 1;
 
     size_t i, j;
-    size_t d1, d2, d3, d_now;;
+    size_t d1, d2, d3, d_now;
     unsigned short cost;
 
     size_t *dist = malloc(rows * cols * sizeof(size_t));
