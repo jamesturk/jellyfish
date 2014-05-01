@@ -10,6 +10,9 @@ char *nysiis(const char *str) {
 
     char c1, c2, c3;
     char *copy = alloca((len + 1) * sizeof(char));
+    char *code = NULL;
+    char *p, *cp;
+
     memcpy(copy, str, len+1);
     if (!copy) {
         return NULL;
@@ -19,12 +22,10 @@ char *nysiis(const char *str) {
         return calloc(1, sizeof(char));
     }
 
-    char *code = calloc(len + 1, sizeof(char));
+    code = calloc(len + 1, sizeof(char));
     if (!code) {
         return NULL;
     }
-
-    char *p, *cp;
 
     // Step 1
     if (!strncmp(copy, "MAC", 3)) {
