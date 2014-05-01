@@ -7,13 +7,13 @@ int match_rating_comparison(const char *s1, const char *s2) {
     size_t i, j;
     int diff;
     char *longer;
-
     char *s1_codex = match_rating_codex(s1);
+    char *s2_codex = match_rating_codex(s2);
+
     if (!s1_codex) {
         return -1;
     }
 
-    char *s2_codex = match_rating_codex(s2);
     if (!s2_codex) {
         free(s1_codex);
         return -1;
