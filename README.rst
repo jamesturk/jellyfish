@@ -2,9 +2,19 @@
 jellyfish
 =========
 
+.. image:: https://travis-ci.org/sunlightlabs/jellyfish.svg?branch=master
+    :target: https://travis-ci.org/sunlightlabs/jellyfish
+
+.. image:: https://pypip.in/version/jellyfish/badge.svg
+    :target: https://pypi.python.org/pypi/jellyfish
+
+.. image:: https://pypip.in/format/jellyfish/badge.svg
+    :target: https://pypi.python.org/pypi/jellyfish
+
+
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
-jellyfish is a project of Sunlight Labs (c) 2010.
+jellyfish is a project of Sunlight Labs (c) 2014.
 All code is released under a BSD-style license, see LICENSE for details.
 
 Written by Michael Stephens <mstephens@sunlightfoundation.com> and James Turk
