@@ -1,1 +1,1 @@
-include LICENSE *.rst *.py *.c *.h
+include LICENSE *.rst *.py cjellyfish/*.c cjellyfish/*.h
