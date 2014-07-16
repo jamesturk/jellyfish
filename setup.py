@@ -87,7 +87,7 @@ def run_setup(build_c):
                   packages=['jellyfish'],
                  )
     else:
-        kw = dict(cmdclass=dict(test=TestCommand))
+        kw = dict(cmdclass=dict(test=TestCommand), packages=['jellyfish'])
 
     with open('README.rst') as readme:
         long_description = readme.read()
@@ -107,7 +107,6 @@ def run_setup(build_c):
                        "Programming Language :: Python",
                        "Topic :: Text Processing :: Linguistic"],
           **kw)
-
 
 try:
     run_setup(not IS_PYPY)
