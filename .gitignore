@@ -7,3 +7,4 @@ jellyfish.egg-info/
 *.DS_Store
 *~
 .tox/
+.coverage

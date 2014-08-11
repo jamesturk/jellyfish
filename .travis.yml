@@ -4,7 +4,10 @@ python:
     - "3.3"
     - "3.4"
     - "pypy"
-script: python setup.py test
+install: pip install mock pytest pytest-cov coveralls
+script: py.test jellyfish/test.py --cov jellyfish
+after_success:
+    - coveralls
 notifications:
     email:
         - jturk@sunlightfoundation.com
