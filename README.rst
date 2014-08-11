@@ -17,10 +17,9 @@ Jellyfish is a python library for doing approximate and phonetic matching of str
 jellyfish is a project of Sunlight Labs (c) 2014.
 All code is released under a BSD-style license, see LICENSE for details.
 
-Written by Michael Stephens <mstephens@sunlightfoundation.com> and James Turk
-<jturk@sunlightfoundation.com>.
+Written by James Turk <jturk@sunlightfoundation.com> and Michael Stephens.
 
-Contributions from Peter Scott.
+See https://github.com/sunlightlabs/jellyfish/graphs/contributors for contributors.
 
 Source is available at http://github.com/sunlightlabs/jellyfish.
 
