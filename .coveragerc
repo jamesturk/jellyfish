@@ -1,0 +1,3 @@
+[run]
+omit = jellyfish/compat.py
+       jellyfish/test.py
