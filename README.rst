@@ -5,6 +5,9 @@ jellyfish
 .. image:: https://travis-ci.org/sunlightlabs/jellyfish.svg?branch=master
     :target: https://travis-ci.org/sunlightlabs/jellyfish
 
+.. image:: https://coveralls.io/repos/sunlightlabs/jellyfish.png?branch=master
+    :target: https://coveralls.io/r/sunlightlabs/jellyfish
+
 .. image:: https://pypip.in/version/jellyfish/badge.svg
     :target: https://pypi.python.org/pypi/jellyfish
 
