@@ -93,7 +93,7 @@ def run_setup(build_c):
         long_description = readme.read()
 
     setup(name="jellyfish",
-          version="0.3.0",
+          version="0.3.1",
           platforms=["any"],
           description=("a library for doing approximate and "
                        "phonetic matching of strings."),
@@ -104,7 +104,9 @@ def run_setup(build_c):
                        "License :: OSI Approved :: BSD License",
                        "Natural Language :: English",
                        "Operating System :: OS Independent",
-                       "Programming Language :: Python",
+                       "Programming Language :: Python :: 2.7",
+                       "Programming Language :: Python :: 3.3",
+                       "Programming Language :: Python :: 3.4",
                        "Topic :: Text Processing :: Linguistic"],
           **kw)
 
