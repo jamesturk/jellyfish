@@ -84,7 +84,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
               (common_chars-trans_count) / common_chars)) / 3
 
     # winkler modification: continue to boost if strings are similar
-    if winklerize and weight > 0.7:
+    if winklerize and weight > 0.7 and ying_len > 3 and yang_len > 3:
         # adjust for up to first 4 chars in common
         j = max(min_len, 4)
         i = 0
