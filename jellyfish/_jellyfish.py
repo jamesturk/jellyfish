@@ -246,7 +246,7 @@ def nysiis(s):
 
     # step 6 - replace AY w/ Y
     if key.endswith('AY'):
-        key = key[:-2] = 'Y'
+        key = key[:-2] + 'Y'
 
     # step 7 - remove trailing A
     if key.endswith('A'):
