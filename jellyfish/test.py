@@ -111,6 +111,7 @@ class JellyfishTests(object):
                  ("Joshua", "JAS"),
                  ("Bosch", "BAS"),
                  ("Lapher", "LAFAR"),
+                 ("wiyh", "WY"),
                  ]
 
         for (s1, s2) in cases:
