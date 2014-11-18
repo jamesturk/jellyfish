@@ -43,7 +43,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     if not ying_len or not yang_len:
         return 0
 
-    min_len = max(ying_len, yang_len)
+    min_len = min(ying_len, yang_len)
     search_range = (min_len // 2) - 1
     if search_range < 0:
         search_range = 0
