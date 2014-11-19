@@ -8,7 +8,7 @@ def _normalize(s):
     return unicodedata.normalize('NFKD', _unicode(s))
 
 
-def _levenshtein_distance(s1, s2):
+def levenshtein_distance(s1, s2):
     if s1 == s2:
         return 0
     rows = len(s1)+1
@@ -97,10 +97,6 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
             weight += ((1.0 - weight) * (float(common_chars-i-1) / float(ying_len+yang_len-i*2+2)))
 
     return weight
-
-
-def levenshtein_distance(s1, s2):
-    return _levenshtein_distance(s1, s2)
 
 
 def damerau_levenshtein_distance(s1, s2):
