@@ -22,7 +22,7 @@ def _levenshtein_distance(s1, s2):
     prev = None
     cur = range(cols)
     for r in _range(1, rows):
-        prevprev, prev, cur = prev, cur, [r] + [0]*(cols-1)
+        prev, cur = cur, [r] + [0]*(cols-1)
         for c in _range(1, cols):
             deletion = prev[c] + 1
             insertion = cur[c-1] + 1
@@ -135,8 +135,7 @@ def damerau_levenshtein_distance(s1, s2):
             score[i+1][j+1] = min(score[i][j] + cost,
                                   score[i+1][j] + 1,
                                   score[i][j+1] + 1,
-                                  score[i1][j1] + (i-i1-1) + 1 + (j-j1-1)
-                                 )
+                                  score[i1][j1] + (i-i1-1) + 1 + (j-j1-1))
         da[s1[i-1]] = i
 
     return score[len1+1][len2+1]
