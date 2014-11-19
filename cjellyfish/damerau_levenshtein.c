@@ -1,56 +1,72 @@
 #include "jellyfish.h"
 #include <string.h>
+#include <stdio.h>
 
 int damerau_levenshtein_distance(const char *s1, const char *s2)
 {
-    size_t s1_len = strlen(s1);
-    size_t s2_len = strlen(s2);
-    size_t rows = s1_len + 1;
-    size_t cols = s2_len + 1;
+    size_t len1 = strlen(s1);
+    size_t len2 = strlen(s2);
+    size_t infinite = len1 + len2;
+    size_t cols = len2 + 2;
 
-    size_t i, j;
-    size_t d1, d2, d3, d_now;
+    size_t i, j, i1, j1;
+    size_t db;
+    size_t d1, d2, d3, d4, result;
     unsigned short cost;
 
-    size_t *dist = malloc(rows * cols * sizeof(size_t));
+    size_t *da = malloc(256 * sizeof(size_t));
+    if (!da) {
+        return -1;
+    }
+    for(i = 0; i < 256; i++) {
+        da[i] = 0;
+    }
+
+    size_t *dist = malloc((len1 + 2) * cols * sizeof(size_t));
     if (!dist) {
         return -1;
     }
 
-    for (i = 0; i < rows; i++) {
-        dist[i * cols] = i;
+    dist[0] = infinite;
+
+    for (i = 0; i <= len1; i++) {
+        dist[((i + 1) * cols) + 0] = infinite;
+        dist[((i + 1) * cols) + 1] = i;
     }
 
-    for (j = 0; j < cols; j++) {
-        dist[j] = j;
+    for (i = 0; i <= len2; i++) {
+        dist[i + 1] = infinite;       // 0*cols + row
+        dist[cols + i + 1] = i;       // 1*cols + row
     }
 
-    for (i = 1; i < rows; i++) {
-        for (j = 1; j < cols; j++) {
+    for (i = 1; i <= len1; i++) {
+        db = 0;
+        for (j = 1; j <= len2; j++) {
+            i1 = da[(size_t)(s2[j-1])];
+            j1 = db;
+
             if (s1[i - 1] == s2[j - 1]) {
                 cost = 0;
+                db = j;
             } else {
                 cost = 1;
             }
 
-            d1 = dist[((i - 1) * cols) + j] + 1;
-            d2 = dist[(i * cols) + (j - 1)] + 1;
-            d3 = dist[((i - 1) * cols) + (j - 1)] + cost;
+            d1 = dist[(i * cols) + j] + cost;
+            d2 = dist[((i + 1) * cols) + j] + 1;
+            d3 = dist[(i * cols) + j + 1] + 1;
+            d4 = dist[(i1 * cols) + j1] + (i - i1 - 1) + 1 + (j - j1 - 1);
 
-            d_now = MIN(d1, MIN(d2, d3));
-
-            if (i > 2 && j > 2 && s1[i - 1] == s2[j - 2] &&
-                s1[i - 2] == s2[j - 1]) {
-                d1 = dist[((i - 2) * cols) + (j - 2)] + cost;
-                d_now = MIN(d_now, d1);
-            }
-
-            dist[(i * cols) + j] = d_now;
+            dist[((i+1)*cols) + j + 1] = MIN(MIN(d1, d2), MIN(d3, d4));
         }
+
+        da[s1[i-1]] = i;
     }
 
-    d_now = dist[(cols * rows) - 1];
-    free(dist);
+    result = dist[((len1+1) * cols) + len2 + 1];
 
-    return d_now;
+    free(dist);
+    free(da);
+
+    return result;
 }
