@@ -1,4 +1,5 @@
 import unicodedata
+from collections import defaultdict
 from .compat import _unicode, _range, _zip_longest
 from .porter import Stemmer
 
@@ -7,7 +8,7 @@ def _normalize(s):
     return unicodedata.normalize('NFKD', _unicode(s))
 
 
-def _levenshtein_distance(s1, s2, damerau=False):
+def _levenshtein_distance(s1, s2):
     if s1 == s2:
         return 0
     rows = len(s1)+1
@@ -27,11 +28,6 @@ def _levenshtein_distance(s1, s2, damerau=False):
             insertion = cur[c-1] + 1
             edit = prev[c-1] + (0 if s1[r-1] == s2[c-1] else 1)
             cur[c] = min(edit, deletion, insertion)
-
-            # damerau
-            if (damerau and r > 1 and c > 1 and s1[r-1] == s2[c-2]
-                    and s1[r-2] == s2[c-1] and s1[r-1] != s2[c-1]):
-                cur[c] = min(cur[c], prevprev[r-2] + 1)
 
     return cur[-1]
 
@@ -104,11 +100,46 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
 
 def levenshtein_distance(s1, s2):
-    return _levenshtein_distance(s1, s2, False)
+    return _levenshtein_distance(s1, s2)
 
 
 def damerau_levenshtein_distance(s1, s2):
-    return _levenshtein_distance(s1, s2, True)
+    len1 = len(s1)
+    len2 = len(s2)
+    infinite = len1 + len2
+
+    # character array
+    da = defaultdict(int)
+
+    # distance matrix
+    score = [[0]*(len2+2) for x in _range(len1+2)]
+
+    score[0][0] = infinite
+    for i in _range(0, len1+1):
+        score[i+1][0] = infinite
+        score[i+1][1] = i
+    for i in _range(0, len2+1):
+        score[0][i+1] = infinite
+        score[1][i+1] = i
+
+    for i in _range(1, len1+1):
+        db = 0
+        for j in _range(1, len2+1):
+            i1 = da[s2[j-1]]
+            j1 = db
+            cost = 1
+            if s1[i-1] == s2[j-1]:
+                cost = 0
+                db = j
+
+            score[i+1][j+1] = min(score[i][j] + cost,
+                                  score[i+1][j] + 1,
+                                  score[i][j+1] + 1,
+                                  score[i1][j1] + (i-i1-1) + 1 + (j-j1-1)
+                                 )
+        da[s1[i-1]] = i
+
+    return score[len1+1][len2+1]
 
 
 def jaro_distance(s1, s2):

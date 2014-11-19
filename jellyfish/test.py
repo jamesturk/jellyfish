@@ -54,11 +54,12 @@ class JellyfishTests(object):
         cases = [("", "", 0),
                  ("abc", "", 3),
                  ("bc", "abc", 1),
-                 ("abc", "acb", 1),
+                 ("fuor", "four", 1),
+                 ("abcd", "acb", 2),
                  ("cape sand recycling ", "edith ann graham", 17),
                  ("jellyifhs", "jellyfish", 2),
                  ("ifhs", "fish", 2),
-                 ]
+                ]
 
         for (s1, s2, value) in cases:
             self.assertEqual(self.jf.damerau_levenshtein_distance(s1, s2), value)
