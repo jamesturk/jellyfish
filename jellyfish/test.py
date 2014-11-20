@@ -11,6 +11,7 @@ class JellyfishTests(object):
                  ("dixon", "dicksonx", 0.8133),
                  ("martha", "marhta", 0.9611),
                  ("dwayne", "duane", 0.84),
+                 ("William", "Williams", 0.975),
                  ]
 
         for (s1, s2, value) in cases:
