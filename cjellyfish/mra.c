@@ -2,29 +2,19 @@
 #include <string.h>
 #include <ctype.h>
 
+static size_t compute_match_rating_codex(const char *str, char codex[7]);
+
 int match_rating_comparison(const char *s1, const char *s2) {
     size_t s1c_len, s2c_len;
     size_t i, j;
     int diff;
     char *longer;
-    char *s1_codex = match_rating_codex(s1);
-    char *s2_codex = match_rating_codex(s2);
 
-    if (!s1_codex) {
-        return -1;
-    }
-
-    if (!s2_codex) {
-        free(s1_codex);
-        return -1;
-    }
-
-    s1c_len = strlen(s1_codex);
-    s2c_len = strlen(s2_codex);
+    char s1_codex[7], s2_codex[7];
+    s1c_len = compute_match_rating_codex(s1, s1_codex);
+    s2c_len = compute_match_rating_codex(s2, s2_codex);
 
     if (abs(s1c_len - s2c_len) >= 3) {
-        free(s1_codex);
-        free(s2_codex);
         return -1;
     }
 
@@ -70,9 +60,6 @@ int match_rating_comparison(const char *s1, const char *s2) {
         }
     }
 
-    free(s1_codex);
-    free(s2_codex);
-
     diff = 6 - diff;
     i = s1c_len + s2c_len;
 
@@ -88,14 +75,19 @@ int match_rating_comparison(const char *s1, const char *s2) {
 }
 
 char* match_rating_codex(const char *str) {
-    size_t len = strlen(str);
-    size_t i, j;
-    char c, prev;
-
     char *codex = malloc(7 * sizeof(char));
     if (!codex) {
         return NULL;
     }
+    compute_match_rating_codex(str, codex);
+
+    return codex;
+}
+
+static size_t compute_match_rating_codex(const char *str, char codex[7]) {
+    size_t len = strlen(str);
+    size_t i, j;
+    char c, prev;
 
     prev = '\0';
     for(i = 0, j = 0; i < len && j < 7; i++) {
@@ -120,6 +112,5 @@ char* match_rating_codex(const char *str) {
     }
 
     codex[j] = '\0';
-
-    return codex;
+    return j;
 }
