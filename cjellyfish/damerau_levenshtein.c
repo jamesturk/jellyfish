@@ -40,7 +40,7 @@ int damerau_levenshtein_distance(const char *s1, const char *s2)
     for (i = 1; i <= len1; i++) {
         db = 0;
         for (j = 1; j <= len2; j++) {
-            i1 = da[(size_t)(s2[j-1])];
+            i1 = da[(unsigned char)s2[j-1]];
             j1 = db;
 
             if (s1[i - 1] == s2[j - 1]) {
@@ -58,7 +58,7 @@ int damerau_levenshtein_distance(const char *s1, const char *s2)
             dist[((i+1)*cols) + j + 1] = MIN(MIN(d1, d2), MIN(d3, d4));
         }
 
-        da[s1[i-1]] = i;
+        da[(unsigned char)s1[i-1]] = i;
     }
 
     result = dist[((len1+1) * cols) + len2 + 1];
