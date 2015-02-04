@@ -8,3 +8,4 @@ jellyfish.egg-info/
 *~
 .tox/
 .coverage
+.ropeproject/
