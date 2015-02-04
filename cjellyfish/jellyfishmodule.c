@@ -19,6 +19,7 @@ static struct jellyfish_state _state;
 #define UTF8_BYTES(s) (PyString_AS_STRING(s))
 #endif
 
+
 /* Returns a new reference to a PyString (python < 3) or
  * PyBytes (python >= 3.0).
  *
@@ -128,15 +129,43 @@ static PyObject* jellyfish_levenshtein_distance(PyObject *self, PyObject *args)
     return Py_BuildValue("i", result);
 }
 
+/*
+ * utility function for damerau_levenshtein to treat unicode and bytes similarly
+ */
+static void* _strdata(PyObject *obj) {
+    if (PyBytes_Check(obj)) {
+        return PyBytes_AsString(obj);
+    } else if (PyUnicode_Check(obj)) {
+#if PY_MAJOR_VERSION >= 3
+        switch(PyUnicode_KIND(obj)) {
+            case PyUnicode_1BYTE_KIND:
+                return PyUnicode_1BYTE_DATA(obj);
+            case PyUnicode_2BYTE_KIND:
+                return PyUnicode_2BYTE_DATA(obj);
+            case PyUnicode_4BYTE_KIND:
+                return PyUnicode_4BYTE_DATA(obj);
+        }
+#else
+        return PyUnicode_AsUTF8String(obj);
+#endif
+    }
+
+    return NULL;
+}
+
 static PyObject* jellyfish_damerau_levenshtein_distance(PyObject *self,
-                                                     PyObject *args)
+                                                        PyObject *args)
 {
+    PyObject *o1, *o2;
     const char *s1, *s2;
     int result;
 
-    if (!PyArg_ParseTuple(args, "ss", &s1, &s2)) {
+    if (!PyArg_ParseTuple(args, "OO", &o1, &o2)) {
         return NULL;
     }
+
+    s1 = _strdata(o1);
+    s2 = _strdata(o2);
 
     result = damerau_levenshtein_distance(s1, s2);
     if (result == -1) {
