@@ -59,7 +59,8 @@ class JellyfishTests(object):
                  ("abcd", "acb", 2),
                  ("cape sand recycling ", "edith ann graham", 17),
                  ("jellyifhs", "jellyfish", 2),
-                 ("ifhs", "fish", 2)]
+                 ("ifhs", "fish", 2),
+                 ("Hello, world!", "Hello,\xc2\xa0world!", 2)]
 
         for (s1, s2, value) in cases:
             self.assertEqual(self.jf.damerau_levenshtein_distance(s1, s2), value)
