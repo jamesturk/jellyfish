@@ -360,6 +360,7 @@ def metaphone(s):
     while i < len(s):
         c = s[i]
         next = s[i+1] if i < len(s)-1 else '*****'
+        nextnext = s[i+2] if i < len(s)-2 else '*****'
 
         # skip doubles except for cc
         if c == next and c != 'c':
@@ -373,7 +374,7 @@ def metaphone(s):
             if (not (i != 0 and s[i-1] == 'm')) or next:
                 result.append('b')
         elif c == 'c':
-            if next == 'i' and s[i+2] == 'a' or next == 'h':
+            if next == 'i' and nextnext == 'a' or next == 'h':
                 result.append('x')
                 i += 1
             elif next in 'iey':
@@ -382,7 +383,7 @@ def metaphone(s):
             else:
                 result.append('k')
         elif c == 'd':
-            if next == 'g' and s[i+2] in 'iey':
+            if next == 'g' and nextnext in 'iey':
                 result.append('j')
                 i += 2
             else:
@@ -394,7 +395,7 @@ def metaphone(s):
                 result.append('j')
             elif next not in 'hn':
                 result.append('k')
-            elif next == 'h' and s[i+2] and s[i+2] not in 'aeiou':
+            elif next == 'h' and nextnext and nextnext not in 'aeiou':
                 i += 1
             elif next != 'n':
                 result.append('k')
@@ -416,18 +417,18 @@ def metaphone(s):
             if next == 'h':
                 result.append('x')
                 i += 1
-            elif next == 'i' and s[i+2] in 'oa':
+            elif next == 'i' and nextnext in 'oa':
                 result.append('x')
                 i += 2
             else:
                 result.append('s')
         elif c == 't':
-            if next == 'i' and s[i+2] in 'oa':
+            if next == 'i' and nextnext in 'oa':
                 result.append('x')
             elif next == 'h':
                 result.append('0')
                 i += 1
-            elif next != 'c' or s[i+2] != 'h':
+            elif next != 'c' or nextnext != 'h':
                 result.append('t')
         elif c == 'v':
             result.append('f')
@@ -439,7 +440,7 @@ def metaphone(s):
                 result.append('w')
         elif c == 'x':
             if i == 0:
-                if next == 'h' or (next == 'i' and s[i+2] in 'oa'):
+                if next == 'h' or (next == 'i' and nextnext in 'oa'):
                     result.append('x')
                 else:
                     result.append('s')

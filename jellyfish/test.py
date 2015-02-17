@@ -92,6 +92,8 @@ class JellyfishTests(object):
                  (u"Çáŕẗéř", "KRTR"),
                  ('kentucky', 'KNTK'),
                  ('KENTUCKY', 'KNTK'),
+                 ('Aapti', 'PT'),
+                 ('Aarti', 'RT'),
                  ]
 
         for (s1, code) in cases:
