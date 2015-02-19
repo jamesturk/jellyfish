@@ -123,6 +123,10 @@ class JellyfishTests(object):
                  ("Bosch", "BAS"),
                  ("Lapher", "LAFAR"),
                  ("wiyh", "WY"),
+                 #("Knave", "NAV"),
+                 #("Pheeny", "FANY"),
+                 #("Schmitty", "SNATY"),
+                 #("MacArthur", "MCARTAR"),
                  ]
 
         for (s1, s2) in cases:
@@ -145,6 +149,8 @@ class JellyfishTests(object):
                  ("Smith", "Smyth", True),
                  ("Catherine", "Kathryn", True),
                  ("Michael", "Mike", False),
+                 ("Tim", "Timothy", None),
+                 ("Ed", "Ad", False),
                  ]
 
         for (s1, s2, value) in cases:
