@@ -112,8 +112,8 @@ class Stemmer(object):
         and if second c isn't w,x, or y.
         used to restore e at end of short words like cave, love, hope, crime
         """
-        if (i < 2 or not self.cons(i) or self.cons(i-1) or not self.cons(i-2)
-                or self.b[i] in 'wxy'):
+        if (i < 2 or not self.cons(i) or self.cons(i-1) or not self.cons(i-2) or
+                self.b[i] in 'wxy'):
             return False
         return True
 
@@ -146,8 +146,8 @@ class Stemmer(object):
         if self.ends(['e', 'e', 'd']):
             if self.m() > 0:
                 self.k -= 1
-        elif ((self.ends(['e', 'd']) or self.ends(['i', 'n', 'g']))
-              and self.vowel_in_stem()):
+        elif ((self.ends(['e', 'd']) or self.ends(['i', 'n', 'g'])) and
+              self.vowel_in_stem()):
             self.k = self.j
             if self.ends(['a', 't']):
                 self.setto(['a', 't', 'e'])
