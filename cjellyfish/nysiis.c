@@ -76,7 +76,7 @@ char *nysiis(const char *str) {
     // Step 3
     *(cp++) = *(p++);
 
-    while (c1 = *p) {
+    while ((c1 = *p)) {
         if (c1 == ' ') {
             break;
         }
