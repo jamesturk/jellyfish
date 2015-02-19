@@ -12,6 +12,9 @@ class JellyfishTests(object):
                  ("martha", "marhta", 0.9611),
                  ("dwayne", "duane", 0.84),
                  ("William", "Williams", 0.975),
+                 ("", "foo", 0),
+                 ("a", "a", 1),
+                 ("abc", "xyz", 0),
                  ]
 
         for (s1, s2, value) in cases:
@@ -43,6 +46,7 @@ class JellyfishTests(object):
     def test_levenshtein_distance(self):
         cases = [("", "", 0),
                  ("abc", "", 3),
+                 ("", "abc", 3),
                  ("bc", "abc", 1),
                  ("kitten", "sitting", 3),
                  ("Saturday", "Sunday", 3),
