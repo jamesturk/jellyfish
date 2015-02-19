@@ -271,12 +271,10 @@ static PyObject* jellyfish_match_rating_comparison(PyObject *self,
     }
 
     result = match_rating_comparison(str1, str2);
-    if (result == -1) {
-        PyErr_NoMemory();
-        return NULL;
-    }
 
-    if (result) {
+    if (result == -1) {
+        Py_RETURN_NONE;
+    } else if (result) {
         Py_RETURN_TRUE;
     } else {
         Py_RETURN_FALSE;

@@ -139,6 +139,8 @@ class JellyfishTests(object):
                  ("Smyth", "SMYTH"),
                  ("Catherine", "CTHRN"),
                  ("Kathryn", "KTHRYN"),
+                 ("Ad", "AD"),
+                 ("Ed", "ED"),
                  ]
 
         for (s1, s2) in cases:
@@ -150,7 +152,7 @@ class JellyfishTests(object):
                  ("Catherine", "Kathryn", True),
                  ("Michael", "Mike", False),
                  ("Tim", "Timothy", None),
-                 ("Ed", "Ad", False),
+                 ("Ed", "Ad", True),
                  ]
 
         for (s1, s2, value) in cases:

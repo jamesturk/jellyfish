@@ -343,7 +343,7 @@ def match_rating_comparison(s1, s2):
             if c2:
                 unmatched_count2 += 1
 
-    return (6 - max(unmatched_count1, unmatched_count2)) > min_rating
+    return (6 - max(unmatched_count1, unmatched_count2)) >= min_rating
 
 
 def metaphone(s):
