@@ -85,20 +85,26 @@ class JellyfishTests(object):
             self.assertEqual(self.jf.soundex(s1), code)
 
     def test_metaphone(self):
-        cases = [("metaphone", 'MTFN'),
-                 ("wHErE", "WR"),
-                 ("shell", "XL"),
-                 ("this is a difficult string", "0S IS A TFKLT STRNK"),
-                 ("aeromancy", "ERMNS"),
-                 ("Antidisestablishmentarianism", "ANTTSSTBLXMNTRNSM"),
-                 ("sunlight labs", "SNLT LBS"),
-                 ("sonlite laabz", "SNLT LBS"),
-                 (u"Çáŕẗéř", "KRTR"),
-                 ('kentucky', 'KNTK'),
-                 ('KENTUCKY', 'KNTK'),
-                 ('Aapti', 'PT'),
-                 ('Aarti', 'RT'),
-                 ]
+        cases = [
+            ('DGIB', 'JB'),
+            ("metaphone", 'MTFN'),
+            ("wHErE", "WR"),
+            ("shell", "XL"),
+            ("this is a difficult string", "0S IS A TFKLT STRNK"),
+            ("aeromancy", "ERMNS"),
+            ("Antidisestablishmentarianism", "ANTTSSTBLXMNTRNSM"),
+            ("sunlight labs", "SNLT LBS"),
+            ("sonlite laabz", "SNLT LBS"),
+            (u"Çáŕẗéř", "KRTR"),
+            ('kentucky', 'KNTK'),
+            ('KENTUCKY', 'KNTK'),
+            ('NXNXNX', 'NKSNKSNKS'),
+            ('Aapti', 'PT'),
+            ('Aarti', 'RT'),
+            ('CIAB', 'XB'),
+            ('NQ', 'NK'),
+            ('sian', 'XN'),
+        ]
 
         for (s1, code) in cases:
             self.assertEqual(self.jf.metaphone(s1), code)
