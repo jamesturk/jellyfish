@@ -242,7 +242,7 @@ def nysiis(s):
             ch = 'N'
         elif ch == 'K':
             if i+1 < len(s) and s[i+1] == 'N':
-                ch = 'K'
+                ch = 'N'
             else:
                 ch = 'C'
         elif ch == 'S' and s[i+1:i+3] == 'CH':

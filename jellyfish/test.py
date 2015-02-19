@@ -124,9 +124,12 @@ class JellyfishTests(object):
                  ("Lapher", "LAFAR"),
                  ("wiyh", "WY"),
                  ("MacArthur", "MCARTAR"),
-                 ("Knave", "NAV"),
-                 ("Pheeny", "FANY"),
-                 ("Schmitty", "SNATY"),
+                 ("Pheenard", "FANAD"),
+                 ("Schmittie", "SNATY"),
+                 ("Knaqze", "NAGS"),
+                 ("Knokno", "NAN"),
+                 ("Knoko", "NAC"),
+                 ("Macaw", "MC"),
                  ]
 
         for (s1, s2) in cases:
