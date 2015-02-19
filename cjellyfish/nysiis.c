@@ -27,17 +27,23 @@ char *nysiis(const char *str) {
         return NULL;
     }
 
+    // Convert to upper case first
+    cp = p = copy;
+    while(*p) {
+        *(cp++) = toupper(*(p++));
+    }
+
     // Step 1
-    if (!strncmp(copy, "MAC", 3)) {
+    if (strncmp(copy, "MAC", 3) == 0) {
         copy[1] = 'C';
-    } else if (!strncmp(copy, "KN", 3)) {
+    } else if (strncmp(copy, "KN", 2) == 0) {
         copy[0] = 'N';
     } else if (copy[0] == 'K') {
         copy[0] = 'C';
-    } else if (!strncmp(copy, "PH", 2)) {
+    } else if (strncmp(copy, "PH", 2) == 0) {
         copy[0] = 'F';
         copy[1] = 'F';
-    } else if (!strncmp(copy, "SCH", 3)) {
+    } else if (strncmp(copy, "SCH", 3) == 0) {
         copy[1] = 'S';
         copy[2] = 'S';
     }
@@ -68,9 +74,9 @@ char *nysiis(const char *str) {
     p = copy;
 
     // Step 3
-    *(cp++) = toupper(*(p++));
+    *(cp++) = *(p++);
 
-    while ((c1 = toupper(*p))) {
+    while (c1 = *p) {
         if (c1 == ' ') {
             break;
         }
@@ -78,7 +84,7 @@ char *nysiis(const char *str) {
         // Step 5
         switch(c1) {
         case 'E':
-            if (toupper(*(p + 1)) == 'V') {
+            if ((*(p + 1)) == 'V') {
                 *cp = 'A';
                 *(++cp) = 'F';
                 ++p;
@@ -100,14 +106,14 @@ char *nysiis(const char *str) {
             *cp = 'N';
             break;
         case 'K':
-            if (toupper(*(p + 1)) == 'N') {
+            if ((*(p + 1)) == 'N') {
                 *cp = 'N';
             } else {
                 *cp = 'C';
             }
             break;
         case 'S':
-            if (toupper(*(p + 1)) == 'C' && toupper(*(p + 2)) == 'H') {
+            if ((*(p + 1)) == 'C' && (*(p + 2)) == 'H') {
                 *(cp++) = 'S';
                 *(cp++) = 'S';
                 *cp = 'S';
@@ -117,7 +123,7 @@ char *nysiis(const char *str) {
             }
             break;
         case 'P':
-            if (toupper(*(p + 1)) == 'H') {
+            if ((*(p + 1)) == 'H') {
                 *cp = 'F';
                 *(++cp) = 'F';
                 p++;
@@ -126,8 +132,8 @@ char *nysiis(const char *str) {
             }
             break;
         case 'H':
-            c2 = toupper(*(p + 1));
-            c3 = toupper(*(p - 1));
+            c2 = (*(p + 1));
+            c3 = (*(p - 1));
             if (!ISVOWEL(c2) || !ISVOWEL(c3)) {
                 if ISVOWEL(c3) {
                     *cp = 'A';
@@ -139,7 +145,7 @@ char *nysiis(const char *str) {
             }
             break;
         case 'W':
-            c2 = toupper(*(p - 1));
+            c2 = (*(p - 1));
             if (ISVOWEL(c2)) {
                 *cp = c2;
             } else {
@@ -147,7 +153,7 @@ char *nysiis(const char *str) {
             }
             break;
         default:
-            *cp = toupper(c1);
+            *cp = (c1);
         }
 
         // Step 6
