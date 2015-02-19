@@ -397,8 +397,6 @@ def metaphone(s):
                 result.append('k')
             elif next == 'h' and nextnext and nextnext not in 'aeiou':
                 i += 1
-            elif next != 'n':
-                result.append('k')
         elif c == 'h':
             if i == 0 or next in 'aeiou' or s[i-1] in 'aeiou':
                 result.append('h')

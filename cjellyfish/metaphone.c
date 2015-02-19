@@ -93,8 +93,6 @@ char* metaphone(const char *str)
             } else if(next == 'h' && !(ISVOWEL(nextnext))) {
                 s++;
                 next = tolower(*(s + 1));
-            } else if(next != 'n') {
-                *r++ = 'K';
             }
             break;
         case 'h':

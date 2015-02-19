@@ -104,6 +104,12 @@ class JellyfishTests(object):
             ('CIAB', 'XB'),
             ('NQ', 'NK'),
             ('sian', 'XN'),
+            ('gek', 'JK'),
+            ('Hb', 'HB'),
+            ('Bho', 'BH'),
+            ('Tiavyi', 'XFY'),
+            ('Xhot', 'XHT'),
+            ('Xnot', 'SNT'),
         ]
 
         for (s1, code) in cases:
