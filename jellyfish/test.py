@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-import csv
+import sys
+if sys.version_info[0] < 3:
+    import unicodecsv as csv
+else:
+    import csv
 import unittest
 import platform
 
@@ -7,28 +11,18 @@ import platform
 class JellyfishTests(object):
 
     def test_jaro_winkler(self):
-        cases = [("dixon", "dicksonx", 0.8133),
-                 ("dixon", "dicksonx", 0.8133),
-                 ("martha", "marhta", 0.9611),
-                 ("dwayne", "duane", 0.84),
-                 ("William", "Williams", 0.975),
-                 ("", "foo", 0),
-                 ("a", "a", 1),
-                 ("abc", "xyz", 0),
-                 ]
-
-        for (s1, s2, value) in cases:
-            self.assertAlmostEqual(self.jf.jaro_winkler(s1, s2), value, places=4)
+        with open('testdata/jaro_winkler.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2, value) in data:
+                value = float(value)
+                self.assertAlmostEqual(self.jf.jaro_winkler(s1, s2), value, places=3)
 
     def test_jaro_distance(self):
-        cases = [("dixon", "dicksonx", 0.767),
-                 ("dixon", "dicksonx", 0.767),
-                 ("martha", "marhta", 0.944),
-                 ("dwayne", "duane", 0.822),
-                 ]
-
-        for (s1, s2, value) in cases:
-            self.assertAlmostEqual(self.jf.jaro_distance(s1, s2), value, places=3)
+        with open('testdata/jaro_distance.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2, value) in data:
+                value = float(value)
+                self.assertAlmostEqual(self.jf.jaro_distance(s1, s2), value, places=3)
 
     def test_hamming_distance(self):
         cases = [("", "", 0),
@@ -85,81 +79,22 @@ class JellyfishTests(object):
             self.assertEqual(self.jf.soundex(s1), code)
 
     def test_metaphone(self):
-        cases = [
-            ('DGIB', 'JB'),
-            ("metaphone", 'MTFN'),
-            ("wHErE", "WR"),
-            ("shell", "XL"),
-            ("this is a difficult string", "0S IS A TFKLT STRNK"),
-            ("aeromancy", "ERMNS"),
-            ("Antidisestablishmentarianism", "ANTTSSTBLXMNTRNSM"),
-            ("sunlight labs", "SNLT LBS"),
-            ("sonlite laabz", "SNLT LBS"),
-            (u"Çáŕẗéř", "KRTR"),
-            ('kentucky', 'KNTK'),
-            ('KENTUCKY', 'KNTK'),
-            ('NXNXNX', 'NKSNKSNKS'),
-            ('Aapti', 'PT'),
-            ('Aarti', 'RT'),
-            ('CIAB', 'XB'),
-            ('NQ', 'NK'),
-            ('sian', 'XN'),
-            ('gek', 'JK'),
-            ('Hb', 'HB'),
-            ('Bho', 'BH'),
-            ('Tiavyi', 'XFY'),
-            ('Xhot', 'XHT'),
-            ('Xnot', 'SNT'),
-        ]
-
-        for (s1, code) in cases:
-            self.assertEqual(self.jf.metaphone(s1), code)
+        with open('testdata/metaphone.csv') as f:
+            data = csv.reader(f)
+            for (s1, code) in data:
+                self.assertEqual(self.jf.metaphone(s1), code)
 
     def test_nysiis(self):
-        cases = [("Worthy", "WARTY"),
-                 ("Ogata", "OGAT"),
-                 ("montgomery", "MANTGANARY"),
-                 ("Costales", "CASTAL"),
-                 ("Tu", "T"),
-                 ("martincevic", "MARTANCAFAC"),
-                 ("Catherine", "CATARAN"),
-                 ("Katherine", "CATARAN"),
-                 ("Katerina", "CATARAN"),
-                 ("Johnathan", "JANATAN"),
-                 ("Jonathan", "JANATAN"),
-                 ("John", "JAN"),
-                 ("Teresa", "TARAS"),
-                 ("Theresa", "TARAS"),
-                 ("Jessica", "JASAC"),
-                 ("Joshua", "JAS"),
-                 ("Bosch", "BAS"),
-                 ("Lapher", "LAFAR"),
-                 ("wiyh", "WY"),
-                 ("MacArthur", "MCARTAR"),
-                 ("Pheenard", "FANAD"),
-                 ("Schmittie", "SNATY"),
-                 ("Knaqze", "NAGS"),
-                 ("Knokno", "NAN"),
-                 ("Knoko", "NAC"),
-                 ("Macaw", "MC"),
-                 ]
-
-        for (s1, s2) in cases:
-            self.assertEqual(self.jf.nysiis(s1), s2)
+        with open('testdata/nysiis.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2) in data:
+                self.assertEqual(self.jf.nysiis(s1), s2)
 
     def test_match_rating_codex(self):
-        cases = [("Byrne", "BYRN"),
-                 ("Boern", "BRN"),
-                 ("Smith", "SMTH"),
-                 ("Smyth", "SMYTH"),
-                 ("Catherine", "CTHRN"),
-                 ("Kathryn", "KTHRYN"),
-                 ("Ad", "AD"),
-                 ("Ed", "ED"),
-                 ]
-
-        for (s1, s2) in cases:
-            self.assertEqual(self.jf.match_rating_codex(s1), s2)
+        with open('testdata/match_rating_codex.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2) in data:
+                self.assertEqual(self.jf.match_rating_codex(s1), s2)
 
     def test_match_rating_comparison(self):
         cases = [("Bryne", "Boern", True),
@@ -180,7 +115,7 @@ class JellyfishTests(object):
         assert [[self.jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
     def test_porter_stem(self):
-        with open('porter-test.csv') as f:
+        with open('testdata/porter.csv') as f:
             reader = csv.reader(f)
             for (a, b) in reader:
                 self.assertEqual(self.jf.porter_stem(a.lower()), b.lower())
