@@ -25,29 +25,18 @@ class JellyfishTests(object):
                 self.assertAlmostEqual(self.jf.jaro_distance(s1, s2), value, places=3)
 
     def test_hamming_distance(self):
-        cases = [("", "", 0),
-                 ("", "abc", 3),
-                 ("abc", "abc", 0),
-                 ("acc", "abc", 1),
-                 ("abcd", "abc", 1),
-                 ("abc", "abcd", 1),
-                 ("testing", "this is a test", 13),
-                 ]
-
-        for (s1, s2, value) in cases:
-            self.assertEqual(self.jf.hamming_distance(s1, s2), value)
+        with open('testdata/hamming.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2, value) in data:
+                value = int(value)
+                self.assertEqual(self.jf.hamming_distance(s1, s2), value)
 
     def test_levenshtein_distance(self):
-        cases = [("", "", 0),
-                 ("abc", "", 3),
-                 ("", "abc", 3),
-                 ("bc", "abc", 1),
-                 ("kitten", "sitting", 3),
-                 ("Saturday", "Sunday", 3),
-                 ]
-
-        for (s1, s2, value) in cases:
-            self.assertEqual(self.jf.levenshtein_distance(s1, s2), value)
+        with open('testdata/levenshtein.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2, value) in data:
+                value = int(value)
+                self.assertEqual(self.jf.levenshtein_distance(s1, s2), value)
 
     def test_damerau_levenshtein_distance(self):
         cases = [("", "", 0),
