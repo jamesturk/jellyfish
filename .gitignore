@@ -10,4 +10,4 @@ jellyfish.egg-info/
 .coverage
 htmlcov/
 .ropeproject/
-_build/html
+_build/
