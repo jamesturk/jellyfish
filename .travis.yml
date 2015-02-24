@@ -1,13 +1,10 @@
 language: python
-python:
-    - "2.7"
-    - "3.3"
-    - "3.4"
-    - "pypy"
-install:
-    - pip install mock pytest pytest-cov coveralls unicodecsv
-    - pip install -e .
-script: py.test jellyfish/test.py --cov jellyfish
+python: 2.7
+env:
+    - TOX_ENV=py27
+    - TOX_ENV=py34
+    - TOX_ENV=pypy
+script: tox -e $TOX_ENV
 after_success:
     - coveralls
 notifications:
