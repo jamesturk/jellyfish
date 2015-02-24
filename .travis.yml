@@ -5,7 +5,7 @@ python:
     - "3.4"
     - "pypy"
 install:
-    - pip install mock pytest pytest-cov coveralls
+    - pip install mock pytest pytest-cov coveralls unicodecsv
     - pip install -e .
 script: py.test jellyfish/test.py --cov jellyfish
 after_success:
