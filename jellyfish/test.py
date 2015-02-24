@@ -29,65 +29,58 @@ class JellyfishTests(object):
             data = csv.reader(f)
             for (s1, s2, value) in data:
                 value = int(value)
-                self.assertEqual(self.jf.hamming_distance(s1, s2), value)
+                assert self.jf.hamming_distance(s1, s2) == value
 
     def test_levenshtein_distance(self):
         with open('testdata/levenshtein.csv') as f:
             data = csv.reader(f)
             for (s1, s2, value) in data:
                 value = int(value)
-                self.assertEqual(self.jf.levenshtein_distance(s1, s2), value)
+                assert self.jf.levenshtein_distance(s1, s2) == value
 
     def test_damerau_levenshtein_distance(self):
-        cases = [("", "", 0),
-                 ("abc", "", 3),
-                 ("bc", "abc", 1),
-                 ("fuor", "four", 1),
-                 ("abcd", "acb", 2),
-                 ("cape sand recycling ", "edith ann graham", 17),
-                 ("jellyifhs", "jellyfish", 2),
-                 ("ifhs", "fish", 2),
-                 ("Hello, world!", "Hello,\xc2\xa0world!", 2)]
-
-        for (s1, s2, value) in cases:
-            self.assertEqual(self.jf.damerau_levenshtein_distance(s1, s2), value)
+        with open('testdata/damerau_levenshtein.csv') as f:
+            data = csv.reader(f)
+            for (s1, s2, value) in data:
+                value = int(value)
+                assert self.jf.damerau_levenshtein_distance(s1, s2) == value
 
     def test_soundex(self):
         with open('testdata/soundex.csv') as f:
             data = csv.reader(f)
             for (s1, code) in data:
-                self.assertEqual(self.jf.soundex(s1), code)
+                assert self.jf.soundex(s1) == code
 
     def test_metaphone(self):
         with open('testdata/metaphone.csv') as f:
             data = csv.reader(f)
             for (s1, code) in data:
-                self.assertEqual(self.jf.metaphone(s1), code)
+                assert self.jf.metaphone(s1) == code
 
     def test_nysiis(self):
         with open('testdata/nysiis.csv') as f:
             data = csv.reader(f)
             for (s1, s2) in data:
-                self.assertEqual(self.jf.nysiis(s1), s2)
+                assert self.jf.nysiis(s1) == s2
 
     def test_match_rating_codex(self):
         with open('testdata/match_rating_codex.csv') as f:
             data = csv.reader(f)
             for (s1, s2) in data:
-                self.assertEqual(self.jf.match_rating_codex(s1), s2)
+                assert self.jf.match_rating_codex(s1) == s2
 
     def test_match_rating_comparison(self):
         with open('testdata/match_rating_comparison.csv') as f:
             data = csv.reader(f)
             for (s1, s2, value) in data:
                 value = {'True': True, 'False': False, 'None': None}[value]
-                self.assertEqual(self.jf.match_rating_comparison(s1, s2), value)
+                assert self.jf.match_rating_comparison(s1, s2) is value
 
     def test_porter_stem(self):
         with open('testdata/porter.csv') as f:
             reader = csv.reader(f)
             for (a, b) in reader:
-                self.assertEqual(self.jf.porter_stem(a.lower()), b.lower())
+                assert self.jf.porter_stem(a.lower()) == b.lower()
 
     def test_match_rating_comparison_segfault(self):
         import hashlib
