@@ -129,45 +129,19 @@ static PyObject* jellyfish_levenshtein_distance(PyObject *self, PyObject *args)
     return Py_BuildValue("i", result);
 }
 
-/*
- * utility function for damerau_levenshtein to treat unicode and bytes similarly
- */
-static void* _strdata(PyObject *obj) {
-    if (PyBytes_Check(obj)) {
-        return PyBytes_AsString(obj);
-    } else if (PyUnicode_Check(obj)) {
-#if PY_MAJOR_VERSION >= 3
-        switch(PyUnicode_KIND(obj)) {
-            case PyUnicode_1BYTE_KIND:
-                return PyUnicode_1BYTE_DATA(obj);
-            case PyUnicode_2BYTE_KIND:
-                return PyUnicode_2BYTE_DATA(obj);
-            case PyUnicode_4BYTE_KIND:
-                return PyUnicode_4BYTE_DATA(obj);
-        }
-#else
-        return PyUnicode_AsUTF8String(obj);
-#endif
-    }
-
-    return NULL;
-}
 
 static PyObject* jellyfish_damerau_levenshtein_distance(PyObject *self,
                                                         PyObject *args)
 {
-    PyObject *o1, *o2;
-    const char *s1, *s2;
+    Py_UNICODE *s1, *s2;
+    size_t len1, len2;
     int result;
 
-    if (!PyArg_ParseTuple(args, "OO", &o1, &o2)) {
+    if (!PyArg_ParseTuple(args, "u#u#", &s1, &len1, &s2, &len2)) {
         return NULL;
     }
 
-    s1 = _strdata(o1);
-    s2 = _strdata(o2);
-
-    result = damerau_levenshtein_distance(s1, s2);
+    result = damerau_levenshtein_distance(s1, s2, len1, len2);
     if (result == -1) {
         PyErr_NoMemory();
         return NULL;
