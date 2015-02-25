@@ -6,32 +6,22 @@ Overview
 
 jellyfish is a library of functions for approximate and phonetic matching of strings.
 
-
-Included Algorithms
-~~~~~~~~~~~~~~~~~~~
-
-String Comparison:
-
-    * Levenshtein Distance
-    * Damerau-Levenshtein Distance
-    * Jaro Distance
-    * Jaro-Winkler Distance
-    * Match Rating Approach Comparison
-    * Hamming Distance
-
-Phonetic Encoding:
-
-    * American Soundex
-    * Metaphone
-    * NYSIIS (New York State Identification and Intelligence System)
-    * Match Rating Codex
-
-
-Contents
---------
+The library provides implementations of the following algorithms:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
+
+   phonetic
+   stemming
+   comparison
+
+Implementation
+--------------
+
+Each algorithm has C and Python implementations, on a typical CPython install the C implementation will be used.
+
+The Python versions are available for PyPy and systems where compiling the CPython extension is not possible.
+
 
 Indices and tables
 ==================

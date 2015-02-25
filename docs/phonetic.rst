@@ -1,16 +1,13 @@
-Algorithms
-==========
-
 Phonetic Encoding
-~~~~~~~~~~~~~~~~~
+=================
 
 These algorithms convert a string to a normalized phonetic encoding, converting a word to a
 representation of its pronunciation.  Each algorithm takes a single string and returns a coded
 representation.
 
 
-soundex (American Soundex)
---------------------------
+American Soundex
+----------------
 
 .. py:function:: jellyfish.soundex(s)
 
@@ -25,7 +22,7 @@ For example ``soundex('Ann') == soundex('Anne') == 'A500'`` and
 See the `Soundex article at Wikipedia <http://en.wikipedia.org/wiki/Soundex>`_ for more details.
 
 
-metaphone
+Metaphone
 ---------
 
 .. py:function:: jellyfish.metaphone(s)
@@ -40,7 +37,7 @@ For example ``metaphone('Klump') == metaphone('Clump') == 'KLMP'``.
 See the `Metaphone article at Wikipedia <http://en.wikipedia.org/wiki/Metaphone>`_ for more details.
 
 
-nysiis
+NYSIIS
 ------
 
 .. py:function:: jellyfish.nysiis(s)
@@ -62,21 +59,8 @@ Match Rating Approach (codex)
 
 The Match rating approach algorithm is an algorithm for determining whether or not two names are
 pronounced similarly.  The algorithm consists of an encoding function (similar to soundex or nysiis)
-as well as a special comparison algorithm that can be used to compare names for equality using
-the generated encoding.
+which is implemented here as well as ``match_rating_comparison`` which does the actual comparison.
 
 See the `Match Rating Approach <http://en.wikipedia.org/wiki/Match_rating_approach>`_ for more details.
 
-porter_stem
------------
 
-.. py:function:: jellyfish.porter_stem(s)
-
-    Reduce the string s to its stem using the common Porter stemmer.
-
-Stemming is the process of reducing a word to its root form, for example 'stemmed' to 'stem'.
-
-Martin Porter's algorithm is a common algorithm used for stemming that works for many purposes.
-
-See the `official homepage for the Porter Stemming Algorithm <http://tartarus.org/martin/PorterStemmer/>` for more details.
-:
