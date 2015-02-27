@@ -18,9 +18,9 @@ The library provides implementations of the following algorithms:
 Implementation
 --------------
 
-Each algorithm has C and Python implementations, on a typical CPython install the C implementation will be used.
+Each algorithm has C and Python implementations.
 
-The Python versions are available for PyPy and systems where compiling the CPython extension is not possible.
+On a typical CPython install the C implementation will be used.  The Python versions are available for PyPy and systems where compiling the CPython extension is not possible.
 
 
 Indices and tables

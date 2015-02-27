@@ -1,15 +1,13 @@
 Phonetic Encoding
 =================
 
-These algorithms convert a string to a normalized phonetic encoding, converting a word to a
-representation of its pronunciation.  Each algorithm takes a single string and returns a coded
-representation.
+These algorithms convert a string to a normalized phonetic encoding, converting a word to a representation of its pronunciation.  Each takes a single string and returns a coded representation.
 
 
 American Soundex
 ----------------
 
-.. py:function:: jellyfish.soundex(s)
+.. py:function:: soundex(s)
 
     Calculate the American Soundex of the string s.
 
@@ -25,14 +23,14 @@ See the `Soundex article at Wikipedia <http://en.wikipedia.org/wiki/Soundex>`_ f
 Metaphone
 ---------
 
-.. py:function:: jellyfish.metaphone(s)
+.. py:function:: metaphone(s)
 
     Calculate the metaphone code for the string s.
 
 The metaphone algorithm was designed as an improvement on Soundex.  It transforms a word into a
 string consisting of '0BFHJKLMNPRSTWXY' where '0' is pronounced 'th' and 'X' is a '[sc]h' sound.
 
-For example ``metaphone('Klump') == metaphone('Clump') == 'KLMP'``.
+For example ``metaphone('Klumpz') == metaphone('Clumps') == 'KLMPS'``.
 
 See the `Metaphone article at Wikipedia <http://en.wikipedia.org/wiki/Metaphone>`_ for more details.
 
@@ -40,7 +38,7 @@ See the `Metaphone article at Wikipedia <http://en.wikipedia.org/wiki/Metaphone>
 NYSIIS
 ------
 
-.. py:function:: jellyfish.nysiis(s)
+.. py:function:: nysiis(s)
 
     Calculate the NYSIIS code for the string s.
 
@@ -53,14 +51,12 @@ See the `NYSIIS article at Wikipedia <http://en.wikipedia.org/wiki/New_York_Stat
 Match Rating Approach (codex)
 -----------------------------
 
-.. py:function:: jellyfish.match_rating_codex(s)
+.. py:function:: match_rating_codex(s)
 
-    Calculate the match rating approach (also called PNI) for the string s.
+    Calculate the match rating approach value (also called PNI) for the string s.
 
 The Match rating approach algorithm is an algorithm for determining whether or not two names are
 pronounced similarly.  The algorithm consists of an encoding function (similar to soundex or nysiis)
-which is implemented here as well as ``match_rating_comparison`` which does the actual comparison.
+which is implemented here as well as :py:func:`match_rating_comparison` which does the actual comparison.
 
-See the `Match Rating Approach <http://en.wikipedia.org/wiki/Match_rating_approach>`_ for more details.
-
-
+See the `Match Rating Approach article at Wikipedia <http://en.wikipedia.org/wiki/Match_rating_approach>`_ for more details.
