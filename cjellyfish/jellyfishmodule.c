@@ -134,7 +134,7 @@ static PyObject* jellyfish_damerau_levenshtein_distance(PyObject *self,
                                                         PyObject *args)
 {
     Py_UNICODE *s1, *s2;
-    size_t len1, len2;
+    int len1, len2;
     int result;
 
     if (!PyArg_ParseTuple(args, "u#u#", &s1, &len1, &s2, &len2)) {
