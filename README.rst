@@ -14,6 +14,10 @@ jellyfish
 .. image:: https://pypip.in/format/jellyfish/badge.svg
     :target: https://pypi.python.org/pypi/jellyfish
 
+.. image:: https://readthedocs.org/projects/jellyfish/badge/?version=latest
+    :target: https://readthedocs.org/projects/jellyfish/?badge=latest
+    :alt: Documentation Status
+
 
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
