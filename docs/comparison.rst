@@ -37,6 +37,11 @@ Hamming Distance
 
     Compute the Hamming distance between s1 and s2.
 
+Hamming distance is the measure of the number of characters that differ between two strings.
+
+Typically Hamming distance is undefined when strings are of different length, but this implementation
+considers extra characters as differing.  For example ``hamming_distance('abc', 'abcd') == 1``.
+
 See the `Hamming distance article at Wikipedia <http://en.wikipedia.org/wiki/Hamming_distance>`_ for more details.
 
 Jaro Distance
