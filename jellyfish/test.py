@@ -80,7 +80,7 @@ class JellyfishTests(object):
         with open('testdata/porter.csv') as f:
             reader = csv.reader(f)
             for (a, b) in reader:
-                assert self.jf.porter_stem(a.lower()) == b.lower()
+                assert self.jf.porter_stem(a) == b
 
     def test_match_rating_comparison_segfault(self):
         import hashlib
