@@ -82,7 +82,9 @@ def run_setup(build_c):
                               'cjellyfish/soundex.c',
                               'cjellyfish/metaphone.c',
                               'cjellyfish/nysiis.c',
-                              'cjellyfish/porter.c'])],
+                              'cjellyfish/porter.c'],
+                             define_macros=[('CJELLYFISH_PYTHON', '1')],
+                             )],
                   cmdclass=dict(build_ext=ve_build_ext, test=TestCommand),
                   packages=['jellyfish'],
                  )
