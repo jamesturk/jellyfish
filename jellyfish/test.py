@@ -89,6 +89,7 @@ class JellyfishTests(object):
         assert [[self.jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
 
+
 class PyJellyfishTestCase(unittest.TestCase, JellyfishTests):
     from jellyfish import _jellyfish as jf      # noqa
 
@@ -97,6 +98,10 @@ if platform.python_implementation() == 'CPython':
     class CJellyfishTestCase(unittest.TestCase, JellyfishTests):
         from jellyfish import cjellyfish as jf  # noqa
 
+        def test_damerau_levenshtein_distance_type(self):
+            self.jf.damerau_levenshtein_distance(u'abc', u'abc')
+            with self.assertRaisesRegexp(ValueError, 'requires unicode'):
+                self.jf.damerau_levenshtein_distance(b'abc', b'abc')
 
 if __name__ == '__main__':
     unittest.main()
