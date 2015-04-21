@@ -4,7 +4,6 @@ if sys.version_info[0] < 3:
     import unicodecsv as csv
 else:
     import csv
-import unittest
 import platform
 import pytest
 
@@ -140,7 +139,6 @@ if platform.python_implementation() == 'CPython':
         sha1s = [hashlib.sha1(str(v).encode('ascii')).hexdigest() for v in range(100)]
         # this segfaulted on 0.1.2
         assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
-
 
     def test_damerau_levenshtein_distance_type():
         from jellyfish import cjellyfish as jf
