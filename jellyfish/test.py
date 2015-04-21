@@ -145,7 +145,7 @@ if platform.python_implementation() == 'CPython':
         jf.damerau_levenshtein_distance(u'abc', u'abc')
         with pytest.raises(ValueError) as exc:
             jf.damerau_levenshtein_distance(b'abc', b'abc')
-            assert 'requires unicode' in str(exc.value)
+            assert 'expected' in str(exc.value)
 
 
 def test_levenshtein_distance_type(jf):
