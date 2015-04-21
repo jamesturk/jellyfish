@@ -88,6 +88,46 @@ class JellyfishTests(object):
         # this segfaulted on 0.1.2
         assert [[self.jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
+    def test_levenshtein_distance_type(self):
+        assert self.jf.levenshtein_distance(u'abc', u'abc') == 0
+        assert self.jf.levenshtein_distance(b'abc', b'abc') == 0
+
+    def test_jaro_distance_type(self):
+        assert self.jf.jaro_distance(u'abc', u'abc') == 1
+        assert self.jf.jaro_distance(b'abc', b'abc') == 1
+
+    def test_jaro_winkler_type(self):
+        assert self.jf.jaro_winkler(u'abc', u'abc') == 1
+        assert self.jf.jaro_winkler(b'abc', b'abc') == 1
+
+    def test_mra_comparison_type(self):
+        assert self.jf.match_rating_comparison(u'abc', u'abc') is True
+        assert self.jf.match_rating_comparison(b'abc', b'abc') is True
+
+    def test_hamming_type(self):
+        assert self.jf.hamming_distance(u'abc', u'abc') == 0
+        assert self.jf.hamming_distance(b'abc', b'abc') == 0
+
+    def test_soundex_type(self):
+        assert self.jf.soundex(u'ABC') == 'A120'
+        assert self.jf.soundex(b'ABC') == 'A120'
+
+    def test_metaphone_type(self):
+        assert self.jf.metaphone(u'abc') == 'ABK'
+        assert self.jf.metaphone(b'abc') == 'ABK'
+
+    def test_nysiis_type(self):
+        assert self.jf.nysiis(u'abc') == 'ABC'
+        assert self.jf.nysiis(b'abc') == 'ABC'
+
+    def test_mr_codex_type(self):
+        assert self.jf.match_rating_codex(u'abc') == 'ABC'
+        assert self.jf.match_rating_codex(b'abc') == 'ABC'
+
+    def test_porter_type(self):
+        assert self.jf.porter_stem(u'abc') == 'abc'
+        assert self.jf.porter_stem(b'abc') == 'abc'
+
 
 
 class PyJellyfishTestCase(unittest.TestCase, JellyfishTests):
