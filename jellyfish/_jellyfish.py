@@ -188,6 +188,9 @@ def soundex(s):
 
 
 def hamming_distance(s1, s2):
+    if isinstance(s1, bytes) or isinstance(s2, bytes):
+        raise TypeError(_no_bytes_err)
+
     # ensure length of s1 >= s2
     if len(s2) > len(s1):
         s1, s2 = s2, s1

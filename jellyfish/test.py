@@ -133,9 +133,10 @@ def test_mra_comparison_type(jf):
         assert 'expected' in str(exc.value)
 
 
-##def test_hamming_type(jf):
-##    assert jf.hamming_distance(u'abc', u'abc') == 0
-##    assert jf.hamming_distance(b'abc', b'abc') == 0
+def test_hamming_type(jf):
+    assert jf.hamming_distance(u'abc', u'abc') == 0
+    with pytest.raises(TypeError) as exc:
+        assert jf.hamming_distance(b'abc', b'abc') == 0
 
 
 def test_soundex_type(jf):
