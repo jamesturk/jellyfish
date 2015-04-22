@@ -116,14 +116,16 @@ if platform.python_implementation() == 'CPython':
 ##    assert jf.levenshtein_distance(b'abc', b'abc') == 0
 
 
-##def test_jaro_distance_type(jf):
-##    assert jf.jaro_distance(u'abc', u'abc') == 1
-##    assert jf.jaro_distance(b'abc', b'abc') == 1
+def test_jaro_distance_type(jf):
+    assert jf.jaro_distance(u'abc', u'abc') == 1
+    with pytest.raises(TypeError) as exc:
+        jf.jaro_distance(b'abc', b'abc')
 
 
-##def test_jaro_winkler_type(jf):
-##    assert jf.jaro_winkler(u'abc', u'abc') == 1
-##    assert jf.jaro_winkler(b'abc', b'abc') == 1
+def test_jaro_winkler_type(jf):
+    assert jf.jaro_winkler(u'abc', u'abc') == 1
+    with pytest.raises(TypeError) as exc:
+        jf.jaro_winkler(b'abc', b'abc')
 
 
 def test_mra_comparison_type(jf):

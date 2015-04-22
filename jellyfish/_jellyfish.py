@@ -33,6 +33,9 @@ def levenshtein_distance(s1, s2):
 
 
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
+    if isinstance(ying, bytes) or isinstance(yang, bytes):
+        raise TypeError(_no_bytes_err)
+
     ying_len = len(ying)
     yang_len = len(yang)
 
