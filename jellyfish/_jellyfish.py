@@ -148,6 +148,8 @@ def jaro_winkler(s1, s2, long_tolerance=False):
 def soundex(s):
     if not s:
         return s
+    if isinstance(s, bytes):
+        raise TypeError(_no_bytes_err)
 
     s = _normalize(s)
 

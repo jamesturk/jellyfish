@@ -138,9 +138,11 @@ def test_mra_comparison_type(jf):
 ##    assert jf.hamming_distance(b'abc', b'abc') == 0
 
 
-##def test_soundex_type(jf):
-##    assert jf.soundex(u'ABC') == 'A120'
-##    assert jf.soundex(b'ABC') == 'A120'
+def test_soundex_type(jf):
+    assert jf.soundex(u'ABC') == 'A120'
+    with pytest.raises(TypeError) as exc:
+        jf.soundex(b'ABC')
+        assert 'expected' in str(exc.value)
 
 
 ##def test_metaphone_type(jf):
