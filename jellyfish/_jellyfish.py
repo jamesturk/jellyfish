@@ -351,6 +351,9 @@ def match_rating_comparison(s1, s2):
 
 
 def metaphone(s):
+    if isinstance(s, bytes):
+        raise TypeError(_no_bytes_err)
+
     result = []
 
     s = _normalize(s.lower())

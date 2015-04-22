@@ -145,9 +145,11 @@ def test_soundex_type(jf):
         assert 'expected' in str(exc.value)
 
 
-##def test_metaphone_type(jf):
-##    assert jf.metaphone(u'abc') == 'ABK'
-##    assert jf.metaphone(b'abc') == 'ABK'
+def test_metaphone_type(jf):
+    assert jf.metaphone(u'abc') == 'ABK'
+    with pytest.raises(TypeError) as exc:
+        jf.metaphone(b'abc')
+        assert 'expected' in str(exc.value)
 
 
 ##def test_nysiis_type(jf):
