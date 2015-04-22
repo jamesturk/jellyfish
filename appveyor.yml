@@ -11,6 +11,7 @@ environment:
           PYTHON_ARCH: "32"
 
 install:
+    - "git submodule update --init --recursive"
     - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - "python --version"
     - "%CMD_IN_ENV% pip install -e ."
