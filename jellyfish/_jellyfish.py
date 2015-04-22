@@ -481,4 +481,6 @@ def metaphone(s):
 
 
 def porter_stem(s):
+    if isinstance(s, bytes):
+        raise TypeError(_no_bytes_err)
     return Stemmer(s).stem()

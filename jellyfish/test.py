@@ -89,6 +89,11 @@ def test_match_rating_comparison(jf, s1, s2, value):
     assert jf.match_rating_comparison(s1, s2) is value
 
 
+# use non-parameterized version for speed
+# @pytest.mark.parametrize("a,b", _load_data('porter'), ids=str)
+# def test_porter_stem(jf, a, b):
+#     assert jf.porter_stem(a) == b
+
 def test_porter_stem(jf):
     with open('testdata/porter.csv') as f:
         reader = csv.reader(f)
@@ -144,7 +149,7 @@ def test_mra_comparison_type(jf):
 def test_hamming_type(jf):
     assert jf.hamming_distance(u'abc', u'abc') == 0
     with pytest.raises(TypeError) as exc:
-        assert jf.hamming_distance(b'abc', b'abc') == 0
+        jf.hamming_distance(b'abc', b'abc')
     assert 'expected' in str(exc.value)
 
 
@@ -165,7 +170,7 @@ def test_metaphone_type(jf):
 def test_nysiis_type(jf):
     assert jf.nysiis(u'abc') == 'ABC'
     with pytest.raises(TypeError) as exc:
-        assert jf.nysiis(b'abc') == 'ABC'
+        jf.nysiis(b'abc')
     assert 'expected' in str(exc.value)
 
 
@@ -176,6 +181,8 @@ def test_mr_codex_type(jf):
     assert 'expected' in str(exc.value)
 
 
-##def test_porter_type(jf):
-##    assert jf.porter_stem(u'abc') == 'abc'
-##    assert jf.porter_stem(b'abc') == 'abc'
+def test_porter_type(jf):
+    assert jf.porter_stem(u'abc') == 'abc'
+    with pytest.raises(TypeError) as exc:
+        jf.porter_stem(b'abc')
+    assert 'expected' in str(exc.value)
