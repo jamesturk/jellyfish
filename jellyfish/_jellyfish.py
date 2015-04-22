@@ -9,6 +9,9 @@ def _normalize(s):
 
 
 def levenshtein_distance(s1, s2):
+    if isinstance(s1, bytes) or isinstance(s2, bytes):
+        raise TypeError(_no_bytes_err)
+
     if s1 == s2:
         return 0
     rows = len(s1)+1
@@ -33,6 +36,9 @@ def levenshtein_distance(s1, s2):
 
 
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
+    if isinstance(ying, bytes) or isinstance(yang, bytes):
+        raise TypeError(_no_bytes_err)
+
     ying_len = len(ying)
     yang_len = len(yang)
 
@@ -100,6 +106,9 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
 
 def damerau_levenshtein_distance(s1, s2):
+    if isinstance(s1, bytes) or isinstance(s2, bytes):
+        raise TypeError(_no_bytes_err)
+
     len1 = len(s1)
     len2 = len(s2)
     infinite = len1 + len2
@@ -188,6 +197,9 @@ def soundex(s):
 
 
 def hamming_distance(s1, s2):
+    if isinstance(s1, bytes) or isinstance(s2, bytes):
+        raise TypeError(_no_bytes_err)
+
     # ensure length of s1 >= s2
     if len(s2) > len(s1):
         s1, s2 = s2, s1
@@ -202,6 +214,8 @@ def hamming_distance(s1, s2):
 
 
 def nysiis(s):
+    if isinstance(s, bytes):
+        raise TypeError(_no_bytes_err)
     s = s.upper()
     key = []
 
@@ -467,4 +481,6 @@ def metaphone(s):
 
 
 def porter_stem(s):
+    if isinstance(s, bytes):
+        raise TypeError(_no_bytes_err)
     return Stemmer(s).stem()

@@ -14,6 +14,7 @@ The library provides implementations of the following algorithms:
    phonetic
    stemming
    comparison
+   changelog
 
 Implementation
 --------------
