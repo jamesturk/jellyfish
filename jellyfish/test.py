@@ -13,12 +13,12 @@ def assertAlmostEqual(a, b, places=3):
 
 
 if platform.python_implementation() == 'CPython':
-    jf_params = ['python', 'c']
+    implementations = ['python', 'c']
 else:
-    jf_params = ['python']
+    implementations = ['python']
 
 
-@pytest.fixture(params=jf_params)
+@pytest.fixture(params=implementations)
 def jf(request):
     if request.param == 'python':
         from jellyfish import _jellyfish as jf
@@ -26,81 +26,65 @@ def jf(request):
         from jellyfish import cjellyfish as jf
     return jf
 
+def _load_data(name):
+    with open('testdata/{}.csv'.format(name)) as f:
+        for data in csv.reader(f):
+            yield data
 
-def test_jaro_winkler(jf):
-    with open('testdata/jaro_winkler.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2, value) in data:
-            value = float(value)
-            assertAlmostEqual(jf.jaro_winkler(s1, s2), value, places=3)
-
-
-def test_jaro_distance(jf):
-    with open('testdata/jaro_distance.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2, value) in data:
-            value = float(value)
-            assertAlmostEqual(jf.jaro_distance(s1, s2), value, places=3)
+@pytest.mark.parametrize("s1,s2,value", _load_data('jaro_winkler'), ids=str)
+def test_jaro_winkler(jf, s1, s2, value):
+    value = float(value)
+    assertAlmostEqual(jf.jaro_winkler(s1, s2), value, places=3)
 
 
-def test_hamming_distance(jf):
-    with open('testdata/hamming.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2, value) in data:
-            value = int(value)
-            assert jf.hamming_distance(s1, s2) == value
+@pytest.mark.parametrize("s1,s2,value", _load_data('jaro_distance'), ids=str)
+def test_jaro_distance(jf, s1, s2, value):
+    value = float(value)
+    assertAlmostEqual(jf.jaro_distance(s1, s2), value, places=3)
 
 
-def test_levenshtein_distance(jf):
-    with open('testdata/levenshtein.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2, value) in data:
-            value = int(value)
-            assert jf.levenshtein_distance(s1, s2) == value
+@pytest.mark.parametrize("s1,s2,value", _load_data('hamming'), ids=str)
+def test_hamming_distance(jf, s1, s2, value):
+    value = int(value)
+    assert jf.hamming_distance(s1, s2) == value
 
 
-def test_damerau_levenshtein_distance(jf):
-        with open('testdata/damerau_levenshtein.csv') as f:
-            data = csv.reader(f)
-            for (s1, s2, value) in data:
-                value = int(value)
-                assert jf.damerau_levenshtein_distance(s1, s2) == value
+@pytest.mark.parametrize("s1,s2,value", _load_data('levenshtein'), ids=str)
+def test_levenshtein_distance(jf, s1, s2, value):
+    value = int(value)
+    assert jf.levenshtein_distance(s1, s2) == value
 
 
-def test_soundex(jf):
-    with open('testdata/soundex.csv') as f:
-        data = csv.reader(f)
-        for (s1, code) in data:
-            assert jf.soundex(s1) == code
+@pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)
+def test_damerau_levenshtein_distance(jf, s1, s2, value):
+    value = int(value)
+    assert jf.damerau_levenshtein_distance(s1, s2) == value
 
 
-def test_metaphone(jf):
-    with open('testdata/metaphone.csv') as f:
-        data = csv.reader(f)
-        for (s1, code) in data:
-            assert jf.metaphone(s1) == code
+@pytest.mark.parametrize("s1,code", _load_data('soundex'), ids=str)
+def test_soundex(jf, s1, code):
+    assert jf.soundex(s1) == code
 
 
-def test_nysiis(jf):
-    with open('testdata/nysiis.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2) in data:
-            assert jf.nysiis(s1) == s2
+@pytest.mark.parametrize("s1,code", _load_data('metaphone'), ids=str)
+def test_metaphone(jf, s1, code):
+    assert jf.metaphone(s1) == code
 
 
-def test_match_rating_codex(jf):
-    with open('testdata/match_rating_codex.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2) in data:
-            assert jf.match_rating_codex(s1) == s2
+@pytest.mark.parametrize("s1,s2", _load_data('nysiis'), ids=str)
+def test_nysiis(jf, s1, s2):
+    assert jf.nysiis(s1) == s2
 
 
-def test_match_rating_comparison(jf):
-    with open('testdata/match_rating_comparison.csv') as f:
-        data = csv.reader(f)
-        for (s1, s2, value) in data:
-            value = {'True': True, 'False': False, 'None': None}[value]
-            assert jf.match_rating_comparison(s1, s2) is value
+@pytest.mark.parametrize("s1,s2", _load_data('match_rating_codex'), ids=str)
+def test_match_rating_codex(jf, s1, s2):
+    assert jf.match_rating_codex(s1) == s2
+
+
+@pytest.mark.parametrize("s1,s2,value", _load_data('match_rating_comparison'), ids=str)
+def test_match_rating_comparison(jf, s1, s2, value):
+    value = {'True': True, 'False': False, 'None': None}[value]
+    assert jf.match_rating_comparison(s1, s2) is value
 
 
 def test_porter_stem(jf):
