@@ -136,7 +136,7 @@ if platform.python_implementation() == 'CPython':
     def test_match_rating_comparison_segfault():
         import hashlib
         from jellyfish import cjellyfish as jf
-        sha1s = [hashlib.sha1(str(v).encode('ascii')).hexdigest().decode('utf8')
+        sha1s = [u'{}'.format(hashlib.sha1(str(v).encode('ascii')).hexdigest())
                  for v in range(100)]
         # this segfaulted on 0.1.2
         assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]

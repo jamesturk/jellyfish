@@ -1,6 +1,6 @@
 import unicodedata
 from collections import defaultdict
-from .compat import _unicode, _range, _zip_longest
+from .compat import _unicode, _range, _zip_longest, _no_bytes_err
 from .porter import Stemmer
 
 
@@ -284,6 +284,8 @@ def nysiis(s):
 
 
 def match_rating_codex(s):
+    if isinstance(s, bytes):
+        raise TypeError(_no_bytes_err)
     s = s.upper()
     codex = []
 
