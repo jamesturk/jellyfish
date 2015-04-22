@@ -152,9 +152,10 @@ def test_metaphone_type(jf):
         assert 'expected' in str(exc.value)
 
 
-##def test_nysiis_type(jf):
-##    assert jf.nysiis(u'abc') == 'ABC'
-##    assert jf.nysiis(b'abc') == 'ABC'
+def test_nysiis_type(jf):
+    assert jf.nysiis(u'abc') == 'ABC'
+    with pytest.raises(TypeError) as exc:
+        assert jf.nysiis(b'abc') == 'ABC'
 
 
 def test_mr_codex_type(jf):
