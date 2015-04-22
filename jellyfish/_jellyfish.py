@@ -106,6 +106,9 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
 
 def damerau_levenshtein_distance(s1, s2):
+    if isinstance(s1, bytes) or isinstance(s2, bytes):
+        raise TypeError(_no_bytes_err)
+
     len1 = len(s1)
     len2 = len(s2)
     infinite = len1 + len2

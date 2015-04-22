@@ -26,10 +26,12 @@ def jf(request):
         from jellyfish import cjellyfish as jf
     return jf
 
+
 def _load_data(name):
     with open('testdata/{}.csv'.format(name)) as f:
         for data in csv.reader(f):
             yield data
+
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('jaro_winkler'), ids=str)
 def test_jaro_winkler(jf, s1, s2, value):
@@ -103,70 +105,75 @@ if platform.python_implementation() == 'CPython':
         # this segfaulted on 0.1.2
         assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
-    def test_damerau_levenshtein_distance_type():
-        from jellyfish import cjellyfish as jf
-        jf.damerau_levenshtein_distance(u'abc', u'abc')
-        with pytest.raises(TypeError) as exc:
-            jf.damerau_levenshtein_distance(b'abc', b'abc')
-            assert 'expected' in str(exc.value)
+
+def test_damerau_levenshtein_distance_type(jf):
+    jf.damerau_levenshtein_distance(u'abc', u'abc')
+    with pytest.raises(TypeError) as exc:
+        jf.damerau_levenshtein_distance(b'abc', b'abc')
+    assert 'expected' in str(exc.value)
 
 
 def test_levenshtein_distance_type(jf):
     assert jf.levenshtein_distance(u'abc', u'abc') == 0
     with pytest.raises(TypeError) as exc:
         jf.levenshtein_distance(b'abc', b'abc')
+    assert 'expected' in str(exc.value)
 
 
 def test_jaro_distance_type(jf):
     assert jf.jaro_distance(u'abc', u'abc') == 1
     with pytest.raises(TypeError) as exc:
         jf.jaro_distance(b'abc', b'abc')
+    assert 'expected' in str(exc.value)
 
 
 def test_jaro_winkler_type(jf):
     assert jf.jaro_winkler(u'abc', u'abc') == 1
     with pytest.raises(TypeError) as exc:
         jf.jaro_winkler(b'abc', b'abc')
+    assert 'expected' in str(exc.value)
 
 
 def test_mra_comparison_type(jf):
     assert jf.match_rating_comparison(u'abc', u'abc') is True
     with pytest.raises(TypeError) as exc:
         jf.match_rating_comparison(b'abc', b'abc')
-        assert 'expected' in str(exc.value)
+    assert 'expected' in str(exc.value)
 
 
 def test_hamming_type(jf):
     assert jf.hamming_distance(u'abc', u'abc') == 0
     with pytest.raises(TypeError) as exc:
         assert jf.hamming_distance(b'abc', b'abc') == 0
+    assert 'expected' in str(exc.value)
 
 
 def test_soundex_type(jf):
     assert jf.soundex(u'ABC') == 'A120'
     with pytest.raises(TypeError) as exc:
         jf.soundex(b'ABC')
-        assert 'expected' in str(exc.value)
+    assert 'expected' in str(exc.value)
 
 
 def test_metaphone_type(jf):
     assert jf.metaphone(u'abc') == 'ABK'
     with pytest.raises(TypeError) as exc:
         jf.metaphone(b'abc')
-        assert 'expected' in str(exc.value)
+    assert 'expected' in str(exc.value)
 
 
 def test_nysiis_type(jf):
     assert jf.nysiis(u'abc') == 'ABC'
     with pytest.raises(TypeError) as exc:
         assert jf.nysiis(b'abc') == 'ABC'
+    assert 'expected' in str(exc.value)
 
 
 def test_mr_codex_type(jf):
     assert jf.match_rating_codex(u'abc') == 'ABC'
     with pytest.raises(TypeError) as exc:
         jf.match_rating_codex(b'abc')
-        assert 'expected' in str(exc.value)
+    assert 'expected' in str(exc.value)
 
 
 ##def test_porter_type(jf):
