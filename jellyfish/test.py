@@ -111,9 +111,10 @@ if platform.python_implementation() == 'CPython':
             assert 'expected' in str(exc.value)
 
 
-##def test_levenshtein_distance_type(jf):
-##    assert jf.levenshtein_distance(u'abc', u'abc') == 0
-##    assert jf.levenshtein_distance(b'abc', b'abc') == 0
+def test_levenshtein_distance_type(jf):
+    assert jf.levenshtein_distance(u'abc', u'abc') == 0
+    with pytest.raises(TypeError) as exc:
+        jf.levenshtein_distance(b'abc', b'abc')
 
 
 def test_jaro_distance_type(jf):

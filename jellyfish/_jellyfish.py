@@ -9,6 +9,9 @@ def _normalize(s):
 
 
 def levenshtein_distance(s1, s2):
+    if isinstance(s1, bytes) or isinstance(s2, bytes):
+        raise TypeError(_no_bytes_err)
+
     if s1 == s2:
         return 0
     rows = len(s1)+1
