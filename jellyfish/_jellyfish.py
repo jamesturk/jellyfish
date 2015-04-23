@@ -1,11 +1,11 @@
 import unicodedata
 from collections import defaultdict
-from .compat import _unicode, _range, _zip_longest, _no_bytes_err
+from .compat import _range, _zip_longest, _no_bytes_err
 from .porter import Stemmer
 
 
 def _normalize(s):
-    return unicodedata.normalize('NFKD', _unicode(s))
+    return unicodedata.normalize('NFKD', s)
 
 
 def levenshtein_distance(s1, s2):
