@@ -29,7 +29,7 @@ def jf(request):
 
 
 def _load_data(name):
-    with open('testdata/{}.csv'.format(name)) as f:
+    with codecs.open('testdata/{}.csv'.format(name), encoding='utf8') as f:
         for data in csv.reader(f):
             yield data
 
