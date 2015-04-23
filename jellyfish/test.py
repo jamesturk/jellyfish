@@ -5,6 +5,7 @@ if sys.version_info[0] < 3:
 else:
     import csv
 import platform
+import codecs
 import pytest
 
 
@@ -95,7 +96,7 @@ def test_match_rating_comparison(jf, s1, s2, value):
 #     assert jf.porter_stem(a) == b
 
 def test_porter_stem(jf):
-    with open('testdata/porter.csv') as f:
+    with codecs.open('testdata/porter.csv', encoding='utf8') as f:
         reader = csv.reader(f)
         for (a, b) in reader:
             assert jf.porter_stem(a) == b
