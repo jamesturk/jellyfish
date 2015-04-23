@@ -2,10 +2,11 @@
 import sys
 if sys.version_info[0] < 3:
     import unicodecsv as csv
+    open_kwargs = {}
 else:
     import csv
+    open_kwargs = {'encoding': 'utf8'}
 import platform
-import codecs
 import pytest
 
 
@@ -29,7 +30,7 @@ def jf(request):
 
 
 def _load_data(name):
-    with codecs.open('testdata/{}.csv'.format(name), encoding='utf8') as f:
+    with open('testdata/{}.csv'.format(name), **open_kwargs) as f:
         for data in csv.reader(f):
             yield data
 
@@ -96,7 +97,7 @@ def test_match_rating_comparison(jf, s1, s2, value):
 #     assert jf.porter_stem(a) == b
 
 def test_porter_stem(jf):
-    with codecs.open('testdata/porter.csv', encoding='utf8') as f:
+    with open('testdata/porter.csv', **open_kwargs) as f:
         reader = csv.reader(f)
         for (a, b) in reader:
             assert jf.porter_stem(a) == b
