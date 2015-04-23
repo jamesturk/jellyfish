@@ -27,3 +27,9 @@ build: false
 
 test_script:
     - "%CMD_IN_ENV% py.test -v jellyfish/test.py"
+
+after_test:
+    - "%CMD_IN_ENV% python setup.py bdist_wheel"
+
+artifacts:
+    - path: dist\*
