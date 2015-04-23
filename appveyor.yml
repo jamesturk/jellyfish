@@ -21,7 +21,7 @@ install:
     - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - "python --version"
     - "%CMD_IN_ENV% pip install -e ."
-    - "%CMD_IN_ENV% pip install pytest unicodecsv"
+    - "%CMD_IN_ENV% pip install pytest unicodecsv wheel"
 
 build: false
 
