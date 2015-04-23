@@ -1,11 +1,12 @@
 Changelog
 =========
 
-0.5.0
------
+0.5.0 - April 23 2015
+---------------------
 
 * consistent unicode behavior, all functions take unicode and reject bytes on Py2 and 3, C and Python
 * parametrize tests
+* Windows compiler support
 
 0.4.0 - March 27 2015
 ---------------------
