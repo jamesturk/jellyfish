@@ -472,7 +472,7 @@ def metaphone(s):
         elif c == 'z':
             result.append('s')
         elif c == ' ':
-            if result[-1] != ' ':
+            if len(result) > 0 and result[-1] != ' ':
                 result.append(' ')
 
         i += 1
