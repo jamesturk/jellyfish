@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5.1
+---------------------
+
+* bugfixes for NYSIIS
+* bugfixes for metaphone
+
 0.5.0 - April 23 2015
 ---------------------
 

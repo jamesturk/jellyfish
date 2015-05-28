@@ -216,6 +216,9 @@ def hamming_distance(s1, s2):
 def nysiis(s):
     if isinstance(s, bytes):
         raise TypeError(_no_bytes_err)
+    if not s:
+        return ''
+
     s = s.upper()
     key = []
 
@@ -283,7 +286,7 @@ def nysiis(s):
     key = ''.join(key)
 
     # step 5 - remove trailing S
-    if key.endswith('S'):
+    if key.endswith('S') and key != 'S':
         key = key[:-1]
 
     # step 6 - replace AY w/ Y
@@ -291,7 +294,7 @@ def nysiis(s):
         key = key[:-2] + 'Y'
 
     # step 7 - remove trailing A
-    if key.endswith('A'):
+    if key.endswith('A') and key != 'A':
         key = key[:-1]
 
     # step 8 was already done
