@@ -10,4 +10,4 @@ after_success:
     - coveralls
 notifications:
     email:
-        - jturk@sunlightfoundation.com
+        - james.p.turk@gmail.com

@@ -2,36 +2,30 @@
 jellyfish
 =========
 
-.. image:: https://travis-ci.org/sunlightlabs/jellyfish.svg?branch=master
-    :target: https://travis-ci.org/sunlightlabs/jellyfish
+.. image:: https://travis-ci.org/jamesturk/jellyfish.svg?branch=master
+    :target: https://travis-ci.org/jamesturk/jellyfish
 
-.. image:: https://coveralls.io/repos/sunlightlabs/jellyfish/badge.png?branch=master
-    :target: https://coveralls.io/r/sunlightlabs/jellyfish
+.. image:: https://coveralls.io/repos/jamesturk/jellyfish/badge.png?branch=master
+    :target: https://coveralls.io/r/jamesturk/jellyfish
 
-.. image:: https://pypip.in/version/jellyfish/badge.svg
-    :target: https://pypi.python.org/pypi/jellyfish
-
-.. image:: https://pypip.in/format/jellyfish/badge.svg
+.. image:: https://img.shields.io/pypi/v/jellyfish.svg
     :target: https://pypi.python.org/pypi/jellyfish
 
 .. image:: https://readthedocs.org/projects/jellyfish/badge/?version=latest
     :target: https://readthedocs.org/projects/jellyfish/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/sunlightlabs/jellyfish?branch=master&svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/github/jamesturk/jellyfish?branch=master&svg=true
     :target: https://ci.appveyor.com/project/jamesturk/jellyfish/
 
 
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
-jellyfish is a project of Sunlight Labs (c) 2014.
-All code is released under a BSD-style license, see LICENSE for details.
+Written by James Turk <james.p.turk@gmail.com> and Michael Stephens.
 
-Written by James Turk <jturk@sunlightfoundation.com> and Michael Stephens.
+See https://github.com/jamesturk/jellyfish/graphs/contributors for contributors.
 
-See https://github.com/sunlightlabs/jellyfish/graphs/contributors for contributors.
-
-Source is available at http://github.com/sunlightlabs/jellyfish.
+Source is available at http://github.com/jamesturk/jellyfish.
 
 Included Algorithms
 ===================

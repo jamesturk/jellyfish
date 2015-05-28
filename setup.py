@@ -99,7 +99,7 @@ def run_setup(build_c):
           platforms=["any"],
           description=("a library for doing approximate and "
                        "phonetic matching of strings."),
-          url="http://github.com/sunlightlabs/jellyfish",
+          url="http://github.com/jamesturk/jellyfish",
           long_description=long_description,
           classifiers=["Development Status :: 4 - Beta",
                        "Intended Audience :: Developers",
