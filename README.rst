@@ -18,16 +18,13 @@ jellyfish
     :target: https://readthedocs.org/projects/jellyfish/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/sunlightlabs/jellyfish?branch=master&svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/t5o03rqcusxhhe41/branch/master?svg=true
     :target: https://ci.appveyor.com/project/jamesturk/jellyfish/
 
 
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
-jellyfish is a project of Sunlight Labs (c) 2014.
-All code is released under a BSD-style license, see LICENSE for details.
-
-Written by James Turk <jturk@sunlightfoundation.com> and Michael Stephens.
+Written by James Turk <james.p.turk@gmail.com> and Michael Stephens.
 
 See https://github.com/sunlightlabs/jellyfish/graphs/contributors for contributors.
 
