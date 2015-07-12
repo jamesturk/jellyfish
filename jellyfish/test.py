@@ -113,6 +113,13 @@ if platform.python_implementation() == 'CPython':
         assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
 
+def test_jaro_winkler_long_tolerance(jf):
+    no_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=False)
+    with_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=True)
+    # make sure long_tolerance does something
+    assert no_lt != with_lt
+
+
 def test_damerau_levenshtein_distance_type(jf):
     jf.damerau_levenshtein_distance(u'abc', u'abc')
     with pytest.raises(TypeError) as exc:
