@@ -1,11 +1,12 @@
 Changelog
 =========
 
-0.5.1
----------------------
+0.5.1 - July 12 2015
+--------------------
 
 * bugfixes for NYSIIS
 * bugfixes for metaphone
+* bugfix for C version of jaro_winkler
 
 0.5.0 - April 23 2015
 ---------------------
