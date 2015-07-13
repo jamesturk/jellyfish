@@ -121,7 +121,6 @@ def test_jaro_winkler_long_tolerance(jf):
     assertAlmostEqual(with_lt, 0.984)
 
 
-
 def test_damerau_levenshtein_distance_type(jf):
     jf.damerau_levenshtein_distance(u'abc', u'abc')
     with pytest.raises(TypeError) as exc:
