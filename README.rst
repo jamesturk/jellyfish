@@ -15,9 +15,8 @@ jellyfish
     :target: https://readthedocs.org/projects/jellyfish/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/jamesturk/jellyfish?branch=master&svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/t5o03rqcusxhhe41/branch/master?svg=true
     :target: https://ci.appveyor.com/project/jamesturk/jellyfish/
-
 
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
