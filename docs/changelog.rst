@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5.2 - February 3 2016
+-----------------------
+
+* testing fixes for Python 3.5
+* bugfix for Metaphone w/ silent H thanks to Jeremy Carbaugh
+
 0.5.1 - July 12 2015
 --------------------
 
