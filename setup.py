@@ -120,12 +120,12 @@ def run_setup(build_c):
 try:
     run_setup(not IS_PYPY)
 except BuildFailed:
-    print('*' * 75)
+    print('*'*75)
     print('WARNING: C extension could not be compiled, falling back to pure '
           'Python.')
-    print('*' * 75)
+    print('*'*75)
     run_setup(False)
-    print('*' * 75)
+    print('*'*75)
     print('WARNING: C extension could not be compiled, falling back to pure '
           'Python.')
-    print('*' * 75)
+    print('*'*75)

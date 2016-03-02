@@ -11,7 +11,7 @@ import pytest
 
 
 def assertAlmostEqual(a, b, places=3):
-    assert abs(a - b) < (0.1 ** places)
+    assert abs(a - b) < (0.1**places)
 
 
 if platform.python_implementation() == 'CPython':

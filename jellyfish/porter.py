@@ -53,10 +53,9 @@ _s4_endings = {
 
 
 class Stemmer(object):
-
     def __init__(self, b):
         self.b = list(b)
-        self.k = len(b) - 1
+        self.k = len(b)-1
         self.j = 0
 
     def cons(self, i):
@@ -64,7 +63,7 @@ class Stemmer(object):
         if self.b[i] in 'aeiou':
             return False
         elif self.b[i] == 'y':
-            return True if i == 0 else not self.cons(i - 1)
+            return True if i == 0 else not self.cons(i-1)
         return True
 
     def m(self):
@@ -97,14 +96,14 @@ class Stemmer(object):
 
     def vowel_in_stem(self):
         """ True iff 0...j contains vowel """
-        for i in _range(0, self.j + 1):
+        for i in _range(0, self.j+1):
             if not self.cons(i):
                 return True
         return False
 
     def doublec(self, j):
         """ True iff j, j-1 contains double consonant """
-        if j < 1 or self.b[j] != self.b[j - 1]:
+        if j < 1 or self.b[j] != self.b[j-1]:
             return False
         return self.cons(j)
 
@@ -113,15 +112,15 @@ class Stemmer(object):
         and if second c isn't w,x, or y.
         used to restore e at end of short words like cave, love, hope, crime
         """
-        if (i < 2 or not self.cons(i) or self.cons(i - 1) or
-                not self.cons(i - 2) or self.b[i] in 'wxy'):
+        if (i < 2 or not self.cons(i) or self.cons(i-1) or
+                not self.cons(i-2) or self.b[i] in 'wxy'):
             return False
         return True
 
     def ends(self, s):
         length = len(s)
         """ True iff 0...k ends with string s """
-        res = (self.b[self.k - length + 1:self.k + 1] == s)
+        res = (self.b[self.k-length+1:self.k+1] == s)
         if res:
             self.j = self.k - length
         return res
@@ -129,7 +128,7 @@ class Stemmer(object):
     def setto(self, s):
         """ set j+1...k to string s, readjusting k """
         length = len(s)
-        self.b[self.j + 1:self.j + 1 + length] = s
+        self.b[self.j+1:self.j+1+length] = s
         self.k = self.j + length
 
     def r(self, s):
@@ -142,7 +141,7 @@ class Stemmer(object):
                 self.k -= 2
             elif self.ends(['i', 'e', 's']):
                 self.setto(['i'])
-            elif self.b[self.k - 1] != 's':
+            elif self.b[self.k-1] != 's':
                 self.k -= 1
         if self.ends(['e', 'e', 'd']):
             if self.m() > 0:
@@ -169,7 +168,7 @@ class Stemmer(object):
             self.b[self.k] = 'i'
 
     def step2and3(self):
-        for end, repl in _s2_options.get(self.b[self.k - 1], []):
+        for end, repl in _s2_options.get(self.b[self.k-1], []):
             if self.ends(end):
                 self.r(repl)
                 break
@@ -180,7 +179,7 @@ class Stemmer(object):
                 break
 
     def step4(self):
-        ch = self.b[self.k - 1]
+        ch = self.b[self.k-1]
 
         if ch == 'o':
             if not ((self.ends(['i', 'o', 'n']) and self.b[self.j] in 'st') or
@@ -201,13 +200,13 @@ class Stemmer(object):
         self.j = self.k
         if self.b[self.k] == 'e':
             a = self.m()
-            if a > 1 or a == 1 and not self.cvc(self.k - 1):
+            if a > 1 or a == 1 and not self.cvc(self.k-1):
                 self.k -= 1
         if self.b[self.k] == 'l' and self.doublec(self.k) and self.m() > 1:
             self.k -= 1
 
     def result(self):
-        return ''.join(self.b[:self.k + 1])
+        return ''.join(self.b[:self.k+1])
 
     def stem(self):
         if self.k > 1:
