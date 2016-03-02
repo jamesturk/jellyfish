@@ -59,7 +59,8 @@ def test_levenshtein_distance(jf, s1, s2, value):
     assert jf.levenshtein_distance(s1, s2) == value
 
 
-@pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)
+@pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'),
+                         ids=str)
 def test_damerau_levenshtein_distance(jf, s1, s2, value):
     value = int(value)
     assert jf.damerau_levenshtein_distance(s1, s2) == value
@@ -85,7 +86,8 @@ def test_match_rating_codex(jf, s1, s2):
     assert jf.match_rating_codex(s1) == s2
 
 
-@pytest.mark.parametrize("s1,s2,value", _load_data('match_rating_comparison'), ids=str)
+@pytest.mark.parametrize("s1,s2,value", _load_data('match_rating_comparison'),
+                         ids=str)
 def test_match_rating_comparison(jf, s1, s2, value):
     value = {'True': True, 'False': False, 'None': None}[value]
     assert jf.match_rating_comparison(s1, s2) is value

@@ -113,8 +113,8 @@ class Stemmer(object):
         and if second c isn't w,x, or y.
         used to restore e at end of short words like cave, love, hope, crime
         """
-        if (i < 2 or not self.cons(i) or self.cons(i - 1) or not self.cons(i - 2) or
-                self.b[i] in 'wxy'):
+        if (i < 2 or not self.cons(i) or self.cons(i - 1) or
+                not self.cons(i - 2) or self.b[i] in 'wxy'):
             return False
         return True
 

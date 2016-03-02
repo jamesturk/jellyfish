@@ -101,7 +101,8 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
         if (long_tolerance and min_len > 4 and common_chars > i + 1 and
                 2 * common_chars >= min_len + i):
             weight += (
-                (1.0 - weight) * (float(common_chars - i - 1) / float(ying_len + yang_len - i * 2 + 2)))
+                (1.0 - weight) * (float(common_chars - i - 1) /
+                                  float(ying_len + yang_len - i * 2 + 2)))
 
     return weight
 
@@ -138,10 +139,11 @@ def damerau_levenshtein_distance(s1, s2):
                 cost = 0
                 db = j
 
-            score[i + 1][j + 1] = min(score[i][j] + cost,
-                                      score[i + 1][j] + 1,
-                                      score[i][j + 1] + 1,
-                                      score[i1][j1] + (i - i1 - 1) + 1 + (j - j1 - 1))
+            score[i + 1][j + 1] = min(
+                score[i][j] + cost,
+                score[i + 1][j] + 1,
+                score[i][j + 1] + 1,
+                score[i1][j1] + (i - i1 - 1) + 1 + (j - j1 - 1))
         da[s1[i - 1]] = i
 
     return score[len1 + 1][len2 + 1]
@@ -271,7 +273,8 @@ def nysiis(s):
         elif ch == 'P' and i + 1 < len(s) and s[i + 1] == 'H':
             ch = 'F'
             i += 1
-        elif ch == 'H' and (s[i - 1] not in 'AEIOU' or (i + 1 < len(s) and s[i + 1] not in 'AEIOU')):
+        elif ch == 'H' and (s[i - 1] not in 'AEIOU' or
+                            (i + 1 < len(s) and s[i + 1] not in 'AEIOU')):
             if s[i - 1] in 'AEIOU':
                 ch = 'A'
             else:
@@ -314,7 +317,8 @@ def match_rating_codex(s):
         # not a space OR
         # starting character & vowel
         # or consonant not preceded by same consonant
-        if (c != ' ' and (i == 0 and c in 'AEIOU') or (c not in 'AEIOU' and c != prev)):
+        if (c != ' ' and (i == 0 and c in 'AEIOU') or (c not in 'AEIOU' and
+                                                       c != prev)):
             codex.append(c)
 
         prev = c
