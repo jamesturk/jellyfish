@@ -11,7 +11,7 @@ import pytest
 
 
 def assertAlmostEqual(a, b, places=3):
-    assert abs(a - b) < (0.1**places)
+    assert abs(a - b) < (0.1 ** places)
 
 
 if platform.python_implementation() == 'CPython':
@@ -110,12 +110,15 @@ if platform.python_implementation() == 'CPython':
         sha1s = [u'{}'.format(hashlib.sha1(str(v).encode('ascii')).hexdigest())
                  for v in range(100)]
         # this segfaulted on 0.1.2
-        assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
+        assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s]
+                for h2 in sha1s]
 
 
 def test_jaro_winkler_long_tolerance(jf):
-    no_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=False)
-    with_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=True)
+    no_lt = jf.jaro_winkler(
+        u'two long strings', u'two long stringz', long_tolerance=False)
+    with_lt = jf.jaro_winkler(
+        u'two long strings', u'two long stringz', long_tolerance=True)
     # make sure long_tolerance does something
     assertAlmostEqual(no_lt, 0.975)
     assertAlmostEqual(with_lt, 0.984)

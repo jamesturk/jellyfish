@@ -14,22 +14,22 @@ def levenshtein_distance(s1, s2):
 
     if s1 == s2:
         return 0
-    rows = len(s1)+1
-    cols = len(s2)+1
+    rows = len(s1) + 1
+    cols = len(s2) + 1
 
     if not s1:
-        return cols-1
+        return cols - 1
     if not s2:
-        return rows-1
+        return rows - 1
 
     prev = None
     cur = range(cols)
     for r in _range(1, rows):
-        prev, cur = cur, [r] + [0]*(cols-1)
+        prev, cur = cur, [r] + [0] * (cols - 1)
         for c in _range(1, cols):
             deletion = prev[c] + 1
-            insertion = cur[c-1] + 1
-            edit = prev[c-1] + (0 if s1[r-1] == s2[c-1] else 1)
+            insertion = cur[c - 1] + 1
+            edit = prev[c - 1] + (0 if s1[r - 1] == s2[c - 1] else 1)
             cur[c] = min(edit, deletion, insertion)
 
     return cur[-1]
@@ -50,15 +50,15 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     if search_range < 0:
         search_range = 0
 
-    ying_flags = [False]*ying_len
-    yang_flags = [False]*yang_len
+    ying_flags = [False] * ying_len
+    yang_flags = [False] * yang_len
 
     # looking only within search range, count & flag matched pairs
     common_chars = 0
     for i, ying_ch in enumerate(ying):
         low = i - search_range if i > search_range else 0
         hi = i + search_range if i + search_range < yang_len else yang_len - 1
-        for j in _range(low, hi+1):
+        for j in _range(low, hi + 1):
             if not yang_flags[j] and yang[j] == ying_ch:
                 ying_flags[i] = yang_flags[j] = True
                 common_chars += 1
@@ -82,8 +82,8 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
     # adjust for similarities in nonmatched characters
     common_chars = float(common_chars)
-    weight = ((common_chars/ying_len + common_chars/yang_len +
-              (common_chars-trans_count) / common_chars)) / 3
+    weight = ((common_chars / ying_len + common_chars / yang_len +
+              (common_chars - trans_count) / common_chars)) / 3
 
     # winkler modification: continue to boost if strings are similar
     if winklerize and weight > 0.7 and ying_len > 3 and yang_len > 3:
@@ -98,9 +98,10 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
         # optionally adjust for long strings
         # after agreeing beginning chars, at least two or more must agree and
         # agreed characters must be > half of remaining characters
-        if (long_tolerance and min_len > 4 and common_chars > i+1 and
+        if (long_tolerance and min_len > 4 and common_chars > i + 1 and
                 2 * common_chars >= min_len + i):
-            weight += ((1.0 - weight) * (float(common_chars-i-1) / float(ying_len+yang_len-i*2+2)))
+            weight += (
+                (1.0 - weight) * (float(common_chars - i - 1) / float(ying_len + yang_len - i * 2 + 2)))
 
     return weight
 
@@ -117,33 +118,33 @@ def damerau_levenshtein_distance(s1, s2):
     da = defaultdict(int)
 
     # distance matrix
-    score = [[0]*(len2+2) for x in _range(len1+2)]
+    score = [[0] * (len2 + 2) for x in _range(len1 + 2)]
 
     score[0][0] = infinite
-    for i in _range(0, len1+1):
-        score[i+1][0] = infinite
-        score[i+1][1] = i
-    for i in _range(0, len2+1):
-        score[0][i+1] = infinite
-        score[1][i+1] = i
+    for i in _range(0, len1 + 1):
+        score[i + 1][0] = infinite
+        score[i + 1][1] = i
+    for i in _range(0, len2 + 1):
+        score[0][i + 1] = infinite
+        score[1][i + 1] = i
 
-    for i in _range(1, len1+1):
+    for i in _range(1, len1 + 1):
         db = 0
-        for j in _range(1, len2+1):
-            i1 = da[s2[j-1]]
+        for j in _range(1, len2 + 1):
+            i1 = da[s2[j - 1]]
             j1 = db
             cost = 1
-            if s1[i-1] == s2[j-1]:
+            if s1[i - 1] == s2[j - 1]:
                 cost = 0
                 db = j
 
-            score[i+1][j+1] = min(score[i][j] + cost,
-                                  score[i+1][j] + 1,
-                                  score[i][j+1] + 1,
-                                  score[i1][j1] + (i-i1-1) + 1 + (j-j1-1))
-        da[s1[i-1]] = i
+            score[i + 1][j + 1] = min(score[i][j] + cost,
+                                      score[i + 1][j] + 1,
+                                      score[i][j + 1] + 1,
+                                      score[i1][j1] + (i - i1 - 1) + 1 + (j - j1 - 1))
+        da[s1[i - 1]] = i
 
-    return score[len1+1][len2+1]
+    return score[len1 + 1][len2 + 1]
 
 
 def jaro_distance(s1, s2):
@@ -192,7 +193,7 @@ def soundex(s):
         if count == 4:
             break
 
-    result += '0'*(4-count)
+    result += '0' * (4 - count)
     return ''.join(result)
 
 
@@ -248,7 +249,7 @@ def nysiis(s):
     len_s = len(s)
     while i < len_s:
         ch = s[i]
-        if ch == 'E' and i+1 < len_s and s[i+1] == 'V':
+        if ch == 'E' and i + 1 < len_s and s[i + 1] == 'V':
             ch = 'AF'
             i += 1
         elif ch in 'AEIOU':
@@ -260,23 +261,23 @@ def nysiis(s):
         elif ch == 'M':
             ch = 'N'
         elif ch == 'K':
-            if i+1 < len(s) and s[i+1] == 'N':
+            if i + 1 < len(s) and s[i + 1] == 'N':
                 ch = 'N'
             else:
                 ch = 'C'
-        elif ch == 'S' and s[i+1:i+3] == 'CH':
+        elif ch == 'S' and s[i + 1:i + 3] == 'CH':
             ch = 'SS'
             i += 2
-        elif ch == 'P' and i+1 < len(s) and s[i+1] == 'H':
+        elif ch == 'P' and i + 1 < len(s) and s[i + 1] == 'H':
             ch = 'F'
             i += 1
-        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and s[i+1] not in 'AEIOU')):
-            if s[i-1] in 'AEIOU':
+        elif ch == 'H' and (s[i - 1] not in 'AEIOU' or (i + 1 < len(s) and s[i + 1] not in 'AEIOU')):
+            if s[i - 1] in 'AEIOU':
                 ch = 'A'
             else:
-                ch = s[i-1]
-        elif ch == 'W' and s[i-1] in 'AEIOU':
-            ch = s[i-1]
+                ch = s[i - 1]
+        elif ch == 'W' and s[i - 1] in 'AEIOU':
+            ch = s[i - 1]
 
         if ch[-1] != key[-1][-1]:
             key.append(ch)
@@ -320,7 +321,7 @@ def match_rating_codex(s):
 
     # just use first/last 3
     if len(codex) > 6:
-        return ''.join(codex[:3]+codex[-3:])
+        return ''.join(codex[:3] + codex[-3:])
     else:
         return ''.join(codex)
 
@@ -334,7 +335,7 @@ def match_rating_comparison(s1, s2):
     res2 = []
 
     # length differs by 3 or more, no result
-    if abs(len1-len2) >= 3:
+    if abs(len1 - len2) >= 3:
         return None
 
     # get minimum rating based on sums of codexes
@@ -383,8 +384,8 @@ def metaphone(s):
 
     while i < len(s):
         c = s[i]
-        next = s[i+1] if i < len(s)-1 else '*****'
-        nextnext = s[i+2] if i < len(s)-2 else '*****'
+        next = s[i + 1] if i < len(s) - 1 else '*****'
+        nextnext = s[i + 2] if i < len(s) - 2 else '*****'
 
         # skip doubles except for cc
         if c == next and c != 'c':
@@ -392,10 +393,10 @@ def metaphone(s):
             continue
 
         if c in 'aeiou':
-            if i == 0 or s[i-1] == ' ':
+            if i == 0 or s[i - 1] == ' ':
                 result.append(c)
         elif c == 'b':
-            if (not (i != 0 and s[i-1] == 'm')) or next:
+            if (not (i != 0 and s[i - 1] == 'm')) or next:
                 result.append('b')
         elif c == 'c':
             if next == 'i' and nextnext == 'a' or next == 'h':
@@ -422,10 +423,10 @@ def metaphone(s):
             elif next == 'h' and nextnext and nextnext not in 'aeiou':
                 i += 1
         elif c == 'h':
-            if i == 0 or next in 'aeiou' or s[i-1] not in 'aeiou':
+            if i == 0 or next in 'aeiou' or s[i - 1] not in 'aeiou':
                 result.append('h')
         elif c == 'k':
-            if i == 0 or s[i-1] != 'c':
+            if i == 0 or s[i - 1] != 'c':
                 result.append('k')
         elif c == 'p':
             if next == 'h':
@@ -457,7 +458,7 @@ def metaphone(s):
         elif c == 'w':
             if i == 0 and next == 'h':
                 i += 1
-                next = s[i+1]
+                next = s[i + 1]
             if next in 'aeiou':
                 result.append('w')
         elif c == 'x':
