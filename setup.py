@@ -63,11 +63,11 @@ class TestCommand(Command):
         import shlex
         import unittest
         test_argv0 = [sys.argv[0] + ' test --args=']
-        # For transfering args to unittest, we have to split args
+        # For transferring args to unittest, we have to split args
         # by ourself, so that command like:
         # python setup.py test --args="-v -f"
         # can be executed, and the parameter '-v -f' can be
-        # transfering to unittest properly.
+        # transferring to unittest properly.
         test_argv = test_argv0 + shlex.split(self.args)
         unittest.main(module='jellyfish.test', argv=test_argv)
 
