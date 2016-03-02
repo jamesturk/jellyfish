@@ -2,11 +2,9 @@
 import os
 import sys
 from setuptools import setup, Extension, Command
-from distutils.command.build import build
 from distutils.command.build_ext import build_ext
 from distutils.errors import (
     CCompilerError, DistutilsExecError, DistutilsPlatformError)
-from distutils import log
 
 # large portions ripped off from simplejson's setup.py
 
