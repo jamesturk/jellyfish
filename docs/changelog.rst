@@ -27,7 +27,7 @@ Changelog
 * tons of new tests
 * documentation
 * split out cjellyfish
-* test all w/ unicode and plenty of fixes to accomodate
+* test all w/ unicode and plenty of fixes to accommodate
 * 100% test coverage
 
 0.3.4 - February 4 2015
