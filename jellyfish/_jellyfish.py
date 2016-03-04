@@ -100,8 +100,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
         # agreed characters must be > half of remaining characters
         if (long_tolerance and min_len > 4 and common_chars > i+1 and
                 2 * common_chars >= min_len + i):
-            weight += ((1.0 - weight) * (float(common_chars-i-1) /
-                                         float(ying_len+yang_len-i*2+2)))
+            weight += ((1.0 - weight) * (float(common_chars-i-1) / float(ying_len+yang_len-i*2+2)))
 
     return weight
 
@@ -271,8 +270,7 @@ def nysiis(s):
         elif ch == 'P' and i+1 < len(s) and s[i+1] == 'H':
             ch = 'F'
             i += 1
-        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and
-                                                      s[i+1] not in 'AEIOU')):
+        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and s[i+1] not in 'AEIOU')):
             if s[i-1] in 'AEIOU':
                 ch = 'A'
             else:
@@ -315,8 +313,7 @@ def match_rating_codex(s):
         # not a space OR
         # starting character & vowel
         # or consonant not preceded by same consonant
-        if (c != ' ' and (i == 0 and c in 'AEIOU') or (c not in 'AEIOU' and
-                                                       c != prev)):
+        if (c != ' ' and (i == 0 and c in 'AEIOU') or (c not in 'AEIOU' and c != prev)):
             codex.append(c)
 
         prev = c

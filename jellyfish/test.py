@@ -59,8 +59,7 @@ def test_levenshtein_distance(jf, s1, s2, value):
     assert jf.levenshtein_distance(s1, s2) == value
 
 
-@pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'),
-                         ids=str)
+@pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)
 def test_damerau_levenshtein_distance(jf, s1, s2, value):
     value = int(value)
     assert jf.damerau_levenshtein_distance(s1, s2) == value
@@ -86,8 +85,7 @@ def test_match_rating_codex(jf, s1, s2):
     assert jf.match_rating_codex(s1) == s2
 
 
-@pytest.mark.parametrize("s1,s2,value", _load_data('match_rating_comparison'),
-                         ids=str)
+@pytest.mark.parametrize("s1,s2,value", _load_data('match_rating_comparison'), ids=str)
 def test_match_rating_comparison(jf, s1, s2, value):
     value = {'True': True, 'False': False, 'None': None}[value]
     assert jf.match_rating_comparison(s1, s2) is value
@@ -112,15 +110,12 @@ if platform.python_implementation() == 'CPython':
         sha1s = [u'{}'.format(hashlib.sha1(str(v).encode('ascii')).hexdigest())
                  for v in range(100)]
         # this segfaulted on 0.1.2
-        assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s]
-                for h2 in sha1s]
+        assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
 
 def test_jaro_winkler_long_tolerance(jf):
-    no_lt = jf.jaro_winkler(
-        u'two long strings', u'two long stringz', long_tolerance=False)
-    with_lt = jf.jaro_winkler(
-        u'two long strings', u'two long stringz', long_tolerance=True)
+    no_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=False)
+    with_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=True)
     # make sure long_tolerance does something
     assertAlmostEqual(no_lt, 0.975)
     assertAlmostEqual(with_lt, 0.984)

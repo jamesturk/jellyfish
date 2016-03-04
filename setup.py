@@ -3,14 +3,12 @@ import os
 import sys
 from setuptools import setup, Extension, Command
 from distutils.command.build_ext import build_ext
-from distutils.errors import (
-    CCompilerError, DistutilsExecError, DistutilsPlatformError)
+from distutils.errors import (CCompilerError, DistutilsExecError, DistutilsPlatformError)
 
 # large portions ripped off from simplejson's setup.py
 
 if sys.platform == 'win32' and sys.version_info > (2, 6):
-    # 2.6's distutils.msvc9compiler can raise an IOError when failing to find
-    # the compiler.
+    # 2.6's distutils.msvc9compiler can raise an IOError when failing to find the compiler
     # It can also raise ValueError http://bugs.python.org/issue7511
     ext_errors = (CCompilerError, DistutilsExecError, DistutilsPlatformError,
                   IOError, ValueError)
@@ -25,7 +23,6 @@ class BuildFailed(Exception):
 
 
 class ve_build_ext(build_ext):
-
     def run(self):
         try:
             build_ext.run(self)
@@ -40,12 +37,10 @@ class ve_build_ext(build_ext):
 
 
 class TestCommand(Command):
-
     """Command for running unittests without install."""
 
-    user_options = [("args=", None,
-                     '''The command args string passed to
-                     unittest framework, such as --args="-v -f"''')]
+    user_options = [("args=", None, '''The command args string passed to
+                                    unittest framework, such as --args="-v -f"''')]
 
     def initialize_options(self):
         self.args = ''
@@ -121,11 +116,9 @@ try:
     run_setup(not IS_PYPY)
 except BuildFailed:
     print('*'*75)
-    print('WARNING: C extension could not be compiled, falling back to pure '
-          'Python.')
+    print('WARNING: C extension could not be compiled, falling back to pure Python.')
     print('*'*75)
     run_setup(False)
     print('*'*75)
-    print('WARNING: C extension could not be compiled, falling back to pure '
-          'Python.')
+    print('WARNING: C extension could not be compiled, falling back to pure Python.')
     print('*'*75)
