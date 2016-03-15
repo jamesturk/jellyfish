@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.3 - March 15 2016
+---------------------
+* style/packaging changes
+
+
 0.5.2 - February 3 2016
 -----------------------
 
