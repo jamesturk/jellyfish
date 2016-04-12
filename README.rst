@@ -49,18 +49,18 @@ Example Usage
 =============
 
 >>> import jellyfish
->>> jellyfish.levenshtein_distance('jellyfish', 'smellyfish')
+>>> jellyfish.levenshtein_distance(u'jellyfish', u'smellyfish')
 2
->>> jellyfish.jaro_distance('jellyfish', 'smellyfish')
+>>> jellyfish.jaro_distance(u'jellyfish', u'smellyfish')
 0.89629629629629637
->>> jellyfish.damerau_levenshtein_distance('jellyfish', 'jellyfihs')
+>>> jellyfish.damerau_levenshtein_distance(u'jellyfish', u'jellyfihs')
 1
 
->>> jellyfish.metaphone('Jellyfish')
+>>> jellyfish.metaphone(u'Jellyfish')
 'JLFX'
->>> jellyfish.soundex('Jellyfish')
+>>> jellyfish.soundex(u'Jellyfish')
 'J412'
->>> jellyfish.nysiis('Jellyfish')
+>>> jellyfish.nysiis(u'Jellyfish')
 'JALYF'
->>> jellyfish.match_rating_codex('Jellyfish')
+>>> jellyfish.match_rating_codex(u'Jellyfish')
 'JLLFSH'
