@@ -11,3 +11,4 @@ jellyfish.egg-info/
 htmlcov/
 .ropeproject/
 _build/
+.ipynb_checkpoints/
