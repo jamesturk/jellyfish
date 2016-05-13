@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.5.4 - May 13 2016
+-------------------
+* bugfix for C version of damerau_levenshtein thanks to Tyler Sellon
+
 0.5.3 - March 15 2016
 ---------------------
 * style/packaging changes
