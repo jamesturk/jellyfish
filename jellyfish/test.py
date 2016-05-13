@@ -113,6 +113,21 @@ if platform.python_implementation() == 'CPython':
         assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
 
+    def test_damerau_levenshtein_unicode_segfault():
+        # unfortunate difference in behavior between Py & C versions
+        from jellyfish.cjellyfish import damerau_levenshtein_distance as c_dl
+        from jellyfish._jellyfish import damerau_levenshtein_distance as py_dl
+        s1 = u'mylifeoutdoors'
+        s2 = u'нахлыст'
+        with pytest.raises(ValueError):
+            c_dl(s1, s2)
+        with pytest.raises(ValueError):
+            c_dl(s2, s1)
+
+        assert py_dl(s1, s2) == 14
+        assert py_dl(s2, s1) == 14
+
+
 def test_jaro_winkler_long_tolerance(jf):
     no_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=False)
     with_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=True)
