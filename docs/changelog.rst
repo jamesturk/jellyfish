@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.5.5 - June 21 2016
+--------------------
+* bugfix for metaphone WH case
+
 0.5.4 - May 13 2016
 -------------------
 * bugfix for C version of damerau_levenshtein thanks to Tyler Sellon
