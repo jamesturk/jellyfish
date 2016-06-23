@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.5.6 - June 23 2016
+--------------------
+* bugfix for metaphone & soundex raising unexpected TypeErrors on Windows (#54)
+
 0.5.5 - June 21 2016
 --------------------
 * bugfix for metaphone WH case
