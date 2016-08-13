@@ -16,6 +16,11 @@ def assertAlmostEqual(a, b, places=3):
 
 if platform.python_implementation() == 'CPython':
     implementations = ['python', 'c']
+    try:
+        import Cython
+        implementations.append('cython')
+    except ImportError:
+        pass
 else:
     implementations = ['python']
 
@@ -24,8 +29,11 @@ else:
 def jf(request):
     if request.param == 'python':
         from jellyfish import _jellyfish as jf
-    else:
+    elif request.param == 'cython':
+        from jellyfish import cyjellyfish as jf
+    elif request.param == 'c':
         from jellyfish import cjellyfish as jf
+    print(request.param)
     return jf
 
 

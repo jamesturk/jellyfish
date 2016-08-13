@@ -70,6 +70,11 @@ class TestCommand(Command):
 def run_setup(build_c):
     kw = {}
 
+    try:
+        from Cython.Build import cythonize
+    except ImportError:
+        cythonize = False
+
     if build_c:
         kw = dict(
             ext_modules=[Extension("jellyfish.cjellyfish",
@@ -88,6 +93,8 @@ def run_setup(build_c):
             cmdclass=dict(build_ext=ve_build_ext, test=TestCommand),
             packages=['jellyfish'],
         )
+        if cythonize:
+            kw['ext_modules'] += cythonize('jellyfish/cyjellyfish.pyx')
     else:
         kw = dict(cmdclass=dict(test=TestCommand), packages=['jellyfish'])
 
