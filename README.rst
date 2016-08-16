@@ -31,19 +31,19 @@ Included Algorithms
 
 String comparison:
 
-  * Levenshtein Distance
-  * Damerau-Levenshtein Distance
-  * Jaro Distance
-  * Jaro-Winkler Distance
-  * Match Rating Approach Comparison
-  * Hamming Distance
+* Levenshtein Distance
+* Damerau-Levenshtein Distance
+* Jaro Distance
+* Jaro-Winkler Distance
+* Match Rating Approach Comparison
+* Hamming Distance
 
 Phonetic encoding:
 
-  * American Soundex
-  * Metaphone
-  * NYSIIS (New York State Identification and Intelligence System)
-  * Match Rating Codex
+* American Soundex
+* Metaphone
+* NYSIIS (New York State Identification and Intelligence System)
+* Match Rating Codex
 
 Example Usage
 =============
