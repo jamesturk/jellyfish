@@ -1,6 +1,6 @@
 import unicodedata
 from collections import defaultdict
-from .compat import _range, _zip_longest, _no_bytes_err, IS_PY3
+from .compat import _range, _zip_longest, IS_PY3
 from .porter import Stemmer
 
 
