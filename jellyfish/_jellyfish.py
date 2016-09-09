@@ -220,10 +220,10 @@ def hamming_distance(s1, s2):
 
 
 def nysiis(s):
-    _check_type(s)
-
     if not s:
         return ''
+
+    _check_type(s)
 
     s = s.upper()
     key = []
