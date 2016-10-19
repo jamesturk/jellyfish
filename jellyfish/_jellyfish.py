@@ -40,7 +40,6 @@ def levenshtein_distance(s1, s2):
 
     return cur[-1]
 
-
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     _check_type(ying)
     _check_type(yang)
@@ -218,6 +217,32 @@ def hamming_distance(s1, s2):
 
     return distance
 
+def wagner_fischer_distance(s1, s2):
+    _check_type(s1)
+    _check_type(s2)
+
+    # dynamic programming algorithm to compute edit distance between two strings.
+    # https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm
+    n = len(s1) + 1 #rows
+    m = len(s2) + 1 #columns
+    # defining a matrix of n X m
+    d = [[0 for x in range(m)] for y in range(n)]
+    # initialization
+    for i in range(n):
+        d[i][0] = i
+    for j in range(m):
+        d[0][j] = j
+    # filling up the rest of matrix by Flood Filling
+    for j in range(1, m):
+        for i in range(1, n):
+            if s1[i-1] == s2[j-1]:
+                d[i][j] = d[i-1][j-1]
+            else:
+                d[i][j] = min(d[i-1][j] + 1, \
+                              d[i][j-1] + 1, \
+                              d[i-1][j-1] + 1 )
+    # return the last element in 2D array, i.e. the south east corner.
+    return d[n-1][m-1]
 
 def nysiis(s):
     if not s:
@@ -310,7 +335,7 @@ def nysiis(s):
 
 def match_rating_codex(s):
     _check_type(s)
-    
+
     s = s.upper()
     codex = []
 
