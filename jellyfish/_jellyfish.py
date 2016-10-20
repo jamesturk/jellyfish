@@ -220,6 +220,27 @@ def hamming_distance(s1, s2):
 def wagner_fischer_distance(s1, s2, trace = False):
     _check_type(s1)
     _check_type(s2)
+
+    traced = ''
+    if len(s1) == 0 and len(s2) == 0:
+        if trace == False:
+            return 0
+        else:
+            return 0, traced
+    if len(s1) == 0:
+        if trace == False:
+            return len(s2)
+        else:
+            for each in s2:
+                traced = traced + '~'
+            return len(s2), traced
+    if len(s2) == 0:
+        if trace == False:
+            return len(s1)
+        else:
+            for each in s1:
+                traced = traced + '~'
+            return len(s1), traced
     # the rows must be smaller than the column, will help with tracing.
     if len(s1) > len(s2):
         temp = s1
@@ -249,7 +270,6 @@ def wagner_fischer_distance(s1, s2, trace = False):
         # return the last element in 2D array, i.e. the south east corner.
         return d[n-1][m-1]
     else:
-        traced = ''
         i = n-1
         j = m-1
         while j >= 0:

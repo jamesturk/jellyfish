@@ -58,6 +58,12 @@ def test_levenshtein_distance(jf, s1, s2, value):
     value = int(value)
     assert jf.levenshtein_distance(s1, s2) == value
 
+@pytest.mark.parametrize("s1,s2,value,trace", _load_data('wagner_fischer'), ids=str)
+def test_wagner_fischer_distance(jf, s1, s2, value, traced):
+    value = int(value)
+    assert jf.wagner_fischer_distance(s1, s2)[0] == value
+    assert jf.wagner_fischer_distance(s1, s2)[0] == traced
+
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)
 def test_damerau_levenshtein_distance(jf, s1, s2, value):
@@ -149,6 +155,11 @@ def test_levenshtein_distance_type(jf):
         jf.levenshtein_distance(b'abc', b'abc')
     assert 'expected' in str(exc.value)
 
+def test_wagner_fischer_distance_type(jf):
+    assert jf.wagner_fischer_distance(u'abc', u'abc', trace=True) == 0
+    with pytest.raises(TypeError) as exc:
+        jf.wagner_fischer_distance(b'abc', b'abc', trace=True)
+    assert 'expected' in str(exc.value)
 
 def test_jaro_distance_type(jf):
     assert jf.jaro_distance(u'abc', u'abc') == 1
