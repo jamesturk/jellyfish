@@ -13,4 +13,3 @@ htmlcov/
 _build/
 .ipynb_checkpoints/
 .cache
-fortest.py

@@ -217,10 +217,14 @@ def hamming_distance(s1, s2):
 
     return distance
 
-def wagner_fischer_distance(s1, s2):
+def wagner_fischer_distance(s1, s2, trace = False):
     _check_type(s1)
     _check_type(s2)
-
+    # the rows must be smaller than the column, will help with tracing.
+    if len(s1) > len(s2):
+        temp = s1
+        s1 = s2
+        s2 = temp
     # dynamic programming algorithm to compute edit distance between two strings.
     # https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm
     n = len(s1) + 1 #rows
@@ -241,8 +245,31 @@ def wagner_fischer_distance(s1, s2):
                 d[i][j] = min(d[i-1][j] + 1, \
                               d[i][j-1] + 1, \
                               d[i-1][j-1] + 1 )
-    # return the last element in 2D array, i.e. the south east corner.
-    return d[n-1][m-1]
+    if trace == False:
+        # return the last element in 2D array, i.e. the south east corner.
+        return d[n-1][m-1]
+    else:
+        traced = ''
+        i = n-1
+        j = m-1
+        while j >= 0:
+            point = min (d[i-1][j-1], d[i][j-1], d[i-1][j])
+            if point == d[i-1][j-1]:
+                if d[i][j] == point:
+                    traced = traced + s1[i-1]
+                    i = i - 1
+                else:
+                    traced = traced + '~'
+                    i = i - 1
+            elif point == d[i][j-1]:
+                traced = traced + '~'
+            j = j - 1
+        #drop last character
+        traced = traced[:-1]
+        #reverse the string
+        traced = traced[::-1]
+        return d[n-1][m-1], traced
+
 
 def nysiis(s):
     if not s:
