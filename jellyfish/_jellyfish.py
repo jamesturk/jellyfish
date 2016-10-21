@@ -217,30 +217,21 @@ def hamming_distance(s1, s2):
 
     return distance
 
-def wagner_fischer_distance(s1, s2, trace = None, trace_char = '~'):
+def wagner_fischer_distance(s1, s2, trace_char = '~'):
     _check_type(s1)
     _check_type(s2)
 
     traced = ''
     if len(s1) == 0 and len(s2) == 0:
-        if trace:
-            return 0, traced
-        else:
-            return 0
+        return 0, traced
     if len(s1) == 0:
-        if trace:
-            for each in s2:
-                traced = traced + trace_char
-            return len(s2), traced
-        else:
-            return len(s2)
+        for each in s2:
+            traced = traced + trace_char
+        return len(s2), traced
     if len(s2) == 0:
-        if trace:
-            for each in s1:
-                traced = traced + trace_char
-            return len(s1), traced
-        else:
-            return len(s1)
+        for each in s1:
+            traced = traced + trace_char
+        return len(s1), traced
     # the rows must be smaller than the column, will help with tracing.
     if len(s1) > len(s2):
         temp = s1
@@ -266,27 +257,24 @@ def wagner_fischer_distance(s1, s2, trace = None, trace_char = '~'):
                 d[i][j] = min(d[i-1][j] + 1, \
                               d[i][j-1] + 1, \
                               d[i-1][j-1] + 1 )
-    if trace:
-        i = n-1
-        j = m-1
-        while j >= 0:
-            point = min (d[i-1][j-1], d[i][j-1], d[i-1][j])
-            if point == d[i-1][j-1]:
-                if d[i][j] == point:
-                    traced = traced + s1[i-1]
-                    i = i - 1
-                else:
-                    traced = traced + trace_char
-                    i = i - 1
-            elif point == d[i][j-1]:
+    # tracing begins
+    i = n-1
+    j = m-1
+    while j >= 0:
+        point = min (d[i-1][j-1], d[i][j-1], d[i-1][j])
+        if point == d[i-1][j-1]:
+            if d[i][j] == point:
+                traced = traced + s1[i-1]
+                i = i - 1
+            else:
                 traced = traced + trace_char
-            j = j - 1
-        #drop last character and reverse
-        traced = traced[len(traced)-2::-1]
-        return d[n-1][m-1], traced
-    else:
-        # return the last element in 2D array, i.e. the south east corner.
-        return d[n-1][m-1]
+                i = i - 1
+        elif point == d[i][j-1]:
+            traced = traced + trace_char
+        j = j - 1
+    #drop last character and reverse
+    traced = traced[len(traced)-2::-1]
+    return d[n-1][m-1], traced
 
 
 def nysiis(s):
