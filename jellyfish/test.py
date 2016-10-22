@@ -161,7 +161,6 @@ def test_levenshtein_distance_type(jf):
 def test_wagner_fischer_distance_type(jf):
     if platform.python_implementation() == 'CPython':
         assert 1 == 1
-        assert 'expected' in str(exc.value)
     else:
         assert jf.wagner_fischer_distance(u'abc', u'abc') == 0
         with pytest.raises(TypeError) as exc:
