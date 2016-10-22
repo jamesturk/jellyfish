@@ -162,7 +162,7 @@ def test_wagner_fischer_distance_type(jf):
     if platform.python_implementation() == 'CPython':
         assert 1 == 1
     else:
-        assert jf.wagner_fischer_distance(u'abc', u'abc') == 0
+        assert jf.wagner_fischer_distance(u'abc', u'abc')[0] == 0
         with pytest.raises(TypeError) as exc:
             jf.wagner_fischer_distance(b'abc', b'abc')
         assert 'expected' in str(exc.value)
