@@ -62,7 +62,7 @@ def test_levenshtein_distance(jf, s1, s2, value):
 def test_wagner_fischer_distance(jf, s1, s2, value, traced):
     value = int(value)
     assert jf.wagner_fischer_distance(s1, s2)[0] == value
-    assert jf.wagner_fischer_distance(s1, s2)[0] == traced
+    assert jf.wagner_fischer_distance(s1, s2)[1] == traced
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)
