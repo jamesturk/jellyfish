@@ -167,19 +167,20 @@ def soundex(s):
     _check_type(s)
 
     s = _normalize(s)
+    s = s.upper()
 
-    replacements = (('bfpv', '1'),
-                    ('cgjkqsxz', '2'),
-                    ('dt', '3'),
-                    ('l', '4'),
-                    ('mn', '5'),
-                    ('r', '6'))
+    replacements = (('BFPV', '1'),
+                    ('CGJKQSXZ', '2'),
+                    ('DT', '3'),
+                    ('L', '4'),
+                    ('MN', '5'),
+                    ('R', '6'))
     result = [s[0]]
     count = 1
 
     # find would-be replacment for first character
     for lset, sub in replacements:
-        if s[0].lower() in lset:
+        if s[0] in lset:
             last = sub
             break
     else:
@@ -187,7 +188,7 @@ def soundex(s):
 
     for letter in s[1:]:
         for lset, sub in replacements:
-            if letter.lower() in lset:
+            if letter in lset:
                 if sub != last:
                     result.append(sub)
                     count += 1
