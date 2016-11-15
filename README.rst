@@ -64,3 +64,16 @@ Example Usage
 'JALYF'
 >>> jellyfish.match_rating_codex(u'Jellyfish')
 'JLLFSH'
+
+Running Tests
+=============
+
+If you are interested in contributing to Jellyfish, you may want to
+run tests locally. Jellyfish uses tox_ to run tests, which you can
+setup and run as follows::
+
+  pip install tox
+  # cd jellyfish/
+  tox
+
+.. _tox: https://tox.readthedocs.io/en/latest/
