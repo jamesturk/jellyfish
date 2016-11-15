@@ -112,7 +112,6 @@ if platform.python_implementation() == 'CPython':
         # this segfaulted on 0.1.2
         assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
 
-
     def test_damerau_levenshtein_unicode_segfault():
         # unfortunate difference in behavior between Py & C versions
         from jellyfish.cjellyfish import damerau_levenshtein_distance as c_dl

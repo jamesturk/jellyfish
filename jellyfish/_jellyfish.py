@@ -7,12 +7,13 @@ from .porter import Stemmer
 def _normalize(s):
     return unicodedata.normalize('NFKD', s)
 
-def _check_type(s):
 
+def _check_type(s):
     if IS_PY3 and not isinstance(s, str):
         raise TypeError('expected str or unicode, got %s' % type(s).__name__)
     elif not IS_PY3 and not isinstance(s, unicode):
         raise TypeError('expected unicode, got %s' % type(s).__name__)
+
 
 def levenshtein_distance(s1, s2):
     _check_type(s1)
@@ -310,7 +311,7 @@ def nysiis(s):
 
 def match_rating_codex(s):
     _check_type(s)
-    
+
     s = s.upper()
     codex = []
 
