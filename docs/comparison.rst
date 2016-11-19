@@ -56,7 +56,7 @@ Jaro distance is a string-edit distance that gives a floating point response in 
 Jaro-Winkler Distance
 ---------------------
 
-.. py:function:: jaro_winkler(s1, s2)
+.. py:function:: jaro_winkler_distance(s1, s2)
 
     Compute the Jaro-Winkler distance between s1 and s2.
 

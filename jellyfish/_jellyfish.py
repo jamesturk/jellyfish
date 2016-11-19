@@ -1,3 +1,4 @@
+import warnings
 import unicodedata
 from collections import defaultdict
 from .compat import _range, _zip_longest, IS_PY3
@@ -157,6 +158,16 @@ def jaro_distance(s1, s2):
 
 
 def jaro_winkler(s1, s2, long_tolerance=False):
+
+    warnings.warn(
+        "This function is renamed. Call jaro_winkler_distance from now.",
+        DeprecationWarning, stacklevel=2
+    )
+
+    return _jaro_winkler(s1, s2, long_tolerance, True)
+
+
+def jaro_winkler_distance(s1, s2, long_tolerance=False):
     return _jaro_winkler(s1, s2, long_tolerance, True)
 
 
