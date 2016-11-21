@@ -30,6 +30,14 @@ To explicitly use a specific implementation, refer to the appropriate module::
   import jellyfish._jellyfish as pyjellyfish
   import jellyfish.cjellyfish as cjellyfish
 
+If you've already imported jellyfish and are not sure what implementation you
+are using, you can check by querying ``jellyfish.library``::
+
+  if jellyfish.library == 'Python':
+      # Python implementation
+  elif jellyfish.library == 'C':
+      # C implementation
+
 
 Indices and tables
 ==================
