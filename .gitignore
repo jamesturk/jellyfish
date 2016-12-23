@@ -13,3 +13,4 @@ htmlcov/
 _build/
 .ipynb_checkpoints/
 .cache
+.hypothesis/
