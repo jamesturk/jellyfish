@@ -24,6 +24,8 @@ Written by James Turk <james.p.turk@gmail.com> and Michael Stephens.
 
 See https://github.com/jamesturk/jellyfish/graphs/contributors for contributors.
 
+See http://jellyfish.readthedocs.io for documentation.
+
 Source is available at http://github.com/jamesturk/jellyfish.
 
 Included Algorithms
