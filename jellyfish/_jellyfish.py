@@ -162,10 +162,11 @@ def jaro_winkler(s1, s2, long_tolerance=False):
 
 
 def soundex(s):
-    if not s:
-        return s
 
     _check_type(s)
+
+    if not s:
+        return ''
 
     s = _normalize(s)
     s = s.upper()
@@ -222,10 +223,11 @@ def hamming_distance(s1, s2):
 
 
 def nysiis(s):
-    if not s:
-        return ''
 
     _check_type(s)
+
+    if not s:
+        return ''
 
     s = s.upper()
     key = []
