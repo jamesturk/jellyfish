@@ -50,7 +50,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     yang_len = len(yang)
 
     if not ying_len or not yang_len:
-        return 0
+        return 0.0
 
     min_len = max(ying_len, yang_len)
     search_range = (min_len // 2) - 1
@@ -73,7 +73,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
     # short circuit if no characters match
     if not common_chars:
-        return 0
+        return 0.0
 
     # count transpositions
     k = trans_count = 0
