@@ -1,5 +1,9 @@
 import unicodedata
-from collections import defaultdict
+import string
+import re
+import itertools
+from collections import defaultdict as dd
+from math import *
 from .compat import _range, _zip_longest, IS_PY3
 from .porter import Stemmer
 
@@ -7,13 +11,11 @@ from .porter import Stemmer
 def _normalize(s):
     return unicodedata.normalize('NFKD', s)
 
-
 def _check_type(s):
     if IS_PY3 and not isinstance(s, str):
         raise TypeError('expected str or unicode, got %s' % type(s).__name__)
     elif not IS_PY3 and not isinstance(s, unicode):
         raise TypeError('expected unicode, got %s' % type(s).__name__)
-
 
 def levenshtein_distance(s1, s2):
     _check_type(s1)
@@ -111,6 +113,133 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
     return weight
 
+keyboard_cartesian_spaces = {
+        '1':{'y':0,'x':0,'z':0},'2':{'y':0,'x':1,'z':0},'3':{'y':0,'x':2,'z':0},'4':{'y':0,'x':3,'z':0},
+        '5':{'y':0,'x':4,'z':0},'6':{'y':0,'x':5,'z':0},'7':{'y':0,'x':6,'z':0},'8':{'y':0,'x':7,'z':0},
+        '9':{'y':0,'x':8,'z':0},'0':{'y':0,'x':9,'z':0},'-':{'y':0,'x':10,'z':0},'=':{'y':0,'x':11,'z':0},
+        'q':{'y':1,'x':0,'z':0},'w':{'y':1,'x':1,'z':0},'e':{'y':1,'x':2,'z':0},'r':{'y':1,'x':3,'z':0},
+        't':{'y':1,'x':4,'z':0},'y':{'y':1,'x':5,'z':0},'u':{'y':1,'x':6,'z':0},'i':{'y':1,'x':7,'z':0},
+        'o':{'y':1,'x':8,'z':0},'p':{'y':1,'x':9,'z':0},'[':{'y':1,'x':10,'z':0},']':{'y':1,'x':11,'z':0},
+        '\\':{'y':1,'x':12,'z':0},'a':{'y':2,'x':0,'z':0},'s':{'y':2,'x':1,'z':0},'d':{'y':2,'x':2,'z':0},
+        'f':{'y':2,'x':3,'z':0},'g':{'y':2,'x':4,'z':0},'h':{'y':2,'x':5,'z':0},'j':{'y':2,'x':6,'z':0},
+        'k':{'y':2,'x':7,'z':0},'l':{'y':2,'x':8,'z':0},';':{'y':2,'x':9,'z':0},"'":{'y':2,'x':10,'z':0},
+        'z':{'y':3,'x':0,'z':0},'x':{'y':3,'x':1,'z':0},'c':{'y':3,'x':2,'z':0},'v':{'y':3,'x':3,'z':0},
+        'b':{'y':3,'x':4,'z':0},'n':{'y':3,'x':4,'z':0},'m':{'y':3,'x':4,'z':0},',':{'y':3,'x':5,'z':0},
+        '.':{'y':3,'x':6,'z':0},'/':{'y':3,'x':7,'z':0}, ' ':{'y':4,'x':3,'z':0},'!':{'y':0,'x':0,'z':1},
+        '@':{'y':0,'x':1,'z':1},'#':{'y':0,'x':2,'z':1},'$':{'y':0,'x':3,'z':1},'%':{'y':0,'x':4,'z':1},
+        '^':{'y':0,'x':5,'z':1},'&':{'y':0,'x':6,'z':1},'*':{'y':0,'x':7,'z':1},'(':{'y':0,'x':8,'z':1},
+        ')':{'y':0,'x':9,'z':1},'_':{'y':0,'x':10,'z':1},'+':{'y':0,'x':11,'z':1},'Q':{'y':1,'x':0,'z':1},
+        'W':{'y':1,'x':1,'z':1},'E':{'y':1,'x':2,'z':1},'R':{'y':1,'x':3,'z':1},'T':{'y':1,'x':4,'z':1},
+        'Y':{'y':1,'x':5,'z':1},'U':{'y':1,'x':6,'z':1},'I':{'y':1,'x':7,'z':1},'O':{'y':1,'x':8,'z':1},
+        'P':{'y':1,'x':9,'z':1},'{':{'y':1,'x':10,'z':1},'}':{'y':1,'x':11,'z':1},'|':{'y':1,'x':12,'z':1},
+        'A':{'y':2,'x':0,'z':1},'S':{'y':2,'x':1,'z':1},'D':{'y':2,'x':2,'z':1},'F':{'y':2,'x':3,'z':1},
+        'G':{'y':2,'x':4,'z':1},'H':{'y':2,'x':5,'z':1},'J':{'y':2,'x':6,'z':1},'K':{'y':2,'x':7,'z':1},
+        'L':{'y':2,'x':8,'z':1},':':{'y':2,'x':9,'z':1},'"':{'y':2,'x':10,'z':1},'Z':{'y':3,'x':0,'z':1},
+        'X':{'y':3,'x':1,'z':1},'C':{'y':3,'x':2,'z':1},'V':{'y':3,'x':3,'z':1},'B':{'y':3,'x':4,'z':1},
+        'N':{'y':3,'x':4,'z':1},'M':{'y':3,'x':4,'z':1},'<':{'y':3,'x':5,'z':1},'>':{'y':3,'x':6,'z':1},
+        '?':{'y':3,'x':7,'z':1}}
+
+def _qwerty_sub_cost(a,b):
+    if a==b:
+        cost = 0.0
+    else:
+        X = (keyboard_cartesian_spaces[a]['x']-keyboard_cartesian_spaces[b]['x'])**2
+        Y = (keyboard_cartesian_spaces[a]['y']-keyboard_cartesian_spaces[b]['y'])**2
+        Z = (keyboard_cartesian_spaces[a]['z']-keyboard_cartesian_spaces[b]['z'])**2
+        cost = sqrt(X+Y+Z)
+    
+    # normalize over threshold of tolerable error, this makes substitution in this region always 
+    # less costly than insertion or deletion.
+    normalized_cost = cost/sqrt(7.68)
+    return cost
+
+def _encapsulate_ops(operations):
+
+    op_names = ['insertion','deletion','substitution','match']
+    ops = dd(int)
+    for op in operations:
+        ops[op]+=1
+    for op_name in op_names:
+        if op_name in ops.keys():
+            pass
+        else:
+            ops[op_name]=0
+    return ops
+
+def _backtrace(target, source, rows):
+
+    i, j = len(target), len(source)
+    edits = []
+
+    while(not (i == 0  and j == 0)):
+        
+        prev_cost = rows[i][j]
+     
+        neighbors = []
+     
+        if(i!=0 and j!=0):
+          neighbors.append(rows[i-1][j-1])
+        if(i!=0):
+          neighbors.append(rows[i-1][j])
+        if(j!=0):
+          neighbors.append(rows[i][j-1])
+     
+        min_cost = min(neighbors)
+ 
+        if(min_cost == prev_cost):
+          i, j = i-1, j-1
+          edits.append('match')
+        elif(i!=0 and j!=0 and min_cost == rows[i-1][j-1]):
+          i, j = i-1, j-1
+          edits.append('substitution')
+        elif(i!=0 and min_cost == rows[i-1][j]):
+          i, j = i-1, j
+          edits.append('deletion')
+        elif(j!=0 and min_cost == rows[i][j-1]):
+          i, j = i, j-1
+          edits.append('insertion')
+    
+    edits.reverse() 
+    return edits
+
+# v basic Minimum Edit Distance function with optional added tracking of operations
+def qwerty_levenshtein(target, source):
+
+    len_target, len_source = len(target),len(source)
+    
+    distance = [[0 for i in range(len_source+1)] for j in range(len_target+1)]
+    
+    for i in range (1,len_target+1):
+        distance[i][0] = distance[i-1][0] + 1
+    for j in range(1, len_source+1):
+        distance[0][j] = distance[0][j-1] + 1
+    for i in range (1,len_target+1):
+        for j in range(1, len_source+1):
+           
+            try:
+                sub_cost = _qwerty_sub_cost(source[j-1],target[i-1])
+            except KeyError, e:
+                cause=e.args[0]
+                if cause in source:
+                    new_source = re.sub(cause,'',source)
+                    return qwerty_levenshtein(target, new_source)
+
+                if cause in target:
+                    new_target=re.sub(cause,'',target)
+                    return qwerty_levenshtein(new_target, source)
+            
+            insert = distance[i-1][j]+1
+            delete = distance[i][j-1]+1
+            substitute = distance[i-1][j-1]+sub_cost
+            
+            distance[i][j] = min(insert,delete,substitute)
+
+            if i and j and target[i]==source[j-1] and target[i-1]==source[j]:
+                distance[i][j] = min(distance[i][j], distance[i-2][j-2]+sub_cost)
+    
+    #operations = _encapsulate_ops(_backtrace(target, source, distance))
+
+    return float(distance[len_target][len_source]) #, distance
 
 def damerau_levenshtein_distance(s1, s2):
     _check_type(s1)
@@ -152,14 +281,11 @@ def damerau_levenshtein_distance(s1, s2):
 
     return score[len1+1][len2+1]
 
-
 def jaro_distance(s1, s2):
     return _jaro_winkler(s1, s2, False, False)
 
-
 def jaro_winkler(s1, s2, long_tolerance=False):
     return _jaro_winkler(s1, s2, long_tolerance, True)
-
 
 def soundex(s):
 
@@ -204,7 +330,6 @@ def soundex(s):
     result += '0'*(4-count)
     return ''.join(result)
 
-
 def hamming_distance(s1, s2):
     _check_type(s1)
     _check_type(s2)
@@ -220,7 +345,6 @@ def hamming_distance(s1, s2):
             distance += 1
 
     return distance
-
 
 def nysiis(s):
 
@@ -311,7 +435,6 @@ def nysiis(s):
 
     return key
 
-
 def match_rating_codex(s):
     _check_type(s)
 
@@ -333,7 +456,6 @@ def match_rating_codex(s):
         return ''.join(codex[:3]+codex[-3:])
     else:
         return ''.join(codex)
-
 
 def match_rating_comparison(s1, s2):
     codex1 = match_rating_codex(s1)
@@ -375,7 +497,6 @@ def match_rating_comparison(s1, s2):
                 unmatched_count2 += 1
 
     return (6 - max(unmatched_count1, unmatched_count2)) >= min_rating
-
 
 def metaphone(s):
     _check_type(s)
@@ -489,7 +610,6 @@ def metaphone(s):
         i += 1
 
     return ''.join(result).upper()
-
 
 def porter_stem(s):
     _check_type(s)
