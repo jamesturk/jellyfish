@@ -28,7 +28,7 @@ possible.
 To explicitly use a specific implementation, refer to the appropriate module::
 
   import jellyfish._jellyfish as pyjellyfish
-  import jellyfish.cjellyfish as cjellyfish
+  import jellyfish._cjellyfish as cjellyfish
 
 If you've already imported jellyfish and are not sure what implementation you
 are using, you can check by querying ``jellyfish.library``::

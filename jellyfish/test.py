@@ -25,7 +25,7 @@ def jf(request):
     if request.param == 'python':
         from jellyfish import _jellyfish as jf
     else:
-        from jellyfish import cjellyfish as jf
+        from jellyfish import _cjellyfish as jf
     return jf
 
 
@@ -106,7 +106,7 @@ def test_porter_stem(jf):
 if platform.python_implementation() == 'CPython':
     def test_match_rating_comparison_segfault():
         import hashlib
-        from jellyfish import cjellyfish as jf
+        from jellyfish import _cjellyfish as jf
         sha1s = [u'{}'.format(hashlib.sha1(str(v).encode('ascii')).hexdigest())
                  for v in range(100)]
         # this segfaulted on 0.1.2
@@ -114,7 +114,7 @@ if platform.python_implementation() == 'CPython':
 
     def test_damerau_levenshtein_unicode_segfault():
         # unfortunate difference in behavior between Py & C versions
-        from jellyfish.cjellyfish import damerau_levenshtein_distance as c_dl
+        from jellyfish._cjellyfish import damerau_levenshtein_distance as c_dl
         from jellyfish._jellyfish import damerau_levenshtein_distance as py_dl
         s1 = u'mylifeoutdoors'
         s2 = u'нахлыст'

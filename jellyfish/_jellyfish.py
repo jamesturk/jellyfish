@@ -1,20 +1,14 @@
-import unicodedata
 from collections import defaultdict
-from .compat import _range, _zip_longest, IS_PY3
+
+from .compat import _range, _zip_longest
+from .utils import (_normalize,
+                    _check_type,
+                    phonetic_decorator,
+                    compare_decorator)
 from .porter import Stemmer
 
 
-def _normalize(s):
-    return unicodedata.normalize('NFKD', s)
-
-
-def _check_type(s):
-    if IS_PY3 and not isinstance(s, str):
-        raise TypeError('expected str or unicode, got %s' % type(s).__name__)
-    elif not IS_PY3 and not isinstance(s, unicode):
-        raise TypeError('expected unicode, got %s' % type(s).__name__)
-
-
+@compare_decorator
 def levenshtein_distance(s1, s2):
     _check_type(s1)
     _check_type(s2)
@@ -112,6 +106,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     return weight
 
 
+@compare_decorator
 def damerau_levenshtein_distance(s1, s2):
     _check_type(s1)
     _check_type(s2)
@@ -153,14 +148,17 @@ def damerau_levenshtein_distance(s1, s2):
     return score[len1+1][len2+1]
 
 
+@compare_decorator
 def jaro_distance(s1, s2):
     return _jaro_winkler(s1, s2, False, False)
 
 
+@compare_decorator
 def jaro_winkler(s1, s2, long_tolerance=False):
     return _jaro_winkler(s1, s2, long_tolerance, True)
 
 
+@phonetic_decorator
 def soundex(s):
 
     _check_type(s)
@@ -205,6 +203,7 @@ def soundex(s):
     return ''.join(result)
 
 
+@compare_decorator
 def hamming_distance(s1, s2):
     _check_type(s1)
     _check_type(s2)
@@ -222,6 +221,7 @@ def hamming_distance(s1, s2):
     return distance
 
 
+@phonetic_decorator
 def nysiis(s):
 
     _check_type(s)
@@ -312,6 +312,7 @@ def nysiis(s):
     return key
 
 
+@phonetic_decorator
 def match_rating_codex(s):
     _check_type(s)
 
@@ -335,6 +336,7 @@ def match_rating_codex(s):
         return ''.join(codex)
 
 
+@compare_decorator
 def match_rating_comparison(s1, s2):
     codex1 = match_rating_codex(s1)
     codex2 = match_rating_codex(s2)
@@ -377,6 +379,7 @@ def match_rating_comparison(s1, s2):
     return (6 - max(unmatched_count1, unmatched_count2)) >= min_rating
 
 
+@phonetic_decorator
 def metaphone(s):
     _check_type(s)
 
