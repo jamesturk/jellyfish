@@ -10,6 +10,8 @@ from .porter import Stemmer
 
 @compare_decorator
 def levenshtein_distance(s1, s2):
+    """Compute the Levenshtein distance."""
+
     _check_type(s1)
     _check_type(s2)
 
@@ -108,6 +110,8 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
 @compare_decorator
 def damerau_levenshtein_distance(s1, s2):
+    """Compute the Damerau-Levenshtein distance."""
+
     _check_type(s1)
     _check_type(s2)
 
@@ -150,16 +154,21 @@ def damerau_levenshtein_distance(s1, s2):
 
 @compare_decorator
 def jaro_distance(s1, s2):
+    """Compute the Jaro distance."""
+
     return _jaro_winkler(s1, s2, False, False)
 
 
 @compare_decorator
 def jaro_winkler(s1, s2, long_tolerance=False):
+    """Compute the Jaro-Winkler distance."""
+
     return _jaro_winkler(s1, s2, long_tolerance, True)
 
 
 @phonetic_decorator
 def soundex(s):
+    """Compute the Soundex code."""
 
     _check_type(s)
 
@@ -205,6 +214,8 @@ def soundex(s):
 
 @compare_decorator
 def hamming_distance(s1, s2):
+    """Compute the Hamming distance."""
+
     _check_type(s1)
     _check_type(s2)
 
@@ -223,6 +234,7 @@ def hamming_distance(s1, s2):
 
 @phonetic_decorator
 def nysiis(s):
+    """Compute the NYSIIS code."""
 
     _check_type(s)
 
@@ -314,6 +326,8 @@ def nysiis(s):
 
 @phonetic_decorator
 def match_rating_codex(s):
+    """Compute the Match Rating Approach code."""
+
     _check_type(s)
 
     s = s.upper()
@@ -338,6 +352,8 @@ def match_rating_codex(s):
 
 @compare_decorator
 def match_rating_comparison(s1, s2):
+    """Compute the Match Rating Approach."""
+
     codex1 = match_rating_codex(s1)
     codex2 = match_rating_codex(s2)
     len1 = len(codex1)
@@ -381,6 +397,8 @@ def match_rating_comparison(s1, s2):
 
 @phonetic_decorator
 def metaphone(s):
+    """"Compute the Metaphone code."""
+
     _check_type(s)
 
     result = []
