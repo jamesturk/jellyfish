@@ -7,12 +7,13 @@ from .porter import Stemmer
 def _normalize(s):
     return unicodedata.normalize('NFKD', s)
 
-def _check_type(s):
 
+def _check_type(s):
     if IS_PY3 and not isinstance(s, str):
         raise TypeError('expected str or unicode, got %s' % type(s).__name__)
     elif not IS_PY3 and not isinstance(s, unicode):
         raise TypeError('expected unicode, got %s' % type(s).__name__)
+
 
 def levenshtein_distance(s1, s2):
     _check_type(s1)
@@ -49,7 +50,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     yang_len = len(yang)
 
     if not ying_len or not yang_len:
-        return 0
+        return 0.0
 
     min_len = max(ying_len, yang_len)
     search_range = (min_len // 2) - 1
@@ -72,7 +73,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
     # short circuit if no characters match
     if not common_chars:
-        return 0
+        return 0.0
 
     # count transpositions
     k = trans_count = 0
@@ -161,25 +162,27 @@ def jaro_winkler(s1, s2, long_tolerance=False):
 
 
 def soundex(s):
-    if not s:
-        return s
 
     _check_type(s)
 
-    s = _normalize(s)
+    if not s:
+        return ''
 
-    replacements = (('bfpv', '1'),
-                    ('cgjkqsxz', '2'),
-                    ('dt', '3'),
-                    ('l', '4'),
-                    ('mn', '5'),
-                    ('r', '6'))
+    s = _normalize(s)
+    s = s.upper()
+
+    replacements = (('BFPV', '1'),
+                    ('CGJKQSXZ', '2'),
+                    ('DT', '3'),
+                    ('L', '4'),
+                    ('MN', '5'),
+                    ('R', '6'))
     result = [s[0]]
     count = 1
 
     # find would-be replacment for first character
     for lset, sub in replacements:
-        if s[0].lower() in lset:
+        if s[0] in lset:
             last = sub
             break
     else:
@@ -187,7 +190,7 @@ def soundex(s):
 
     for letter in s[1:]:
         for lset, sub in replacements:
-            if letter.lower() in lset:
+            if letter in lset:
                 if sub != last:
                     result.append(sub)
                     count += 1
@@ -220,10 +223,11 @@ def hamming_distance(s1, s2):
 
 
 def nysiis(s):
-    if not s:
-        return ''
 
     _check_type(s)
+
+    if not s:
+        return ''
 
     s = s.upper()
     key = []
@@ -310,7 +314,7 @@ def nysiis(s):
 
 def match_rating_codex(s):
     _check_type(s)
-    
+
     s = s.upper()
     codex = []
 

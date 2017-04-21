@@ -24,6 +24,8 @@ Written by James Turk <james.p.turk@gmail.com> and Michael Stephens.
 
 See https://github.com/jamesturk/jellyfish/graphs/contributors for contributors.
 
+See http://jellyfish.readthedocs.io for documentation.
+
 Source is available at http://github.com/jamesturk/jellyfish.
 
 Included Algorithms
@@ -64,3 +66,16 @@ Example Usage
 'JALYF'
 >>> jellyfish.match_rating_codex(u'Jellyfish')
 'JLLFSH'
+
+Running Tests
+=============
+
+If you are interested in contributing to Jellyfish, you may want to
+run tests locally. Jellyfish uses tox_ to run tests, which you can
+setup and run as follows::
+
+  pip install tox
+  # cd jellyfish/
+  tox
+
+.. _tox: https://tox.readthedocs.io/en/latest/
