@@ -10,7 +10,7 @@ Levenshtein Distance
 
     Compute the Levenshtein distance between s1 and s2.
 
-Levenshtein distance represents the number of insertions, deletions, and subsititutions required to change one word to another.
+Levenshtein distance represents the number of insertions, deletions, and substitutions required to change one word to another.
 
 For example: ``levenshtein_distance('berne', 'born') == 2`` representing the transformation of the first e to o and the deletion of the second e.
 
