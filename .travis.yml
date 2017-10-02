@@ -5,7 +5,7 @@ python:
   - "3.5"
   - "3.6"
   - "pypy"
-install: pip install -e .
+install: pip install -e . unicodecsv
 script: py.test jellyfish/test.py
 after_success:
     - coveralls
