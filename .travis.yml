@@ -1,6 +1,12 @@
+sudo: false
 language: python
-install: pip install tox
-script: tox
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+  - "pypy"
+install: pip install -e .
+script: py.test jellyfish/test.py
 after_success:
     - coveralls
 notifications:
