@@ -50,7 +50,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     yang_len = len(yang)
 
     if not ying_len or not yang_len:
-        return 0
+        return 0.0
 
     min_len = max(ying_len, yang_len)
     search_range = (min_len // 2) - 1
@@ -73,7 +73,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
     # short circuit if no characters match
     if not common_chars:
-        return 0
+        return 0.0
 
     # count transpositions
     k = trans_count = 0
@@ -162,10 +162,11 @@ def jaro_winkler(s1, s2, long_tolerance=False):
 
 
 def soundex(s):
-    if not s:
-        return s
 
     _check_type(s)
+
+    if not s:
+        return ''
 
     s = _normalize(s)
     s = s.upper()
@@ -222,10 +223,11 @@ def hamming_distance(s1, s2):
 
 
 def nysiis(s):
-    if not s:
-        return ''
 
     _check_type(s)
+
+    if not s:
+        return ''
 
     s = s.upper()
     key = []
@@ -464,7 +466,9 @@ def metaphone(s):
         elif c == 'w':
             if i == 0 and next == 'h':
                 i += 1
-            if nextnext in 'aeiou' or nextnext == '*****':
+                if nextnext in 'aeiou' or nextnext == '*****':
+                    result.append('w')
+            elif next in 'aeiou' or next == '*****':
                 result.append('w')
         elif c == 'x':
             if i == 0:

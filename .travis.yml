@@ -1,13 +1,12 @@
+sudo: false
 language: python
-python: 3.5
-env:
-    - TOX_ENV=py27
-    - TOX_ENV=py33
-    - TOX_ENV=py34
-    - TOX_ENV=py35
-    - TOX_ENV=pypy
-install: pip install tox
-script: tox -e $TOX_ENV
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+  - "pypy"
+install: pip install -e . unicodecsv
+script: py.test jellyfish/test.py
 after_success:
     - coveralls
 notifications:
