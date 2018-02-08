@@ -6,6 +6,9 @@ Overview
 
 jellyfish is a library of functions for approximate and phonetic matching of strings.
 
+Source code is `available on GitHub
+<https://github.com/jamesturk/jellyfish>`_
+
 The library provides implementations of the following algorithms:
 
 .. toctree::
