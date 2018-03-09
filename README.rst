@@ -71,11 +71,9 @@ Running Tests
 =============
 
 If you are interested in contributing to Jellyfish, you may want to
-run tests locally. Jellyfish uses tox_ to run tests, which you can
-setup and run as follows::
+run tests locally::
 
-  pip install tox
-  # cd jellyfish/
-  tox
+  pip install -r requirements-test.txt
+  pytest
 
 .. _tox: https://tox.readthedocs.io/en/latest/
