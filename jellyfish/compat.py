@@ -7,5 +7,5 @@ if IS_PY3:
     _range = range
     _zip_longest = itertools.zip_longest
 else:
-    _range = xrange
+    _range = xrange  # noqa: F821
     _zip_longest = itertools.izip_longest
