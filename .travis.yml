@@ -7,8 +7,8 @@ python:
     - "pypy"
 install:
     - pip install -U pip
-    - pip install -e .
     - pip install -r requirements-test.txt
+    - pip install -e .
 script:
     - flake8 jellyfish/
     - pytest jellyfish/
