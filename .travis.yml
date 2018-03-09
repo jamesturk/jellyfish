@@ -6,7 +6,7 @@ python:
   - "3.6"
   - "pypy"
 install: pip install -e . unicodecsv
-script: py.test jellyfish/test.py
+script: pytest jellyfish/
 after_success:
     - coveralls
 notifications:
