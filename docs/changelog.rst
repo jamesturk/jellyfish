@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.6.0 - April 7 2018
+--------------------
+* fix quite a few bugs & differences between C/Py implementations
+* add wagner-fischer testdata
+* uppercase soundex result
+* better error handling in nysiis, soundex, and jaro
+
 0.5.6 - June 23 2016
 --------------------
 * bugfix for metaphone & soundex raising unexpected TypeErrors on Windows (#54)
