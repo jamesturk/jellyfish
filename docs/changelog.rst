@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.6.1 - April 16 2018
+---------------------
+* fixed wheel release issue
+
 0.6.0 - April 7 2018
 --------------------
 * fix quite a few bugs & differences between C/Py implementations
