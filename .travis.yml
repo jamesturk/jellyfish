@@ -11,4 +11,4 @@ after_success:
     - coveralls
 notifications:
     email:
-        - james.p.turk@gmail.com
+        - dev@jamesturk.net
