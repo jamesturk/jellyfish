@@ -1,6 +1,6 @@
 import unicodedata
 from collections import defaultdict
-from .compat import _range, _zip_longest, IS_PY3
+from itertools import zip_longest
 from .porter import Stemmer
 
 
@@ -9,10 +9,8 @@ def _normalize(s):
 
 
 def _check_type(s):
-    if IS_PY3 and not isinstance(s, str):
+    if not isinstance(s, str):
         raise TypeError('expected str or unicode, got %s' % type(s).__name__)
-    elif not IS_PY3 and not isinstance(s, unicode):
-        raise TypeError('expected unicode, got %s' % type(s).__name__)
 
 
 def levenshtein_distance(s1, s2):
@@ -31,9 +29,9 @@ def levenshtein_distance(s1, s2):
 
     prev = None
     cur = range(cols)
-    for r in _range(1, rows):
+    for r in range(1, rows):
         prev, cur = cur, [r] + [0]*(cols-1)
-        for c in _range(1, cols):
+        for c in range(1, cols):
             deletion = prev[c] + 1
             insertion = cur[c-1] + 1
             edit = prev[c-1] + (0 if s1[r-1] == s2[c-1] else 1)
@@ -65,7 +63,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     for i, ying_ch in enumerate(ying):
         low = i - search_range if i > search_range else 0
         hi = i + search_range if i + search_range < yang_len else yang_len - 1
-        for j in _range(low, hi+1):
+        for j in range(low, hi+1):
             if not yang_flags[j] and yang[j] == ying_ch:
                 ying_flags[i] = yang_flags[j] = True
                 common_chars += 1
@@ -79,7 +77,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     k = trans_count = 0
     for i, ying_f in enumerate(ying_flags):
         if ying_f:
-            for j in _range(k, yang_len):
+            for j in range(k, yang_len):
                 if yang_flags[j]:
                     k = j + 1
                     break
@@ -124,19 +122,19 @@ def damerau_levenshtein_distance(s1, s2):
     da = defaultdict(int)
 
     # distance matrix
-    score = [[0]*(len2+2) for x in _range(len1+2)]
+    score = [[0]*(len2+2) for x in range(len1+2)]
 
     score[0][0] = infinite
-    for i in _range(0, len1+1):
+    for i in range(0, len1+1):
         score[i+1][0] = infinite
         score[i+1][1] = i
-    for i in _range(0, len2+1):
+    for i in range(0, len2+1):
         score[0][i+1] = infinite
         score[1][i+1] = i
 
-    for i in _range(1, len1+1):
+    for i in range(1, len1+1):
         db = 0
-        for j in _range(1, len2+1):
+        for j in range(1, len2+1):
             i1 = da[s2[j-1]]
             j1 = db
             cost = 1
@@ -359,7 +357,7 @@ def match_rating_comparison(s1, s2):
         min_rating = 2
 
     # strip off common prefixes
-    for c1, c2 in _zip_longest(codex1, codex2):
+    for c1, c2 in zip_longest(codex1, codex2):
         if c1 != c2:
             if c1:
                 res1.append(c1)
@@ -367,7 +365,7 @@ def match_rating_comparison(s1, s2):
                 res2.append(c2)
 
     unmatched_count1 = unmatched_count2 = 0
-    for c1, c2 in _zip_longest(reversed(res1), reversed(res2)):
+    for c1, c2 in zip_longest(reversed(res1), reversed(res2)):
         if c1 != c2:
             if c1:
                 unmatched_count1 += 1
