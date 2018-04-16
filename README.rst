@@ -20,7 +20,7 @@ jellyfish
 
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
-Written by James Turk <james.p.turk@gmail.com> and Michael Stephens.
+Written by James Turk <dev@jamesturk.net> and Michael Stephens.
 
 See https://github.com/jamesturk/jellyfish/graphs/contributors for contributors.
 
