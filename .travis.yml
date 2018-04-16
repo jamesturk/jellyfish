@@ -3,7 +3,7 @@ language: python
 python:
   - "3.5"
   - "3.6"
-  - "pypy"
+  - "pypy3"
 install: pip install -e . unicodecsv
 script: py.test jellyfish/test.py
 after_success:
