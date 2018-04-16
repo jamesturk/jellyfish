@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.7.0 - 
+--------
+* drop Python 2 compatibility & legacy code
+
 0.6.1 - April 16 2018
 ---------------------
 * fixed wheel release issue
