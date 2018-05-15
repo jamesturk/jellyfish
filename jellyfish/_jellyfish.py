@@ -11,7 +11,7 @@ def _normalize(s):
 def _check_type(s):
     if IS_PY3 and not isinstance(s, str):
         raise TypeError('expected str or unicode, got %s' % type(s).__name__)
-    elif not IS_PY3 and not isinstance(s, unicode):
+    elif not IS_PY3 and not isinstance(s, unicode):  # noqa: F821
         raise TypeError('expected unicode, got %s' % type(s).__name__)
 
 
