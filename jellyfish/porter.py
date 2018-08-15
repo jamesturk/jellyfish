@@ -1,5 +1,3 @@
-from .compat import _range
-
 _s2_options = {
     'a': ((['a', 't', 'i', 'o', 'n', 'a', 'l'], ['a', 't', 'e']),
           (['t', 'i', 'o', 'n', 'a', 'l'], ['t', 'i', 'o', 'n'])),
@@ -96,7 +94,7 @@ class Stemmer(object):
 
     def vowel_in_stem(self):
         """ True iff 0...j contains vowel """
-        for i in _range(0, self.j+1):
+        for i in range(0, self.j+1):
             if not self.cons(i):
                 return True
         return False

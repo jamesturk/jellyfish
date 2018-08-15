@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
-if sys.version_info[0] < 3:
-    import unicodecsv as csv
-    open_kwargs = {}
-else:
-    import csv
-    open_kwargs = {'encoding': 'utf8'}
+import csv
 import platform
 import pytest
 
+open_kwargs = {'encoding': 'utf8'}
 
 def assertAlmostEqual(a, b, places=3):
     assert abs(a - b) < (0.1**places)
