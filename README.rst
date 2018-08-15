@@ -28,6 +28,8 @@ See http://jellyfish.readthedocs.io for documentation.
 
 Source is available at http://github.com/jamesturk/jellyfish.
 
+**Jellyfish >= 0.7 only supports Python 3, if you need Python 2 please use 0.6.x.**
+
 Included Algorithms
 ===================
 
