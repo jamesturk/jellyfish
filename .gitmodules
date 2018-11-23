@@ -3,4 +3,4 @@
 	url = https://github.com/jamesturk/jellyfish-testdata.git
 [submodule "cjellyfish"]
 	path = cjellyfish
-	url = https://github.com/jamesturk/cjellyfish.git
+	url = https://github.com/immerrr/cjellyfish.git
