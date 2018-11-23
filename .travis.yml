@@ -4,7 +4,9 @@ python:
   - "3.5"
   - "3.6"
   - "pypy3"
-install: pip install -e .
+install:
+  - python setup.py build_ext --inplace
+  - pip install -e .
 script: py.test jellyfish/test.py
 after_success:
     - coveralls
