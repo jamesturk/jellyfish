@@ -1,5 +1,5 @@
 =========
-jellyfish
+Jellyfish
 =========
 
 .. image:: https://travis-ci.org/jamesturk/jellyfish.svg?branch=master
@@ -18,15 +18,15 @@ jellyfish
 .. image:: https://ci.appveyor.com/api/projects/status/9xeyl1f5sd5pl40h?svg=true
     :target: https://ci.appveyor.com/project/jamesturk/jellyfish/
 
-Jellyfish is a python library for doing approximate and phonetic matching of strings.
+Jellyfish is a Python library for doing approximate and phonetic matching of strings.
 
 Written by James Turk <dev@jamesturk.net> and Michael Stephens.
 
-See https://github.com/jamesturk/jellyfish/graphs/contributors for contributors.
+Contributors listed in https://github.com/jamesturk/jellyfish/graphs/contributors
 
-See http://jellyfish.readthedocs.io for documentation.
+Documentation accessible at http://jellyfish.readthedocs.io
 
-Source is available at http://github.com/jamesturk/jellyfish.
+Source code available at http://github.com/jamesturk/jellyfish
 
 **Jellyfish >= 0.7 only supports Python 3, if you need Python 2 please use 0.6.x.**
 
@@ -73,11 +73,11 @@ Running Tests
 =============
 
 If you are interested in contributing to Jellyfish, you may want to
-run tests locally. Jellyfish uses tox_ to run tests, which you can
-setup and run as follows::
+run tests locally. Jellyfish uses Tox_ to run tests, which you can
+set up and run as follows::
 
   pip install tox
   # cd jellyfish/
   tox
 
-.. _tox: https://tox.readthedocs.io/en/latest/
+.. _Tox: https://tox.readthedocs.io/en/latest/
