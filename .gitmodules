@@ -1,6 +1,6 @@
 [submodule "testdata"]
 	path = testdata
-	url = https://github.com/jamesturk/jellyfish-testdata.git
+	url = https://github.com/ahood/jellyfish-testdata.git
 [submodule "cjellyfish"]
 	path = cjellyfish
-	url = https://github.com/jamesturk/cjellyfish.git
+	url = https://github.com/ahood/cjellyfish.git
