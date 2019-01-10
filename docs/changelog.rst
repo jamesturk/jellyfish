@@ -1,9 +1,10 @@
 Changelog
 =========
 
-0.7.0 - 
---------
+0.7.0 - 10 January 2019
+-----------------------
 * drop Python 2 compatibility & legacy code
+* add bugfix for NYSIIS for words starting with PF
 
 0.6.1 - April 16 2018
 ---------------------
