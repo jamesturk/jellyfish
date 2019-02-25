@@ -39,6 +39,15 @@ def levenshtein_distance(s1, s2):
 
     return cur[-1]
 
+def metric_traversal(strings,key=len,metric=lambda x,y: levenshtein_distance(x.lower(),y.lower())):
+    samp = sorted(list(strings),key=key)
+    if samp == []: return
+    c = samp.pop(0)
+    yield c
+    while samp!=[]:
+        c = min(samp,key=lambda x: metric(c,x))
+        samp.remove(c)
+        yield c
 
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     _check_type(ying)
