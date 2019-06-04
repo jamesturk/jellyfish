@@ -1,9 +1,9 @@
 sudo: false
 language: python
+dist: xenial
 python:
   - "3.5"
   - "3.6"
-  - "3.7"
   - "pypy3"
 install: pip install -e .
 script: py.test jellyfish/test.py
