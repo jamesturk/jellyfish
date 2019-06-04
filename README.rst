@@ -2,8 +2,8 @@
 jellyfish
 =========
 
-.. image:: https://travis-ci.org/jamesturk/jellyfish.svg?branch=master
-    :target: https://travis-ci.org/jamesturk/jellyfish
+.. image:: https://travis-ci.com/jamesturk/jellyfish.svg?branch=master
+    :target: https://travis-ci.com/jamesturk/jellyfish
 
 .. image:: https://coveralls.io/repos/jamesturk/jellyfish/badge.png?branch=master
     :target: https://coveralls.io/r/jamesturk/jellyfish
