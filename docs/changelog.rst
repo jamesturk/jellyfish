@@ -4,6 +4,7 @@ Changelog
 0.7.2 - WIP
 -----------------------
 * fix CJellyfish damerau_levenshtein w/ unicode, thanks to immerrr
+* fix final H in NYSIIS
 
 0.7.1 - 10 January 2019
 -----------------------
