@@ -1,10 +1,11 @@
 Changelog
 =========
 
-0.7.2 - WIP
+0.7.2 - 5 June 2019
 -----------------------
 * fix CJellyfish damerau_levenshtein w/ unicode, thanks to immerrr
 * fix final H in NYSIIS
+* fix issue w/ trailing W in metaphone
 
 0.7.1 - 10 January 2019
 -----------------------
