@@ -278,7 +278,7 @@ def nysiis(s):
         elif ch == 'P' and i+1 < len(s) and s[i+1] == 'H':
             ch = 'F'
             i += 1
-        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and s[i+1] not in 'AEIOU')):
+        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and s[i+1] not in 'AEIOU') or (i+1 == len(s))):
             if s[i-1] in 'AEIOU':
                 ch = 'A'
             else:
