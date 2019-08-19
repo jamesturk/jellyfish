@@ -23,4 +23,5 @@ jobs:
         pip install -e .
     - name: Test with pytest
       run: |
-        py.test jellyfish/test.py
+        pip install pytest
+        pytest jellyfish/test.py
