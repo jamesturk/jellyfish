@@ -23,7 +23,7 @@ Damerau-Levenshtein Distance
 
     Compute the Damerau-Levenshtein distance between s1 and s2.
 
-A modification of Levenshtein distance, Damerau-Levenshtein distance counts transpositions (such as ifhs for fish) as a single edit.
+A modification of Levenshtein distance, Damerau-Levenshtein distance counts transpositions (such as ifsh for fish) as a single edit.
 
 Where ``levenshtein_distance('fish', 'ifsh') == 2`` as it would require a deletion and an insertion,
 though ``damerau_levenshtein_distance('fish', 'ifsh') == 1`` as this counts as a transposition.
