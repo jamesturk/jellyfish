@@ -1,6 +1,7 @@
 import unicodedata
 from collections import defaultdict
 from itertools import zip_longest
+import warnings
 from .porter import Stemmer
 
 
@@ -155,7 +156,7 @@ def jaro_distance(s1, s2):
     return _jaro_winkler(s1, s2, False, False)
 
 
-def jaro_winkler(s1, s2, long_tolerance=False):
+def jaro_winkler_distance(s1, s2, long_tolerance=False):
     return _jaro_winkler(s1, s2, long_tolerance, True)
 
 

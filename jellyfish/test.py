@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 import csv
 import platform
 import pytest
@@ -32,9 +31,16 @@ def _load_data(name):
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('jaro_winkler'), ids=str)
-def test_jaro_winkler(jf, s1, s2, value):
+def test_jaro_winkler_distance(jf, s1, s2, value):
     value = float(value)
-    assertAlmostEqual(jf.jaro_winkler(s1, s2), value, places=3)
+    assertAlmostEqual(jf.jaro_winkler_distance(s1, s2), value, places=3)
+
+
+def test_jaro_winkler_deprecation(jf):
+    # backwards compatibility function
+    from jellyfish import jaro_winkler
+    with pytest.deprecated_call():
+        assert jaro_winkler("a", "a") == 1
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('jaro_distance'), ids=str)
@@ -122,8 +128,8 @@ if platform.python_implementation() == 'CPython':
 
 
 def test_jaro_winkler_long_tolerance(jf):
-    no_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=False)
-    with_lt = jf.jaro_winkler(u'two long strings', u'two long stringz', long_tolerance=True)
+    no_lt = jf.jaro_winkler_distance(u'two long strings', u'two long stringz', long_tolerance=False)
+    with_lt = jf.jaro_winkler_distance(u'two long strings', u'two long stringz', long_tolerance=True)
     # make sure long_tolerance does something
     assertAlmostEqual(no_lt, 0.975)
     assertAlmostEqual(with_lt, 0.984)
@@ -151,9 +157,9 @@ def test_jaro_distance_type(jf):
 
 
 def test_jaro_winkler_type(jf):
-    assert jf.jaro_winkler(u'abc', u'abc') == 1
+    assert jf.jaro_winkler_distance(u'abc', u'abc') == 1
     with pytest.raises(TypeError) as exc:
-        jf.jaro_winkler(b'abc', b'abc')
+        jf.jaro_winkler_distance(b'abc', b'abc')
     assert 'expected' in str(exc.value)
 
 
