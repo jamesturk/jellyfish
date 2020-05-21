@@ -5,10 +5,11 @@ Changelog
 ----------
 * rename jaro_winkler to jaro_winkler_distance to match other functions
   backwards compatible shim added, but will be removed in 1.0
-* fix Python jaro_winkler bug #124
 * fix soundex bug with W/H cases, #83
 * fix metaphone bug with WH prefix, #108
+* fix C match rating codex bug with duplicate letters, #121
 * fix metaphone bug with leading vowels and 'kn' pair, #123
+* fix Python jaro_winkler bug #124
 * fix Python 3.9 deprecation warning
 
 0.7.2 - 5 June 2019
