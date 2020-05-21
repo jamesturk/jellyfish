@@ -1,9 +1,15 @@
 Changelog
 =========
 
+0.8.1 - 21 May 2020
+-------------------
+* fix jaro_winkler/jaro_winkler_similarity mix-up
+* deprecate jaro_distance in favor of jaro_similarity
+  backwards compatible shim left in place, will be removed in 1.0
+
 0.8.0 - 21 May 2020
 -------------------
-* rename jaro_winkler to jaro_winkler_distance to match other functions
+* rename jaro_winkler to jaro_winkler_similarity to match other functions
   backwards compatible shim added, but will be removed in 1.0
 * fix soundex bug with W/H cases, #83
 * fix metaphone bug with WH prefix, #108
