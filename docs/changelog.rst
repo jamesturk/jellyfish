@@ -1,11 +1,12 @@
 Changelog
 =========
 
-0.8.1 - 21 May 2020
+0.8.2 - 21 May 2020
 -------------------
 * fix jaro_winkler/jaro_winkler_similarity mix-up
 * deprecate jaro_distance in favor of jaro_similarity
   backwards compatible shim left in place, will be removed in 1.0
+* (note: 0.8.1 was a broken release without proper C libraries)
 
 0.8.0 - 21 May 2020
 -------------------
