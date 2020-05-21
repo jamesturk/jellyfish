@@ -467,8 +467,7 @@ def metaphone(s):
         elif c == 'w':
             if i == 0 and next == 'h':
                 i += 1
-                if nextnext in 'aeiou' or nextnext == '*****':
-                    result.append('w')
+                result.append('w')
             elif next in 'aeiou':
                 result.append('w')
         elif c == 'x':
