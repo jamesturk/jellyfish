@@ -1,17 +1,16 @@
 import unicodedata
 from collections import defaultdict
 from itertools import zip_longest
-import warnings
 from .porter import Stemmer
 
 
 def _normalize(s):
-    return unicodedata.normalize('NFKD', s)
+    return unicodedata.normalize("NFKD", s)
 
 
 def _check_type(s):
     if not isinstance(s, str):
-        raise TypeError('expected str or unicode, got %s' % type(s).__name__)
+        raise TypeError("expected str or unicode, got %s" % type(s).__name__)
 
 
 def levenshtein_distance(s1, s2):
@@ -20,22 +19,22 @@ def levenshtein_distance(s1, s2):
 
     if s1 == s2:
         return 0
-    rows = len(s1)+1
-    cols = len(s2)+1
+    rows = len(s1) + 1
+    cols = len(s2) + 1
 
     if not s1:
-        return cols-1
+        return cols - 1
     if not s2:
-        return rows-1
+        return rows - 1
 
     prev = None
     cur = range(cols)
     for r in range(1, rows):
-        prev, cur = cur, [r] + [0]*(cols-1)
+        prev, cur = cur, [r] + [0] * (cols - 1)
         for c in range(1, cols):
             deletion = prev[c] + 1
-            insertion = cur[c-1] + 1
-            edit = prev[c-1] + (0 if s1[r-1] == s2[c-1] else 1)
+            insertion = cur[c - 1] + 1
+            edit = prev[c - 1] + (0 if s1[r - 1] == s2[c - 1] else 1)
             cur[c] = min(edit, deletion, insertion)
 
     return cur[-1]
@@ -56,15 +55,15 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
     if search_range < 0:
         search_range = 0
 
-    s1_flags = [False]*s1_len
-    s2_flags = [False]*s2_len
+    s1_flags = [False] * s1_len
+    s2_flags = [False] * s2_len
 
     # looking only within search range, count & flag matched pairs
     common_chars = 0
     for i, s1_ch in enumerate(s1):
         low = max(0, i - search_range)
         hi = min(i + search_range, s2_len - 1)
-        for j in range(low, hi+1):
+        for j in range(low, hi + 1):
             if not s2_flags[j] and s2[j] == s1_ch:
                 s1_flags[i] = s2_flags[j] = True
                 common_chars += 1
@@ -88,8 +87,13 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
 
     # adjust for similarities in nonmatched characters
     common_chars = float(common_chars)
-    weight = ((common_chars/s1_len + common_chars/s2_len +
-              (common_chars-trans_count) / common_chars)) / 3
+    weight = (
+        (
+            common_chars / s1_len
+            + common_chars / s2_len
+            + (common_chars - trans_count) / common_chars
+        )
+    ) / 3
 
     # winkler modification: continue to boost if strings are similar
     if winklerize and weight > 0.7 and s1_len > 3 and s2_len > 3:
@@ -104,9 +108,15 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
         # optionally adjust for long strings
         # after agreeing beginning chars, at least two or more must agree and
         # agreed characters must be > half of remaining characters
-        if (long_tolerance and min_len > 4 and common_chars > i+1 and
-                2 * common_chars >= min_len + i):
-            weight += ((1.0 - weight) * (float(common_chars-i-1) / float(s1_len+s2_len-i*2+2)))
+        if (
+            long_tolerance
+            and min_len > 4
+            and common_chars > i + 1
+            and 2 * common_chars >= min_len + i
+        ):
+            weight += (1.0 - weight) * (
+                float(common_chars - i - 1) / float(s1_len + s2_len - i * 2 + 2)
+            )
 
     return weight
 
@@ -123,33 +133,35 @@ def damerau_levenshtein_distance(s1, s2):
     da = defaultdict(int)
 
     # distance matrix
-    score = [[0]*(len2+2) for x in range(len1+2)]
+    score = [[0] * (len2 + 2) for x in range(len1 + 2)]
 
     score[0][0] = infinite
-    for i in range(0, len1+1):
-        score[i+1][0] = infinite
-        score[i+1][1] = i
-    for i in range(0, len2+1):
-        score[0][i+1] = infinite
-        score[1][i+1] = i
+    for i in range(0, len1 + 1):
+        score[i + 1][0] = infinite
+        score[i + 1][1] = i
+    for i in range(0, len2 + 1):
+        score[0][i + 1] = infinite
+        score[1][i + 1] = i
 
-    for i in range(1, len1+1):
+    for i in range(1, len1 + 1):
         db = 0
-        for j in range(1, len2+1):
-            i1 = da[s2[j-1]]
+        for j in range(1, len2 + 1):
+            i1 = da[s2[j - 1]]
             j1 = db
             cost = 1
-            if s1[i-1] == s2[j-1]:
+            if s1[i - 1] == s2[j - 1]:
                 cost = 0
                 db = j
 
-            score[i+1][j+1] = min(score[i][j] + cost,
-                                  score[i+1][j] + 1,
-                                  score[i][j+1] + 1,
-                                  score[i1][j1] + (i-i1-1) + 1 + (j-j1-1))
-        da[s1[i-1]] = i
+            score[i + 1][j + 1] = min(
+                score[i][j] + cost,
+                score[i + 1][j] + 1,
+                score[i][j + 1] + 1,
+                score[i1][j1] + (i - i1 - 1) + 1 + (j - j1 - 1),
+            )
+        da[s1[i - 1]] = i
 
-    return score[len1+1][len2+1]
+    return score[len1 + 1][len2 + 1]
 
 
 def jaro_distance(s1, s2):
@@ -165,17 +177,19 @@ def soundex(s):
     _check_type(s)
 
     if not s:
-        return ''
+        return ""
 
     s = _normalize(s)
     s = s.upper()
 
-    replacements = (('BFPV', '1'),
-                    ('CGJKQSXZ', '2'),
-                    ('DT', '3'),
-                    ('L', '4'),
-                    ('MN', '5'),
-                    ('R', '6'))
+    replacements = (
+        ("BFPV", "1"),
+        ("CGJKQSXZ", "2"),
+        ("DT", "3"),
+        ("L", "4"),
+        ("MN", "5"),
+        ("R", "6"),
+    )
     result = [s[0]]
     count = 1
 
@@ -202,8 +216,8 @@ def soundex(s):
         if count == 4:
             break
 
-    result += '0'*(4-count)
-    return ''.join(result)
+    result += "0" * (4 - count)
+    return "".join(result)
 
 
 def hamming_distance(s1, s2):
@@ -228,28 +242,28 @@ def nysiis(s):
     _check_type(s)
 
     if not s:
-        return ''
+        return ""
 
     s = s.upper()
     key = []
 
     # step 1 - prefixes
-    if s.startswith('MAC'):
-        s = 'MCC' + s[3:]
-    elif s.startswith('KN'):
+    if s.startswith("MAC"):
+        s = "MCC" + s[3:]
+    elif s.startswith("KN"):
         s = s[1:]
-    elif s.startswith('K'):
-        s = 'C' + s[1:]
-    elif s.startswith(('PH', 'PF')):
-        s = 'FF' + s[2:]
-    elif s.startswith('SCH'):
-        s = 'SSS' + s[3:]
+    elif s.startswith("K"):
+        s = "C" + s[1:]
+    elif s.startswith(("PH", "PF")):
+        s = "FF" + s[2:]
+    elif s.startswith("SCH"):
+        s = "SSS" + s[3:]
 
     # step 2 - suffixes
-    if s.endswith(('IE', 'EE')):
-        s = s[:-2] + 'Y'
-    elif s.endswith(('DT', 'RT', 'RD', 'NT', 'ND')):
-        s = s[:-2] + 'D'
+    if s.endswith(("IE", "EE")):
+        s = s[:-2] + "Y"
+    elif s.endswith(("DT", "RT", "RD", "NT", "ND")):
+        s = s[:-2] + "D"
 
     # step 3 - first character of key comes from name
     key.append(s[0])
@@ -259,53 +273,57 @@ def nysiis(s):
     len_s = len(s)
     while i < len_s:
         ch = s[i]
-        if ch == 'E' and i+1 < len_s and s[i+1] == 'V':
-            ch = 'AF'
+        if ch == "E" and i + 1 < len_s and s[i + 1] == "V":
+            ch = "AF"
             i += 1
-        elif ch in 'AEIOU':
-            ch = 'A'
-        elif ch == 'Q':
-            ch = 'G'
-        elif ch == 'Z':
-            ch = 'S'
-        elif ch == 'M':
-            ch = 'N'
-        elif ch == 'K':
-            if i+1 < len(s) and s[i+1] == 'N':
-                ch = 'N'
+        elif ch in "AEIOU":
+            ch = "A"
+        elif ch == "Q":
+            ch = "G"
+        elif ch == "Z":
+            ch = "S"
+        elif ch == "M":
+            ch = "N"
+        elif ch == "K":
+            if i + 1 < len(s) and s[i + 1] == "N":
+                ch = "N"
             else:
-                ch = 'C'
-        elif ch == 'S' and s[i+1:i+3] == 'CH':
-            ch = 'SS'
+                ch = "C"
+        elif ch == "S" and s[i + 1 : i + 3] == "CH":
+            ch = "SS"
             i += 2
-        elif ch == 'P' and i+1 < len(s) and s[i+1] == 'H':
-            ch = 'F'
+        elif ch == "P" and i + 1 < len(s) and s[i + 1] == "H":
+            ch = "F"
             i += 1
-        elif ch == 'H' and (s[i-1] not in 'AEIOU' or (i+1 < len(s) and s[i+1] not in 'AEIOU') or (i+1 == len(s))):
-            if s[i-1] in 'AEIOU':
-                ch = 'A'
+        elif ch == "H" and (
+            s[i - 1] not in "AEIOU"
+            or (i + 1 < len(s) and s[i + 1] not in "AEIOU")
+            or (i + 1 == len(s))
+        ):
+            if s[i - 1] in "AEIOU":
+                ch = "A"
             else:
-                ch = s[i-1]
-        elif ch == 'W' and s[i-1] in 'AEIOU':
-            ch = s[i-1]
+                ch = s[i - 1]
+        elif ch == "W" and s[i - 1] in "AEIOU":
+            ch = s[i - 1]
 
         if ch[-1] != key[-1][-1]:
             key.append(ch)
 
         i += 1
 
-    key = ''.join(key)
+    key = "".join(key)
 
     # step 5 - remove trailing S
-    if key.endswith('S') and key != 'S':
+    if key.endswith("S") and key != "S":
         key = key[:-1]
 
     # step 6 - replace AY w/ Y
-    if key.endswith('AY'):
-        key = key[:-2] + 'Y'
+    if key.endswith("AY"):
+        key = key[:-2] + "Y"
 
     # step 7 - remove trailing A
-    if key.endswith('A') and key != 'A':
+    if key.endswith("A") and key != "A":
         key = key[:-1]
 
     # step 8 was already done
@@ -324,16 +342,16 @@ def match_rating_codex(s):
         # not a space OR
         # starting character & vowel
         # or consonant not preceded by same consonant
-        if (c != ' ' and (i == 0 and c in 'AEIOU') or (c not in 'AEIOU' and c != prev)):
+        if c != " " and (i == 0 and c in "AEIOU") or (c not in "AEIOU" and c != prev):
             codex.append(c)
 
         prev = c
 
     # just use first/last 3
     if len(codex) > 6:
-        return ''.join(codex[:3]+codex[-3:])
+        return "".join(codex[:3] + codex[-3:])
     else:
-        return ''.join(codex)
+        return "".join(codex)
 
 
 def match_rating_comparison(s1, s2):
@@ -345,7 +363,7 @@ def match_rating_comparison(s1, s2):
     res2 = []
 
     # length differs by 3 or more, no result
-    if abs(len1-len2) >= 3:
+    if abs(len1 - len2) >= 3:
         return None
 
     # get minimum rating based on sums of codexes
@@ -386,113 +404,113 @@ def metaphone(s):
     s = _normalize(s.lower())
 
     # skip first character if s starts with these
-    if s.startswith(('kn', 'gn', 'pn', 'wr', 'ae')):
+    if s.startswith(("kn", "gn", "pn", "wr", "ae")):
         s = s[1:]
 
     i = 0
 
     while i < len(s):
         c = s[i]
-        next = s[i+1] if i < len(s)-1 else '*****'
-        nextnext = s[i+2] if i < len(s)-2 else '*****'
+        next = s[i + 1] if i < len(s) - 1 else "*****"
+        nextnext = s[i + 2] if i < len(s) - 2 else "*****"
 
         # skip doubles except for cc
-        if c == next and c != 'c':
+        if c == next and c != "c":
             i += 1
             continue
 
-        if c in 'aeiou':
-            if i == 0 or s[i-1] == ' ':
+        if c in "aeiou":
+            if i == 0 or s[i - 1] == " ":
                 result.append(c)
-        elif c == 'b':
-            if (not (i != 0 and s[i-1] == 'm')) or next:
-                result.append('b')
-        elif c == 'c':
-            if next == 'i' and nextnext == 'a' or next == 'h':
-                result.append('x')
+        elif c == "b":
+            if (not (i != 0 and s[i - 1] == "m")) or next:
+                result.append("b")
+        elif c == "c":
+            if next == "i" and nextnext == "a" or next == "h":
+                result.append("x")
                 i += 1
-            elif next in 'iey':
-                result.append('s')
+            elif next in "iey":
+                result.append("s")
                 i += 1
             else:
-                result.append('k')
-        elif c == 'd':
-            if next == 'g' and nextnext in 'iey':
-                result.append('j')
+                result.append("k")
+        elif c == "d":
+            if next == "g" and nextnext in "iey":
+                result.append("j")
                 i += 2
             else:
-                result.append('t')
-        elif c in 'fjlmnr':
+                result.append("t")
+        elif c in "fjlmnr":
             result.append(c)
-        elif c == 'g':
-            if next in 'iey':
-                result.append('j')
-            elif next == 'h' and nextnext and nextnext not in 'aeiou':
+        elif c == "g":
+            if next in "iey":
+                result.append("j")
+            elif next == "h" and nextnext and nextnext not in "aeiou":
                 i += 1
-            elif next == 'n' and not nextnext:
-                i += 1
-            else:
-                result.append('k')
-        elif c == 'h':
-            if i == 0 or next in 'aeiou' or s[i-1] not in 'aeiou':
-                result.append('h')
-        elif c == 'k':
-            if i == 0 or s[i-1] != 'c':
-                result.append('k')
-        elif c == 'p':
-            if next == 'h':
-                result.append('f')
+            elif next == "n" and not nextnext:
                 i += 1
             else:
-                result.append('p')
-        elif c == 'q':
-            result.append('k')
-        elif c == 's':
-            if next == 'h':
-                result.append('x')
+                result.append("k")
+        elif c == "h":
+            if i == 0 or next in "aeiou" or s[i - 1] not in "aeiou":
+                result.append("h")
+        elif c == "k":
+            if i == 0 or s[i - 1] != "c":
+                result.append("k")
+        elif c == "p":
+            if next == "h":
+                result.append("f")
                 i += 1
-            elif next == 'i' and nextnext in 'oa':
-                result.append('x')
+            else:
+                result.append("p")
+        elif c == "q":
+            result.append("k")
+        elif c == "s":
+            if next == "h":
+                result.append("x")
+                i += 1
+            elif next == "i" and nextnext in "oa":
+                result.append("x")
                 i += 2
             else:
-                result.append('s')
-        elif c == 't':
-            if next == 'i' and nextnext in 'oa':
-                result.append('x')
-            elif next == 'h':
-                result.append('0')
+                result.append("s")
+        elif c == "t":
+            if next == "i" and nextnext in "oa":
+                result.append("x")
+            elif next == "h":
+                result.append("0")
                 i += 1
-            elif next != 'c' or nextnext != 'h':
-                result.append('t')
-        elif c == 'v':
-            result.append('f')
-        elif c == 'w':
-            if i == 0 and next == 'h':
+            elif next != "c" or nextnext != "h":
+                result.append("t")
+        elif c == "v":
+            result.append("f")
+        elif c == "w":
+            if i == 0 and next == "h":
                 i += 1
-                result.append('w')
-            elif next in 'aeiou':
-                result.append('w')
-        elif c == 'x':
+                result.append("w")
+            elif next in "aeiou":
+                result.append("w")
+        elif c == "x":
             if i == 0:
-                if next == 'h' or (next == 'i' and nextnext in 'oa'):
-                    result.append('x')
+                if next == "h" or (next == "i" and nextnext in "oa"):
+                    result.append("x")
                 else:
-                    result.append('s')
+                    result.append("s")
             else:
-                result.append('k')
-                result.append('s')
-        elif c == 'y':
-            if next in 'aeiou':
-                result.append('y')
-        elif c == 'z':
-            result.append('s')
-        elif c == ' ':
-            if len(result) > 0 and result[-1] != ' ':
-                result.append(' ')
+                result.append("k")
+                result.append("s")
+        elif c == "y":
+            if next in "aeiou":
+                result.append("y")
+        elif c == "z":
+            result.append("s")
+        elif c == " ":
+            if len(result) > 0 and result[-1] != " ":
+                result.append(" ")
 
         i += 1
 
-    return ''.join(result).upper()
+    return "".join(result).upper()
 
 
 def porter_stem(s):
