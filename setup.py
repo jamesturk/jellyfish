@@ -95,7 +95,7 @@ def run_setup(build_c):
         long_description = readme.read()
 
     setup(name="jellyfish",
-          version="0.7.2",
+          version="0.7.3",
           python_requires=">3.4",
           platforms=["any"],
           description=("a library for doing approximate and "
