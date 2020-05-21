@@ -32,9 +32,9 @@ def _load_data(name):
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data("jaro_winkler"), ids=str)
-def test_jaro_winkler_distance(jf, s1, s2, value):
+def test_jaro_winkler_similarity(jf, s1, s2, value):
     value = float(value)
-    assertAlmostEqual(jf.jaro_winkler_distance(s1, s2), value, places=3)
+    assertAlmostEqual(jf.jaro_winkler_similarity(s1, s2), value, places=3)
 
 
 def test_jaro_winkler_deprecation(jf):
@@ -45,10 +45,18 @@ def test_jaro_winkler_deprecation(jf):
         assert jaro_winkler("a", "a") == 1
 
 
+def test_jaro_distance_deprecation():
+    # backwards compatibility function
+    from jellyfish import jaro_distance
+
+    with pytest.deprecated_call():
+        assert jaro_distance("a", "a") == 1
+
+
 @pytest.mark.parametrize("s1,s2,value", _load_data("jaro_distance"), ids=str)
-def test_jaro_distance(jf, s1, s2, value):
+def test_jaro_similarity(jf, s1, s2, value):
     value = float(value)
-    assertAlmostEqual(jf.jaro_distance(s1, s2), value, places=3)
+    assertAlmostEqual(jf.jaro_similarity(s1, s2), value, places=3)
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data("hamming"), ids=str)
@@ -136,10 +144,10 @@ if platform.python_implementation() == "CPython":
 
 
 def test_jaro_winkler_long_tolerance(jf):
-    no_lt = jf.jaro_winkler_distance(
+    no_lt = jf.jaro_winkler_similarity(
         u"two long strings", u"two long stringz", long_tolerance=False
     )
-    with_lt = jf.jaro_winkler_distance(
+    with_lt = jf.jaro_winkler_similarity(
         u"two long strings", u"two long stringz", long_tolerance=True
     )
     # make sure long_tolerance does something
@@ -161,17 +169,17 @@ def test_levenshtein_distance_type(jf):
     assert "expected" in str(exc.value)
 
 
-def test_jaro_distance_type(jf):
-    assert jf.jaro_distance(u"abc", u"abc") == 1
+def test_jaro_similarity_type(jf):
+    assert jf.jaro_similarity(u"abc", u"abc") == 1
     with pytest.raises(TypeError) as exc:
-        jf.jaro_distance(b"abc", b"abc")
+        jf.jaro_similarity(b"abc", b"abc")
     assert "expected" in str(exc.value)
 
 
 def test_jaro_winkler_type(jf):
-    assert jf.jaro_winkler_distance(u"abc", u"abc") == 1
+    assert jf.jaro_winkler_similarity(u"abc", u"abc") == 1
     with pytest.raises(TypeError) as exc:
-        jf.jaro_winkler_distance(b"abc", b"abc")
+        jf.jaro_winkler_similarity(b"abc", b"abc")
     assert "expected" in str(exc.value)
 
 
