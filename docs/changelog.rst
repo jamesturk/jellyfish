@@ -5,6 +5,7 @@ Changelog
 0.7.3
 ---------
 * fix Python jaro_winkler bug #124
+* fix Soundex bug with W/H cases, #83
 * fix Python 3.9 deprecation warning
 
 0.7.2 - 5 June 2019
