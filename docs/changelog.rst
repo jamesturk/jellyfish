@@ -11,6 +11,7 @@ Changelog
 * fix metaphone bug with leading vowels and 'kn' pair, #123
 * fix Python jaro_winkler bug #124
 * fix Python 3.9 deprecation warning
+* add manylinux wheels
 
 0.7.2 - 5 June 2019
 -----------------------
