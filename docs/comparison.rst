@@ -54,7 +54,7 @@ Jaro Similarity
 Jaro distance is a string-edit distance that gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.
 
 .. warning:: 
-  Prior to 0.8.1 this function was named jaro_distance.  That name is still available, but no longer functions as expected.
+  Prior to 0.8.1 this function was named jaro_distance.  That name is still available, but is no longer recommended.
   It will be replaced in 1.0 with a correct version.
 
 Jaro-Winkler Similarity
@@ -67,7 +67,7 @@ Jaro-Winkler Similarity
 Jaro-Winkler is a modification/improvement to Jaro distance, like Jaro it gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.
 
 .. warning:: 
-  Prior to 0.8.1 this function was named jaro_winkler.  That name is still available, but no longer functions as expected.
+  Prior to 0.8.1 this function was named jaro_winkler.  That name is still available, but is no longer recommended.
   It will be replaced in 1.0 with a correct version.
 
 See the `Jaro-Winkler distance article at Wikipedia <http://en.wikipedia.org/wiki/Jaro-Winkler_distance>`_ for more details.
