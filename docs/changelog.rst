@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.8.0 - 
-----------
+0.8.0 - 21 May 2020
+-------------------
 * rename jaro_winkler to jaro_winkler_distance to match other functions
   backwards compatible shim added, but will be removed in 1.0
 * fix soundex bug with W/H cases, #83
