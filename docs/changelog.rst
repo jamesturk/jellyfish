@@ -1,9 +1,10 @@
 Changelog
 =========
 
-
-0.7.3
----------
+0.8.0 - 
+----------
+* rename jaro_winkler to jaro_winkler_distance to match other functions
+  backwards compatible shim added, but will be removed in 1.0
 * fix Python jaro_winkler bug #124
 * fix Soundex bug with W/H cases, #83
 * fix Python 3.9 deprecation warning
