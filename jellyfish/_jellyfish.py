@@ -121,6 +121,14 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
     return weight
 
 
+def jaro_similarity(s1, s2):
+    return _jaro_winkler(s1, s2, False, False)  # noqa
+
+
+def jaro_winkler_similarity(s1, s2, long_tolerance=False):
+    return _jaro_winkler(s1, s2, long_tolerance, True)  # noqa
+
+
 def damerau_levenshtein_distance(s1, s2):
     _check_type(s1)
     _check_type(s2)
@@ -162,14 +170,6 @@ def damerau_levenshtein_distance(s1, s2):
         da[s1[i - 1]] = i
 
     return score[len1 + 1][len2 + 1]
-
-
-def jaro_distance(s1, s2):
-    return _jaro_winkler(s1, s2, False, False)
-
-
-def jaro_winkler_distance(s1, s2, long_tolerance=False):
-    return _jaro_winkler(s1, s2, long_tolerance, True)
 
 
 def soundex(s):
