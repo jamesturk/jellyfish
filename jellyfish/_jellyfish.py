@@ -386,7 +386,7 @@ def metaphone(s):
     s = _normalize(s.lower())
 
     # skip first character if s starts with these
-    if s.startswith(('kn', 'gn', 'pn', 'ac', 'wr', 'ae')):
+    if s.startswith(('kn', 'gn', 'pn', 'wr', 'ae')):
         s = s[1:]
 
     i = 0
@@ -427,10 +427,12 @@ def metaphone(s):
         elif c == 'g':
             if next in 'iey':
                 result.append('j')
-            elif next not in 'hn':
-                result.append('k')
             elif next == 'h' and nextnext and nextnext not in 'aeiou':
                 i += 1
+            elif next == 'n' and not nextnext:
+                i += 1
+            else:
+                result.append('k')
         elif c == 'h':
             if i == 0 or next in 'aeiou' or s[i-1] not in 'aeiou':
                 result.append('h')
