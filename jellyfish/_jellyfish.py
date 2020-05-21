@@ -40,32 +40,32 @@ def levenshtein_distance(s1, s2):
     return cur[-1]
 
 
-def _jaro_winkler(ying, yang, long_tolerance, winklerize):
-    _check_type(ying)
-    _check_type(yang)
+def _jaro_winkler(s1, s2, long_tolerance, winklerize):
+    _check_type(s1)
+    _check_type(s2)
 
-    ying_len = len(ying)
-    yang_len = len(yang)
+    s1_len = len(s1)
+    s2_len = len(s2)
 
-    if not ying_len or not yang_len:
+    if not s1_len or not s2_len:
         return 0.0
 
-    min_len = max(ying_len, yang_len)
+    min_len = max(s1_len, s2_len)
     search_range = (min_len // 2) - 1
     if search_range < 0:
         search_range = 0
 
-    ying_flags = [False]*ying_len
-    yang_flags = [False]*yang_len
+    s1_flags = [False]*s1_len
+    s2_flags = [False]*s2_len
 
     # looking only within search range, count & flag matched pairs
     common_chars = 0
-    for i, ying_ch in enumerate(ying):
-        low = i - search_range if i > search_range else 0
-        hi = i + search_range if i + search_range < yang_len else yang_len - 1
+    for i, s1_ch in enumerate(s1):
+        low = max(0, i - search_range)
+        hi = min(i + search_range, s2_len - 1)
         for j in range(low, hi+1):
-            if not yang_flags[j] and yang[j] == ying_ch:
-                ying_flags[i] = yang_flags[j] = True
+            if not s2_flags[j] and s2[j] == s1_ch:
+                s1_flags[i] = s2_flags[j] = True
                 common_chars += 1
                 break
 
@@ -75,27 +75,27 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
 
     # count transpositions
     k = trans_count = 0
-    for i, ying_f in enumerate(ying_flags):
-        if ying_f:
-            for j in range(k, yang_len):
-                if yang_flags[j]:
+    for i, s1_f in enumerate(s1_flags):
+        if s1_f:
+            for j in range(k, s2_len):
+                if s2_flags[j]:
                     k = j + 1
                     break
-            if ying[i] != yang[j]:
+            if s1[i] != s2[j]:
                 trans_count += 1
-    trans_count /= 2
+    trans_count //= 2
 
     # adjust for similarities in nonmatched characters
     common_chars = float(common_chars)
-    weight = ((common_chars/ying_len + common_chars/yang_len +
+    weight = ((common_chars/s1_len + common_chars/s2_len +
               (common_chars-trans_count) / common_chars)) / 3
 
     # winkler modification: continue to boost if strings are similar
-    if winklerize and weight > 0.7 and ying_len > 3 and yang_len > 3:
+    if winklerize and weight > 0.7 and s1_len > 3 and s2_len > 3:
         # adjust for up to first 4 chars in common
         j = min(min_len, 4)
         i = 0
-        while i < j and ying[i] == yang[i] and ying[i]:
+        while i < j and s1[i] == s2[i] and s1[i]:
             i += 1
         if i:
             weight += i * 0.1 * (1.0 - weight)
@@ -105,7 +105,7 @@ def _jaro_winkler(ying, yang, long_tolerance, winklerize):
         # agreed characters must be > half of remaining characters
         if (long_tolerance and min_len > 4 and common_chars > i+1 and
                 2 * common_chars >= min_len + i):
-            weight += ((1.0 - weight) * (float(common_chars-i-1) / float(ying_len+yang_len-i*2+2)))
+            weight += ((1.0 - weight) * (float(common_chars-i-1) / float(s1_len+s2_len-i*2+2)))
 
     return weight
 
