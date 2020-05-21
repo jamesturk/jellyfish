@@ -15,9 +15,6 @@ jellyfish
     :target: https://readthedocs.org/projects/jellyfish/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/9xeyl1f5sd5pl40h?svg=true
-    :target: https://ci.appveyor.com/project/jamesturk/jellyfish/
-
 Jellyfish is a python library for doing approximate and phonetic matching of strings.
 
 Written by James Turk <dev@jamesturk.net> and Michael Stephens.
