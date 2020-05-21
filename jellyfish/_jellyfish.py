@@ -195,7 +195,9 @@ def soundex(s):
                 last = sub
                 break
         else:
-            last = None
+            if letter != "H" and letter != "W":
+                # leave last alone if middle letter is H or W
+                last = None
         if count == 4:
             break
 
