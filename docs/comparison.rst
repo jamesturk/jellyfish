@@ -44,23 +44,31 @@ considers extra characters as differing.  For example ``hamming_distance('abc', 
 
 See the `Hamming distance article at Wikipedia <http://en.wikipedia.org/wiki/Hamming_distance>`_ for more details.
 
-Jaro Distance
--------------
+Jaro Similarity
+----------------
 
-.. py:function:: jaro_distance(s1, s2)
+.. py:function:: jaro_similarity(s1, s2)
 
-    Compute the Jaro distance between s1 and s2.
+    Compute the Jaro similarity between s1 and s2.
 
 Jaro distance is a string-edit distance that gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.
 
-Jaro-Winkler Distance
----------------------
+.. warning:: 
+  Prior to 0.8.1 this function was named jaro_distance.  That name is still available, but is no longer recommended.
+  It will be replaced in 1.0 with a correct version.
 
-.. py:function:: jaro_winkler(s1, s2)
+Jaro-Winkler Similarity
+-----------------------
+
+.. py:function:: jaro_winkler_similarity(s1, s2)
 
     Compute the Jaro-Winkler distance between s1 and s2.
 
 Jaro-Winkler is a modification/improvement to Jaro distance, like Jaro it gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.
+
+.. warning:: 
+  Prior to 0.8.1 this function was named jaro_winkler.  That name is still available, but is no longer recommended.
+  It will be replaced in 1.0 with a correct version.
 
 See the `Jaro-Winkler distance article at Wikipedia <http://en.wikipedia.org/wiki/Jaro-Winkler_distance>`_ for more details.
 

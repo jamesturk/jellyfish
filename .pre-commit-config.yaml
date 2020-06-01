@@ -1,0 +1,14 @@
+default_language_version:
+    python: python3.7
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0  # Use the ref you want to point at
+    hooks:
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: flake8
+        args: ["--ignore=E203,E501,W503"]
+-   repo: https://github.com/ambv/black
+    rev: 19.10b0
+    hooks:
+      - id: black
