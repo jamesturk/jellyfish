@@ -1,2 +1,2 @@
-include LICENSE *.rst *.py cjellyfish/*.c cjellyfish/*.h docs/* testdata/*
+include LICENSE *.rst *.py *.pyi py.typed cjellyfish/*.c cjellyfish/*.h docs/* testdata/*
 global-exclude .git
