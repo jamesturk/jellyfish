@@ -80,8 +80,6 @@ class TestCommand(Command):
 
 
 def run_setup(build_c):
-    kw = {}
-
     if build_c:
         kw = dict(
             ext_modules=[
@@ -103,10 +101,9 @@ def run_setup(build_c):
                 )
             ],
             cmdclass=dict(build_ext=ve_build_ext, test=TestCommand),
-            packages=["jellyfish"],
         )
     else:
-        kw = dict(cmdclass=dict(test=TestCommand), packages=["jellyfish"])
+        kw = dict(cmdclass=dict(test=TestCommand))
 
     with open("README.rst") as readme:
         long_description = readme.read()
@@ -135,6 +132,8 @@ def run_setup(build_c):
             "Programming Language :: Python :: 3.9",
             "Topic :: Text Processing :: Linguistic",
         ],
+        packages=["jellyfish"],
+        package_data={"jellyfish": ["*.pyi", "py.typed"]},
         **kw
     )
 
