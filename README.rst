@@ -2,8 +2,7 @@
 jellyfish
 =========
 
-.. image:: https://travis-ci.com/jamesturk/jellyfish.svg?branch=master
-    :target: https://travis-ci.com/jamesturk/jellyfish
+.. image:: https://github.com/jamesturk/jellyfish/workflows/Python%20package/badge.svg
 
 .. image:: https://coveralls.io/repos/jamesturk/jellyfish/badge.png?branch=master
     :target: https://coveralls.io/r/jamesturk/jellyfish
