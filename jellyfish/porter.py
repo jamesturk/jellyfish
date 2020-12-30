@@ -123,7 +123,7 @@ class Stemmer(object):
         return self.cons(j)
 
     def cvc(self, i):
-        """ True iff i-2,i-1,i is consonent-vowel consonant
+        """ True iff i-2,i-1,i is consonant-vowel consonant
         and if second c isn't w,x, or y.
         used to restore e at end of short words like cave, love, hope, crime
         """
