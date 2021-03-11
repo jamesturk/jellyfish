@@ -110,8 +110,8 @@ def run_setup(build_c):
 
     setup(
         name="jellyfish",
-        version="0.8.2",
-        python_requires=">3.4",
+        version="0.8.3",
+        python_requires=">3.5",
         platforms=["any"],
         description=(
             "a library for doing approximate and " "phonetic matching of strings."
@@ -124,8 +124,6 @@ def run_setup(build_c):
             "License :: OSI Approved :: BSD License",
             "Natural Language :: English",
             "Operating System :: OS Independent",
-            "Programming Language :: Python :: 3.4",
-            "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
             "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.3 - 11 March 2021
+---------------------
+* build changes
+* include OSX and Windows wheels
+
 0.8.2 - 21 May 2020
 -------------------
 * fix jaro_winkler/jaro_winkler_similarity mix-up
