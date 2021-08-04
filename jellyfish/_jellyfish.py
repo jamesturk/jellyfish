@@ -50,8 +50,9 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
     if not s1_len or not s2_len:
         return 0.0
 
-    min_len = max(s1_len, s2_len)
-    search_range = (min_len // 2) - 1
+    min_len = min(s1_len, s2_len)
+    search_range = max(s1_len, s2_len)
+    search_range = (search_range // 2) - 1
     if search_range < 0:
         search_range = 0
 
@@ -96,7 +97,7 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
     ) / 3
 
     # winkler modification: continue to boost if strings are similar
-    if winklerize and weight > 0.7 and s1_len > 3 and s2_len > 3:
+    if winklerize and weight > 0.7:
         # adjust for up to first 4 chars in common
         j = min(min_len, 4)
         i = 0
