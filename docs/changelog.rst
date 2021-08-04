@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.8.4 - 4 August 2021
+---------------------
+* fix for jaro winkler (cjellyfish#8)
+
 0.8.3 - 11 March 2021
 ---------------------
 * build changes
