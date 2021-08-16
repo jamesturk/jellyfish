@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.7 - 16 August 2021
+----------------------
+* safer allocations from CJellyfish
+* include aarch64 wheels
+
 0.8.4 - 4 August 2021
 ---------------------
 * fix for jaro winkler (cjellyfish#8)
