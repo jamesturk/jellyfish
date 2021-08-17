@@ -176,8 +176,8 @@ jobs:
         name: artifacts
         path: dist
 
-    - name: clean up releases that can't be uploaded
-      run: rm dist/*linux_x86_64*
+    - name: clean up releases that shouldn't be uploaded
+      run: rm dist/*linux_x86_64* dist/*none*
 
     - name: Push build artifacts to PyPI
       uses: pypa/gh-action-pypi-publish@v1.4.1
