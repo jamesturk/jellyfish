@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.8.8 - 17 August 2021
+----------------------
+* release fix to fix Linux wheel issue
+
 0.8.7 - 16 August 2021
 ----------------------
 * safer allocations from CJellyfish
