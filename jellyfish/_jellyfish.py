@@ -101,7 +101,7 @@ def _jaro_winkler(s1, s2, long_tolerance, winklerize):
         # adjust for up to first 4 chars in common
         j = min(min_len, 4)
         i = 0
-        while i < j and s1[i] == s2[i] and s1[i]:
+        while i < j and s1[i] == s2[i]:
             i += 1
         if i:
             weight += i * 0.1 * (1.0 - weight)
