@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.9 - 26 October 2021
+-----------------------
+* fix buffer overflow in NYSIIS
+* remove unnecessary/undocumented special casing of digits in Jaro-Winkler
+
 0.8.8 - 17 August 2021
 ----------------------
 * release fix to fix Linux wheel issue
