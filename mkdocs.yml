@@ -37,7 +37,6 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.tabbed
   - pymdownx.superfences
-  - mkdocs-click
   - toc:
       permalink: true
 plugins:
@@ -47,3 +46,7 @@ extra_css:
   - assets/extra.css
 nav:
   - 'index.md'
+  - 'phonetic.md'
+  - 'comparison.md'
+  - 'stemming.md'
+  - 'changelog.md'
