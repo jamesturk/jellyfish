@@ -46,7 +46,5 @@ extra_css:
   - assets/extra.css
 nav:
   - 'index.md'
-  - 'phonetic.md'
-  - 'comparison.md'
-  - 'stemming.md'
+  - 'functions.md'
   - 'changelog.md'
