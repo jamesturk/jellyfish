@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://jamesturk.github.io/jellyfish/</loc>
+         <lastmod>2021-11-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jamesturk.github.io/jellyfish/changelog/</loc>
+         <lastmod>2021-11-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jamesturk.github.io/jellyfish/functions/</loc>
+         <lastmod>2021-11-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>

@@ -1,0 +1,774 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A python library for approximate and phonetic matching of strings.">
+      
+      
+      
+        <meta name="author" content="James Turk">
+      
+      
+        <link rel="canonical" href="https://jamesturk.github.io/jellyfish/functions/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Functions - jellyfish</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#functions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="jellyfish" class="md-header__button md-logo" aria-label="jellyfish" data-md-component="logo">
+      
+  <img src="../assets/white-jellyfish.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            jellyfish
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Functions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/jamesturk/jellyfish/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jamesturk/jellyfish
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="jellyfish" class="md-nav__button md-logo" aria-label="jellyfish" data-md-component="logo">
+      
+  <img src="../assets/white-jellyfish.svg" alt="logo">
+
+    </a>
+    jellyfish
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/jamesturk/jellyfish/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jamesturk/jellyfish
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Functions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Functions
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#string-comparison" class="md-nav__link">
+    String Comparison
+  </a>
+  
+    <nav class="md-nav" aria-label="String Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#levenshtein-distance" class="md-nav__link">
+    Levenshtein Distance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#damerau-levenshtein-distance" class="md-nav__link">
+    Damerau-Levenshtein Distance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hamming-distance" class="md-nav__link">
+    Hamming Distance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaro-similarity" class="md-nav__link">
+    Jaro Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaro-winkler-similarity" class="md-nav__link">
+    Jaro-Winkler Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#match-rating-approach-comparison" class="md-nav__link">
+    Match Rating Approach (comparison)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phonetic-encoding" class="md-nav__link">
+    Phonetic Encoding
+  </a>
+  
+    <nav class="md-nav" aria-label="Phonetic Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#american-soundex" class="md-nav__link">
+    American Soundex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaphone" class="md-nav__link">
+    Metaphone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nysiis" class="md-nav__link">
+    NYSIIS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#match-rating-approach-codex" class="md-nav__link">
+    Match Rating Approach (codex)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stemming" class="md-nav__link">
+    Stemming
+  </a>
+  
+    <nav class="md-nav" aria-label="Stemming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#porter-stemmer" class="md-nav__link">
+    Porter Stemmer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#string-comparison" class="md-nav__link">
+    String Comparison
+  </a>
+  
+    <nav class="md-nav" aria-label="String Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#levenshtein-distance" class="md-nav__link">
+    Levenshtein Distance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#damerau-levenshtein-distance" class="md-nav__link">
+    Damerau-Levenshtein Distance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hamming-distance" class="md-nav__link">
+    Hamming Distance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaro-similarity" class="md-nav__link">
+    Jaro Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaro-winkler-similarity" class="md-nav__link">
+    Jaro-Winkler Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#match-rating-approach-comparison" class="md-nav__link">
+    Match Rating Approach (comparison)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phonetic-encoding" class="md-nav__link">
+    Phonetic Encoding
+  </a>
+  
+    <nav class="md-nav" aria-label="Phonetic Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#american-soundex" class="md-nav__link">
+    American Soundex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaphone" class="md-nav__link">
+    Metaphone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nysiis" class="md-nav__link">
+    NYSIIS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#match-rating-approach-codex" class="md-nav__link">
+    Match Rating Approach (codex)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stemming" class="md-nav__link">
+    Stemming
+  </a>
+  
+    <nav class="md-nav" aria-label="Stemming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#porter-stemmer" class="md-nav__link">
+    Porter Stemmer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jamesturk/jellyfish/edit/main/docs/functions.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h1>
+<p>Jellyfish provides a variety of functions for string comparison, phonetic encoding, and stemming.</p>
+<h2 id="string-comparison">String Comparison<a class="headerlink" href="#string-comparison" title="Permanent link">&para;</a></h2>
+<p>These methods are all measures of the difference (aka edit distance) between two strings.</p>
+<h3 id="levenshtein-distance">Levenshtein Distance<a class="headerlink" href="#levenshtein-distance" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">levenshtein_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Compute the Levenshtein distance between s1 and s2.</p>
+<p>Levenshtein distance represents the number of insertions, deletions, and substitutions required to change one word to another.</p>
+<p>For example: <code>levenshtein_distance('berne', 'born') == 2</code> representing the transformation of the first e to o and the deletion of the second e.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance article at Wikipedia</a> for more details.</p>
+<h3 id="damerau-levenshtein-distance">Damerau-Levenshtein Distance<a class="headerlink" href="#damerau-levenshtein-distance" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">damerau_levenshtein_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Compute the Damerau-Levenshtein distance between s1 and s2.</p>
+<p>A modification of Levenshtein distance, Damerau-Levenshtein distance counts transpositions (such as ifsh for fish) as a single edit.</p>
+<p>Where <code>levenshtein_distance('fish', 'ifsh') == 2</code> as it would require a deletion and an insertion,
+though <code>damerau_levenshtein_distance('fish', 'ifsh') == 1</code> as this counts as a transposition.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Damerau-Levenshtein_distance">Damerau-Levenshtein distance article at Wikipedia</a> for more details.</p>
+<h3 id="hamming-distance">Hamming Distance<a class="headerlink" href="#hamming-distance" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">hamming_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Compute the Hamming distance between s1 and s2.</p>
+<p>Hamming distance is the measure of the number of characters that differ between two strings.</p>
+<p>Typically Hamming distance is undefined when strings are of different length, but this implementation
+considers extra characters as differing.  For example <code>hamming_distance('abc', 'abcd') == 1</code>.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Hamming_distance">Hamming distance article at Wikipedia</a> for more details.</p>
+<h3 id="jaro-similarity">Jaro Similarity<a class="headerlink" href="#jaro-similarity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">jaro_similarity</span><span class="p">(</span><span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Compute the Jaro similarity between s1 and s2.</p>
+<p>Jaro distance is a string-edit distance that gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Prior to 0.8.1 this function was named jaro_distance.  That name is still available, but is no longer recommended.
+It will be replaced in 1.0 with a correct version.</p>
+</div>
+<h3 id="jaro-winkler-similarity">Jaro-Winkler Similarity<a class="headerlink" href="#jaro-winkler-similarity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">jaro_winkler_similarity</span><span class="p">(</span><span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Compute the Jaro-Winkler distance between s1 and s2.</p>
+<p>Jaro-Winkler is a modification/improvement to Jaro distance, like Jaro it gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Prior to 0.8.1 this function was named jaro_winkler.  That name is still available, but is no longer recommended.
+It will be replaced in 1.0 with a correct version.</p>
+</div>
+<p>See the <a href="http://en.wikipedia.org/wiki/Jaro-Winkler_distance">Jaro-Winkler distance article at Wikipedia</a> for more details.</p>
+<h3 id="match-rating-approach-comparison">Match Rating Approach (comparison)<a class="headerlink" href="#match-rating-approach-comparison" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">match_rating_comparison</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+</code></pre></div>
+<p>Compare s1 and s2 using the match rating approach algorithm, returns <code>True</code> if strings are considered equivalent or <code>False</code> if not.  Can also return <code>None</code> if s1 and s2 are not comparable (length differs by more than 3).</p>
+<p>The Match rating approach algorithm is an algorithm for determining whether or not two names are
+pronounced similarly.  Strings are first encoded using :py:func:<code>match_rating_codex</code> then compared according to the MRA algorithm.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Match_rating_approach">Match Rating Approach article at Wikipedia</a> for more details.</p>
+<h2 id="phonetic-encoding">Phonetic Encoding<a class="headerlink" href="#phonetic-encoding" title="Permanent link">&para;</a></h2>
+<p>These algorithms convert a string to a normalized phonetic encoding, converting a word to a representation of its pronunciation.  Each takes a single string and returns a coded representation.</p>
+<h3 id="american-soundex">American Soundex<a class="headerlink" href="#american-soundex" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">soundex</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Calculate the American Soundex of the string s.</p>
+<p>Soundex is an algorithm to convert a word (typically a name) to a four digit code in the form 
+'A123' where 'A' is the first letter of the name and the digits represent similar sounds.</p>
+<p>For example <code>soundex('Ann') == soundex('Anne') == 'A500'</code> and
+<code>soundex('Rupert') == soundex('Robert') == 'R163'</code>.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Soundex">Soundex article at Wikipedia</a> for more details.</p>
+<h3 id="metaphone">Metaphone<a class="headerlink" href="#metaphone" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metaphone</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Calculate the metaphone code for the string s.</p>
+<p>The metaphone algorithm was designed as an improvement on Soundex.  It transforms a word into a
+string consisting of '0BFHJKLMNPRSTWXY' where '0' is pronounced 'th' and 'X' is a '[sc]h' sound.</p>
+<p>For example <code>metaphone('Klumpz') == metaphone('Clumps') == 'KLMPS'</code>.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Metaphone">Metaphone article at Wikipedia</a> for more details.</p>
+<h3 id="nysiis">NYSIIS<a class="headerlink" href="#nysiis" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">nysiis</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Calculate the NYSIIS code for the string s.</p>
+<p>The NYSIIS algorithm is an algorithm developed by the New York State Identification and Intelligence System.  It transforms a word into a phonetic code.  Like soundex and metaphone it is primarily intended for use on names (as they would be pronounced in English).</p>
+<p>For example <code>nysiis('John') == nysiis('Jan') == JAN</code>.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System">NYSIIS article at Wikipedia</a> for more details.</p>
+<h3 id="match-rating-approach-codex">Match Rating Approach (codex)<a class="headerlink" href="#match-rating-approach-codex" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">match_rating_codex</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Calculate the match rating approach value (also called PNI) for the string s.</p>
+<p>The Match rating approach algorithm is an algorithm for determining whether or not two names are
+pronounced similarly.  The algorithm consists of an encoding function (similar to soundex or nysiis)
+which is implemented here as well as :py:func:<code>match_rating_comparison</code> which does the actual comparison.</p>
+<p>See the <a href="http://en.wikipedia.org/wiki/Match_rating_approach">Match Rating Approach article at Wikipedia</a> for more details.</p>
+<h2 id="stemming">Stemming<a class="headerlink" href="#stemming" title="Permanent link">&para;</a></h2>
+<h3 id="porter-stemmer">Porter Stemmer<a class="headerlink" href="#porter-stemmer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">porter_stem</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+<p>Reduce the string s to its stem using the common Porter stemmer.</p>
+<p>Stemming is the process of reducing a word to its root form, for example 'stemmed' to 'stem'.</p>
+<p>Martin Porter's algorithm is a common algorithm used for stemming that works for many purposes.</p>
+<p>See the <a href="http://tartarus.org/martin/PorterStemmer/">official homepage for the Porter Stemming Algorithm</a> for more details.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../changelog/" class="md-footer__link md-footer__link--next" aria-label="Next: Changelog" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Changelog
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 James Turk
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
