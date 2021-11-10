@@ -105,7 +105,7 @@ def run_setup(build_c):
     else:
         kw = dict(cmdclass=dict(test=TestCommand))
 
-    with open("README.rst") as readme:
+    with open("README.md") as readme:
         long_description = readme.read()
 
     setup(
