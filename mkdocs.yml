@@ -1,0 +1,50 @@
+site_name: jellyfish
+site_url: https://jamesturk.github.io/jellyfish/
+site_author: James Turk
+site_description: A python library for approximate and phonetic matching of strings.
+copyright: Copyright &copy; 2021 James Turk
+repo_url: https://github.com/jamesturk/jellyfish
+repo_name: jamesturk/jellyfish
+edit_uri: edit/main/docs/
+
+theme:
+  logo: assets/white-jellyfish.svg
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+  features:
+    #- navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+markdown_extensions:
+  - admonition
+  - def_list
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+plugins:
+- search
+
+extra_css:
+  - assets/extra.css
+nav:
+  - 'index.md'
+  - 'functions.md'
+  - 'changelog.md'
