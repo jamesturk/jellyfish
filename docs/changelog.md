@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+--------
+* updated documentation available at https://jamesturk.github.io/jellyfish/
+
 0.8.9 - 26 October 2021
 -----------------------
 * fix buffer overflow in NYSIIS
