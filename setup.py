@@ -55,7 +55,6 @@ class TestCommand(Command):
 
     def initialize_options(self):
         self.args = ""
-        pass
 
     def finalize_options(self):
         pass
