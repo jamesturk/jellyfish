@@ -194,7 +194,7 @@ def soundex(s):
     result = [s[0]]
     count = 1
 
-    # find would-be replacment for first character
+    # find would-be replacement for first character
     for lset, sub in replacements:
         if s[0] in lset:
             last = sub
