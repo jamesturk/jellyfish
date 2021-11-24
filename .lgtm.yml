@@ -1,0 +1,8 @@
+# This file contains configuration for the LGTM tool: https://lgtm.com/
+# The jellyfish repository is continuously scanned by the LGTM tool for
+# any security and/or code vulnerabilities. You can find the alert here:
+# https://lgtm.com/projects/g/jamesturk/jellyfish/
+extraction:
+  python:
+    python_setup:
+      version: 3
