@@ -335,18 +335,20 @@ def nysiis(s):
 def match_rating_codex(s):
     _check_type(s)
 
-    s = s.upper()
+    # we ignore spaces
+    s = s.upper().replace(" ", "")
     codex = []
 
     prev = None
-    for i, c in enumerate(s):
-        # not a space OR
-        # starting character & vowel
+    first = True
+    for c in s:
+        # starting character
         # or consonant not preceded by same consonant
-        if c != " " and (i == 0 and c in "AEIOU") or (c not in "AEIOU" and c != prev):
+        if first or (c not in "AEIOU" and c != prev):
             codex.append(c)
 
         prev = c
+        first = False
 
     # just use first/last 3
     if len(codex) > 6:
