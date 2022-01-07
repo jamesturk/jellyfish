@@ -117,6 +117,7 @@ def run_setup(build_c):
         ),
         url="http://github.com/jamesturk/jellyfish",
         long_description=long_description,
+        long_description_content_type="text/markdown",
         classifiers=[
             "Development Status :: 4 - Beta",
             "Intended Audience :: Developers",
