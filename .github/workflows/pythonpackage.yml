@@ -18,7 +18,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10', pypy3]
+        python-version: ['3.7', '3.8', '3.9', '3.10', pypy3]
         os: [ubuntu-latest, windows-latest]
 
     steps:
@@ -48,7 +48,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
         - os: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
     name: "Test ${{ matrix.pyver }} aarch64"
     strategy:
       matrix:
-        pyver: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310]
+        pyver: [cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310]
         arch: [aarch64]
       fail-fast: false
     runs-on: ubuntu-latest
@@ -125,7 +125,7 @@ jobs:
     name: "Build on ${{ matrix.pyver }} aarch64"
     strategy:
       matrix:
-        pyver: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310]
+        pyver: [cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310]
         arch: [aarch64]
       fail-fast: false
     runs-on: ubuntu-latest
