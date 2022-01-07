@@ -109,8 +109,8 @@ def run_setup(build_c):
 
     setup(
         name="jellyfish",
-        version="0.8.9",
-        python_requires=">3.5",
+        version="0.9.0",
+        python_requires=">3.6",
         platforms=["any"],
         description=(
             "a library for doing approximate and " "phonetic matching of strings."

@@ -1,9 +1,11 @@
 Changelog
 =========
 
-next
---------
+0.9.0 - 7 January 2021
+----------------------
 * updated documentation available at https://jamesturk.github.io/jellyfish/
+* support for Python 3.10+
+* handle spaces correctly in MRA algorithm
 
 0.8.9 - 26 October 2021
 -----------------------
