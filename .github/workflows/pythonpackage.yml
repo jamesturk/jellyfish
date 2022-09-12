@@ -22,7 +22,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: "actions/checkout@v2"
+    - uses: "actions/checkout@v3"
       with:
         submodules: 'true'
     - name: Set up Python ${{ matrix.python-version }}
@@ -53,7 +53,7 @@ jobs:
           python-version: 'pypy3.9'
 
     steps:
-    - uses: "actions/checkout@v2"
+    - uses: "actions/checkout@v3"
       with:
         submodules: 'true'
     - name: Set up Python ${{ matrix.python-version }}
@@ -67,7 +67,7 @@ jobs:
     - name: Build package
       run: python -m build
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: artifacts
@@ -85,7 +85,7 @@ jobs:
       py: /opt/python/${{ matrix.pyver }}/bin/python
       img: quay.io/pypa/manylinux2014_${{ matrix.arch }}
     steps:
-    - uses: "actions/checkout@v2"
+    - uses: "actions/checkout@v3"
       with:
         submodules: 'true'
     - name: Set up QEMU
@@ -126,7 +126,7 @@ jobs:
       py: /opt/python/${{ matrix.pyver }}/bin/python
       img: quay.io/pypa/manylinux2014_${{ matrix.arch }}
     steps:
-    - uses: "actions/checkout@v2"
+    - uses: "actions/checkout@v3"
       with:
         submodules: 'true'
     - name: Set up QEMU
@@ -145,7 +145,7 @@ jobs:
         docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
           ${{ env.img }} auditwheel repair dist/*.whl --wheel-dir wheelhouse/
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: artifacts
         path: wheelhouse/*
@@ -161,7 +161,7 @@ jobs:
     if: github.event_name == 'create' && github.event.ref_type == 'tag'
 
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: artifacts
         path: dist
