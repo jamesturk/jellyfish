@@ -1,11 +1,35 @@
 import warnings
 
 try:
-    from .cjellyfish import *  # noqa
+    from .cjellyfish import (
+        damerau_levenshtein_distance,
+        hamming_distance,
+        jaro_similarity,
+        jaro_winkler_similarity,
+        levenshtein_distance,
+        match_rating_codex,
+        match_rating_comparison,
+        metaphone,
+        nysiis,
+        porter_stem,
+        soundex,
+    )
 
     library = "C"
 except ImportError:
-    from ._jellyfish import *  # noqa
+    from ._jellyfish import (
+        damerau_levenshtein_distance,
+        hamming_distance,
+        jaro_similarity,
+        jaro_winkler_similarity,
+        levenshtein_distance,
+        match_rating_codex,
+        match_rating_comparison,
+        metaphone,
+        nysiis,
+        porter_stem,
+        soundex,
+    )
 
     library = "Python"
 
