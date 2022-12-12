@@ -170,7 +170,7 @@ jobs:
       run: rm dist/*linux_x86_64* dist/*none*
 
     - name: Push build artifacts to PyPI
-      uses: pypa/gh-action-pypi-publish@v1.5.1
+      uses: pypa/gh-action-pypi-publish@v1.6.4
       with:
         skip_existing: true
         user: __token__
