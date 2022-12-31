@@ -71,7 +71,7 @@ Jaro distance is a string-edit distance that gives a floating point response in 
 def jaro_winkler_similarity(s1: str, s2: str)
 ```
 
-Compute the Jaro-Winkler distance between s1 and s2.
+Compute the Jaro-Winkler similarity between s1 and s2.
 
 Jaro-Winkler is a modification/improvement to Jaro distance, like Jaro it gives a floating point response in [0,1] where 0 represents two completely dissimilar strings and 1 represents identical strings.
 
