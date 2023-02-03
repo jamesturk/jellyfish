@@ -35,19 +35,19 @@ Phonetic encoding:
 
 ``` python
 >>> import jellyfish
->>> jellyfish.levenshtein_distance(u'jellyfish', u'smellyfish')
+>>> jellyfish.levenshtein_distance('jellyfish', 'smellyfish')
 2
->>> jellyfish.jaro_distance(u'jellyfish', u'smellyfish')
+>>> jellyfish.jaro_distance('jellyfish', 'smellyfish')
 0.89629629629629637
->>> jellyfish.damerau_levenshtein_distance(u'jellyfish', u'jellyfihs')
+>>> jellyfish.damerau_levenshtein_distance('jellyfish', 'jellyfihs')
 1
 
->>> jellyfish.metaphone(u'Jellyfish')
+>>> jellyfish.metaphone('Jellyfish')
 'JLFX'
->>> jellyfish.soundex(u'Jellyfish')
+>>> jellyfish.soundex('Jellyfish')
 'J412'
->>> jellyfish.nysiis(u'Jellyfish')
+>>> jellyfish.nysiis('Jellyfish')
 'JALYF'
->>> jellyfish.match_rating_codex(u'Jellyfish')
+>>> jellyfish.match_rating_codex('Jellyfish')
 'JLLFSH'
 ```
