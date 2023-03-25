@@ -11,9 +11,9 @@ def assertAlmostEqual(a, b, places=3):
 
 
 if platform.python_implementation() == "CPython":
-    implementations = ["python", "c"]
+    implementations = ["python", "c", "rust"]
 else:
-    implementations = ["python"]
+    implementations = ["python", "rust"]
 
 
 @pytest.fixture(params=implementations)
@@ -22,6 +22,8 @@ def jf(request):
         from jellyfish import _jellyfish as jf
     elif request.param == "c":
         from jellyfish import cjellyfish as jf
+    elif request.param == "rust":
+        import rustyfish as jf
     return jf
 
 
@@ -90,6 +92,8 @@ def test_soundex(jf, s1, code):
 
 @pytest.mark.parametrize("s1,code", _load_data("metaphone"), ids=str)
 def test_metaphone(jf, s1, code):
+    if jf.__name__ == "rustyfish":
+        pytest.skip("rustyfish does not support metaphone")
     assert jf.metaphone(s1) == code
 
 
