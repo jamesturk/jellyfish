@@ -1,0 +1,16 @@
+[package]
+name = "rustyfish"
+version = "0.11.0-alpha.1"
+edition = "2021"
+
+[package.metadata.maturin]
+name = "jellyfish.rustyfish"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "rustyfish"
+crate-type = ["cdylib"]
+
+[dependencies]
+jellyfish = "0.4.0"
+pyo3 = "0.18.1"

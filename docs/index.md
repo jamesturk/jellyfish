@@ -33,17 +33,17 @@ Phonetic encoding:
 
 ## Implementations
 
-Each algorithm has C and Python implementations.
+Each algorithm has Rust and Python implementations.
 
-On a typical CPython install the C implementation will be used. The Python versions
-are available for PyPy and systems where compiling the CPython extension is not
-possible.
+The Rust implementations are used by default. The Python
+implementations are a remnant of an early version of 
+the library and will probably be removed in 1.0.
 
 To explicitly use a specific implementation, refer to the appropriate module::
 
 ``` python
-  import jellyfish._jellyfish as pyjellyfish
-  import jellyfish.cjellyfish as cjellyfish
+import jellyfish._jellyfish as pyjellyfish
+import jellyfish.rustyfish as rustyfish
 ```
 
 If you've already imported jellyfish and are not sure what implementation you
@@ -52,27 +52,27 @@ are using, you can check by querying `jellyfish.library`.
 ``` python
   if jellyfish.library == 'Python':
       # Python implementation
-  elif jellyfish.library == 'C':
-      # C implementation
+  elif jellyfish.library == 'Rust':
+      # Rust implementation
 ```
 
 ## Example Usage
 
 ``` python
 >>> import jellyfish
->>> jellyfish.levenshtein_distance(u'jellyfish', u'smellyfish')
+>>> jellyfish.levenshtein_distance('jellyfish', 'smellyfish')
 2
->>> jellyfish.jaro_distance(u'jellyfish', u'smellyfish')
+>>> jellyfish.jaro_distance('jellyfish', 'smellyfish')
 0.89629629629629637
->>> jellyfish.damerau_levenshtein_distance(u'jellyfish', u'jellyfihs')
+>>> jellyfish.damerau_levenshtein_distance('jellyfish', 'jellyfihs')
 1
 
->>> jellyfish.metaphone(u'Jellyfish')
+>>> jellyfish.metaphone('Jellyfish')
 'JLFX'
->>> jellyfish.soundex(u'Jellyfish')
+>>> jellyfish.soundex('Jellyfish')
 'J412'
->>> jellyfish.nysiis(u'Jellyfish')
+>>> jellyfish.nysiis('Jellyfish')
 'JALYF'
->>> jellyfish.match_rating_codex(u'Jellyfish')
+>>> jellyfish.match_rating_codex('Jellyfish')
 'JLLFSH'
 ```

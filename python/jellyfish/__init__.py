@@ -1,9 +1,9 @@
 import warnings
 
 try:
-    from .cjellyfish import *  # noqa
+    from .rustyfish import *
 
-    library = "C"
+    library = "Rust"
 except ImportError:
     from ._jellyfish import *  # noqa
 

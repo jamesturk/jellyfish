@@ -15,3 +15,6 @@ _build/
 .cache
 wheelhouse/
 site/
+target/
+Cargo.lock
+.venv
