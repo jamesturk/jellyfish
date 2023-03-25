@@ -95,7 +95,7 @@ def run_setup(build_c):
 
     setup(
         name="jellyfish",
-        version="0.9.0",
+        version="0.10.0",
         python_requires=">3.6",
         platforms=["any"],
         description=(
