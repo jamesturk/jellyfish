@@ -81,7 +81,6 @@ def run_setup(build_c):
                         "cjellyfish/soundex.c",
                         "cjellyfish/metaphone.c",
                         "cjellyfish/nysiis.c",
-                        "cjellyfish/porter.c",
                     ],
                     define_macros=[("CJELLYFISH_PYTHON", "1")],
                 )
