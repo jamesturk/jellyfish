@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.10.0 - 25 March 2023
+---------------------
+* removed rarely-used `porter_stem` function, better implementations exist
+
 0.9.0 - 7 January 2021
 ----------------------
 * updated documentation available at https://jamesturk.github.io/jellyfish/
