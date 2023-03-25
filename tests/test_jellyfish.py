@@ -16,7 +16,7 @@ implementations = ["python", "rust"]
 @pytest.fixture(params=implementations)
 def jf(request):
     if request.param == "python":
-        from jellyfish import _jellyfish as jf
+        import jellyfish._jellyfish as jf
     elif request.param == "rust":
         from jellyfish import rustyfish as jf
     return jf

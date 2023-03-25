@@ -1,13 +1,7 @@
 import warnings
 
-try:
-    from .rustyfish import *
-
-    library = "Rust"
-except ImportError:
-    from ._jellyfish import *  # noqa
-
-    library = "Python"
+from .rustyfish import *
+from . import _jellyfish
 
 
 def jaro_winkler(s1, s2, long_tolerance=False):

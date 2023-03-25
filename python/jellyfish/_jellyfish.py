@@ -1,6 +1,13 @@
 import unicodedata
 from collections import defaultdict
 from itertools import zip_longest
+import warnings
+
+warnings.warn(
+    "The jellyfish._jellyfish module is deprecated and will be removed in jellyfish 1.0.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 def _normalize(s):
@@ -173,7 +180,6 @@ def damerau_levenshtein_distance(s1, s2):
 
 
 def soundex(s):
-
     _check_type(s)
 
     if not s:
@@ -238,7 +244,6 @@ def hamming_distance(s1, s2):
 
 
 def nysiis(s):
-
     _check_type(s)
 
     if not s:
