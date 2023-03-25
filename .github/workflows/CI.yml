@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         target: [x86_64] #, x86, aarch64, armv7, s390x, ppc64le]
-        python-version: ['3.10', '3.11', 'pypy3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -46,7 +46,7 @@ jobs:
     strategy:
       matrix:
         target: [x64, x86]
-        python-version: ['3.10', '3.11', 'pypy3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -70,7 +70,7 @@ jobs:
     strategy:
       matrix:
         target: [x86_64, aarch64]
-        python-version: ['3.10', '3.11', 'pypy3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
