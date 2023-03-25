@@ -1,2 +1,0 @@
-include LICENSE mkdocs.yml *.py *.pyi py.typed cjellyfish/*.c cjellyfish/*.h docs/* testdata/*
-global-exclude .git
