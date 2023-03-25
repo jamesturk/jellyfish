@@ -1,7 +1,6 @@
 import unicodedata
 from collections import defaultdict
 from itertools import zip_longest
-from .porter import Stemmer
 
 
 def _normalize(s):
@@ -514,9 +513,3 @@ def metaphone(s):
         i += 1
 
     return "".join(result).upper()
-
-
-def porter_stem(s):
-    _check_type(s)
-
-    return Stemmer(s).stem()

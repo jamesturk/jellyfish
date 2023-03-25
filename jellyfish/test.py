@@ -113,21 +113,6 @@ def test_match_rating_comparison(jf, s1, s2, value):
     assert jf.match_rating_comparison(s1, s2) is value
 
 
-# use non-parameterized version for speed
-# @pytest.mark.parametrize("a,b", _load_data('porter'), ids=str)
-# def test_porter_stem(jf, a, b):
-#     assert jf.porter_stem(a) == b
-
-
-def test_porter_stem(jf):
-    if jf.__name__ == "rustyfish":
-        pytest.skip("rustyfish does not support porter_stem")
-    with open("testdata/porter.csv", **open_kwargs) as f:
-        reader = csv.reader(f)
-        for (a, b) in reader:
-            assert jf.porter_stem(a) == b
-
-
 if platform.python_implementation() == "CPython":
 
     def test_match_rating_comparison_segfault():
@@ -227,11 +212,3 @@ def test_mr_codex_type(jf):
     assert jf.match_rating_codex("abc") == "ABC"
     with pytest.raises(TypeError) as exc:
         jf.match_rating_codex(b"abc")
-
-
-def test_porter_type(jf):
-    if jf.__name__ == "rustyfish":
-        pytest.skip("rustyfish does not support porter_stem")
-    assert jf.porter_stem("abc") == "abc"
-    with pytest.raises(TypeError) as exc:
-        jf.porter_stem(b"abc")
