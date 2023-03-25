@@ -21,12 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [x86_64, x86, aarch64, armv7, s390x, ppc64le]
+        target: [x86_64] #, x86, aarch64, armv7, s390x, ppc64le]
+        python-version: ['3.10', '3.11', 'pypy3.10']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ['3.10', '3.11', 'pypy3.10']
+          python-version: ${{ matrix.python-version }}
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -45,11 +46,12 @@ jobs:
     strategy:
       matrix:
         target: [x64, x86]
+        python-version: ['3.10', '3.11', 'pypy3.10']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ['3.10', '3.11', 'pypy3.10']
+          python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.target }}
       - name: Build wheels
         uses: PyO3/maturin-action@v1
@@ -68,11 +70,12 @@ jobs:
     strategy:
       matrix:
         target: [x86_64, aarch64]
+        python-version: ['3.10', '3.11', 'pypy3.10']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ['3.10', '3.11', 'pypy3.10']
+          python-version: ${{ matrix.python-version }}
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
