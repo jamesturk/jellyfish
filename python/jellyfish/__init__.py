@@ -2,6 +2,8 @@ import warnings
 
 try:
     from .rustyfish import *
+
+    library = "Rust"
 except ImportError:
     from ._jellyfish import *  # noqa
 
