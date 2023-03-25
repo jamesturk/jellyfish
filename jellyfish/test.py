@@ -120,6 +120,8 @@ def test_match_rating_comparison(jf, s1, s2, value):
 
 
 def test_porter_stem(jf):
+    if jf.__name__ == "rustyfish":
+        pytest.skip("rustyfish does not support porter_stem")
     with open("testdata/porter.csv", **open_kwargs) as f:
         reader = csv.reader(f)
         for (a, b) in reader:
@@ -208,6 +210,8 @@ def test_soundex_type(jf):
 
 
 def test_metaphone_type(jf):
+    if jf.__name__ == "rustyfish":
+        pytest.skip("rustyfish does not support metaphone")
     assert jf.metaphone("abc") == "ABK"
     with pytest.raises(TypeError) as exc:
         jf.metaphone(b"abc")
@@ -226,6 +230,8 @@ def test_mr_codex_type(jf):
 
 
 def test_porter_type(jf):
+    if jf.__name__ == "rustyfish":
+        pytest.skip("rustyfish does not support porter_stem")
     assert jf.porter_stem("abc") == "abc"
     with pytest.raises(TypeError) as exc:
         jf.porter_stem(b"abc")
