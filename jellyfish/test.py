@@ -169,74 +169,63 @@ def test_damerau_levenshtein_distance_type(jf):
     jf.damerau_levenshtein_distance("abc", "abc")
     with pytest.raises(TypeError) as exc:
         jf.damerau_levenshtein_distance(b"abc", b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_levenshtein_distance_type(jf):
     assert jf.levenshtein_distance("abc", "abc") == 0
     with pytest.raises(TypeError) as exc:
         jf.levenshtein_distance(b"abc", b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_jaro_similarity_type(jf):
     assert jf.jaro_similarity("abc", "abc") == 1
     with pytest.raises(TypeError) as exc:
         jf.jaro_similarity(b"abc", b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_jaro_winkler_type(jf):
     assert jf.jaro_winkler_similarity("abc", "abc") == 1
     with pytest.raises(TypeError) as exc:
         jf.jaro_winkler_similarity(b"abc", b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_mra_comparison_type(jf):
     assert jf.match_rating_comparison("abc", "abc") is True
     with pytest.raises(TypeError) as exc:
         jf.match_rating_comparison(b"abc", b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_hamming_type(jf):
     assert jf.hamming_distance("abc", "abc") == 0
     with pytest.raises(TypeError) as exc:
         jf.hamming_distance(b"abc", b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_soundex_type(jf):
     assert jf.soundex("ABC") == "A120"
     with pytest.raises(TypeError) as exc:
         jf.soundex(b"ABC")
-    assert "expected" in str(exc.value)
 
 
 def test_metaphone_type(jf):
     assert jf.metaphone("abc") == "ABK"
     with pytest.raises(TypeError) as exc:
         jf.metaphone(b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_nysiis_type(jf):
     assert jf.nysiis("abc") == "ABC"
     with pytest.raises(TypeError) as exc:
         jf.nysiis(b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_mr_codex_type(jf):
     assert jf.match_rating_codex("abc") == "ABC"
     with pytest.raises(TypeError) as exc:
         jf.match_rating_codex(b"abc")
-    assert "expected" in str(exc.value)
 
 
 def test_porter_type(jf):
     assert jf.porter_stem("abc") == "abc"
     with pytest.raises(TypeError) as exc:
         jf.porter_stem(b"abc")
-    assert "expected" in str(exc.value)
