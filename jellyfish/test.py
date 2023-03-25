@@ -10,18 +10,13 @@ def assertAlmostEqual(a, b, places=3):
     assert abs(a - b) < (0.1**places)
 
 
-if platform.python_implementation() == "CPython":
-    implementations = ["python", "c", "rust"]
-else:
-    implementations = ["python", "rust"]
+implementations = ["python", "rust"]
 
 
 @pytest.fixture(params=implementations)
 def jf(request):
     if request.param == "python":
         from jellyfish import _jellyfish as jf
-    elif request.param == "c":
-        from jellyfish import cjellyfish as jf
     elif request.param == "rust":
         import rustyfish as jf
     return jf
@@ -111,33 +106,6 @@ def test_match_rating_codex(jf, s1, s2):
 def test_match_rating_comparison(jf, s1, s2, value):
     value = {"True": True, "False": False, "None": None}[value]
     assert jf.match_rating_comparison(s1, s2) is value
-
-
-if platform.python_implementation() == "CPython":
-
-    def test_match_rating_comparison_segfault():
-        import hashlib
-        from jellyfish import cjellyfish as jf
-
-        sha1s = [
-            "{}".format(hashlib.sha1(str(v).encode("ascii")).hexdigest())
-            for v in range(100)
-        ]
-        # this segfaulted on 0.1.2
-        assert [[jf.match_rating_comparison(h1, h2) for h1 in sha1s] for h2 in sha1s]
-
-    def test_damerau_levenshtein_unicode_segfault():
-        # test that unicode works in C & Python versions now
-        from jellyfish.cjellyfish import damerau_levenshtein_distance as c_dl
-        from jellyfish._jellyfish import damerau_levenshtein_distance as py_dl
-
-        s1 = "mylifeoutdoors"
-        s2 = "нахлыст"
-        assert c_dl(s1, s2) == 14
-        assert c_dl(s2, s1) == 14
-
-        assert py_dl(s1, s2) == 14
-        assert py_dl(s2, s1) == 14
 
 
 def test_jaro_winkler_long_tolerance(jf):

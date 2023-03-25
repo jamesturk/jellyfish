@@ -66,30 +66,7 @@ class TestCommand(Command):
 
 
 def run_setup(build_c):
-    if build_c:
-        kw = dict(
-            ext_modules=[
-                Extension(
-                    "jellyfish.cjellyfish",
-                    [
-                        "cjellyfish/jellyfishmodule.c",
-                        "cjellyfish/jaro.c",
-                        "cjellyfish/hamming.c",
-                        "cjellyfish/levenshtein.c",
-                        "cjellyfish/damerau_levenshtein.c",
-                        "cjellyfish/mra.c",
-                        "cjellyfish/soundex.c",
-                        "cjellyfish/metaphone.c",
-                        "cjellyfish/nysiis.c",
-                        "cjellyfish/porter.c",
-                    ],
-                    define_macros=[("CJELLYFISH_PYTHON", "1")],
-                )
-            ],
-            cmdclass=dict(build_ext=ve_build_ext, test=TestCommand),
-        )
-    else:
-        kw = dict(cmdclass=dict(test=TestCommand))
+    kw = dict(cmdclass=dict(test=TestCommand))
 
     with open("README.md") as readme:
         long_description = readme.read()
@@ -115,6 +92,7 @@ def run_setup(build_c):
             "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
             "Topic :: Text Processing :: Linguistic",
         ],
         packages=["jellyfish"],
