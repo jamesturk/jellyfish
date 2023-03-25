@@ -61,6 +61,12 @@ fn soundex(a: &str) -> PyResult<String> {
     Ok(jellyfish::soundex(a))
 }
 
+/// Calculates the phonetic encoding of a string using the Metaphone algorithm.
+#[pyfunction]
+fn metaphone(a: &str) -> PyResult<String> {
+    Ok(jellyfish::metaphone(a))
+}
+
 /// A Python module implemented in Rust.
 #[pymodule]
 fn rustyfish(_py: Python, m: &PyModule) -> PyResult<()> {
@@ -73,6 +79,7 @@ fn rustyfish(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(match_rating_comparison, m)?)?;
     m.add_function(wrap_pyfunction!(nysiis, m)?)?;
     m.add_function(wrap_pyfunction!(soundex, m)?)?;
+    m.add_function(wrap_pyfunction!(metaphone, m)?)?;
 
     Ok(())
 }

@@ -12,5 +12,5 @@ name = "rustyfish"
 crate-type = ["cdylib"]
 
 [dependencies]
-jellyfish = "0.3.0"
+jellyfish = "0.4.0"
 pyo3 = "0.18.1"

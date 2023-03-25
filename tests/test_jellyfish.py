@@ -87,8 +87,6 @@ def test_soundex(jf, s1, code):
 
 @pytest.mark.parametrize("s1,code", _load_data("metaphone"), ids=str)
 def test_metaphone(jf, s1, code):
-    if jf.__name__ == "jellyfish.rustyfish":
-        pytest.skip("rustyfish does not support metaphone")
     assert jf.metaphone(s1) == code
 
 
@@ -163,8 +161,6 @@ def test_soundex_type(jf):
 
 
 def test_metaphone_type(jf):
-    if jf.__name__ == "jellyfish.rustyfish":
-        pytest.skip("rustyfish does not support metaphone")
     assert jf.metaphone("abc") == "ABK"
     with pytest.raises(TypeError) as exc:
         jf.metaphone(b"abc")
