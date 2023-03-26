@@ -1,10 +1,11 @@
+use crate::common::FastVec;
 use std::cmp;
 use unicode_segmentation::UnicodeSegmentation;
 
 pub fn match_rating_codex(s: &str) -> String {
     // match rating only really makes sense on strings
     let s = &s.to_uppercase()[..];
-    let v = UnicodeSegmentation::graphemes(s, true).collect::<Vec<&str>>();
+    let v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
     let mut codex = String::new();
     let mut prev = "~tmp~";
 
@@ -46,8 +47,8 @@ pub fn match_rating_comparison(s1: &str, s2: &str) -> Result<bool, String> {
     }
 
     // remove matching characters going forward
-    let mut res1 = Vec::new();
-    let mut res2 = Vec::new();
+    let mut res1 = FastVec::new();
+    let mut res2 = FastVec::new();
     let mut iter1 = longer.chars();
     let mut iter2 = shorter.chars();
     loop {

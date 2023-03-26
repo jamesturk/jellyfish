@@ -1,3 +1,4 @@
+use crate::common::FastVec;
 use std::cmp;
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -7,7 +8,11 @@ enum JaroVersion {
     WinklerLongTolerance,
 }
 
-fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVersion) -> f64 {
+fn vec_jaro_or_winkler<T: PartialEq>(
+    s1: &FastVec<T>,
+    s2: &FastVec<T>,
+    version: JaroVersion,
+) -> f64 {
     let s1_len = s1.len();
     let s2_len = s2.len();
 
@@ -106,33 +111,33 @@ fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVers
     weight
 }
 
-pub fn vec_jaro_similarity<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> f64 {
+pub fn vec_jaro_similarity<T: PartialEq>(s1: &FastVec<T>, s2: &FastVec<T>) -> f64 {
     vec_jaro_or_winkler(s1, s2, JaroVersion::Pure)
 }
 
-pub fn vec_jaro_winkler_similarity<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> f64 {
+pub fn vec_jaro_winkler_similarity<T: PartialEq>(s1: &FastVec<T>, s2: &FastVec<T>) -> f64 {
     vec_jaro_or_winkler(s1, s2, JaroVersion::Winkler)
 }
 
-pub fn vec_jaro_winkler_similarity_longtol<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> f64 {
+pub fn vec_jaro_winkler_similarity_longtol<T: PartialEq>(s1: &FastVec<T>, s2: &FastVec<T>) -> f64 {
     vec_jaro_or_winkler(s1, s2, JaroVersion::WinklerLongTolerance)
 }
 
 pub fn jaro_similarity(s1: &str, s2: &str) -> f64 {
-    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<Vec<&str>>();
-    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<Vec<&str>>();
+    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<FastVec<&str>>();
+    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<FastVec<&str>>();
     vec_jaro_similarity(&us1, &us2)
 }
 
 pub fn jaro_winkler_similarity(s1: &str, s2: &str) -> f64 {
-    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<Vec<&str>>();
-    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<Vec<&str>>();
+    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<FastVec<&str>>();
+    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<FastVec<&str>>();
     vec_jaro_winkler_similarity(&us1, &us2)
 }
 
 pub fn jaro_winkler_similarity_longtol(s1: &str, s2: &str) -> f64 {
-    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<Vec<&str>>();
-    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<Vec<&str>>();
+    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<FastVec<&str>>();
+    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<FastVec<&str>>();
     vec_jaro_winkler_similarity_longtol(&us1, &us2)
 }
 

@@ -1,6 +1,7 @@
+use crate::common::FastVec;
 use unicode_segmentation::UnicodeSegmentation;
 
-pub fn vec_hamming_distance<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> usize {
+pub fn vec_hamming_distance<T: PartialEq>(s1: &FastVec<T>, s2: &FastVec<T>) -> usize {
     let (longer, shorter) = if s1.len() > s2.len() {
         (s1, s2)
     } else {
@@ -19,8 +20,8 @@ pub fn vec_hamming_distance<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> usize {
 }
 
 pub fn hamming_distance(s1: &str, s2: &str) -> usize {
-    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<Vec<&str>>();
-    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<Vec<&str>>();
+    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<FastVec<&str>>();
+    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<FastVec<&str>>();
 
     vec_hamming_distance(&us1, &us2)
 }
