@@ -53,15 +53,19 @@ pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
 
     let mut item_position = HashMap::new();
     // distance matrix
-    let mut score: FastVec<FastVec<usize>> = smallvec![smallvec![0; len2 + 2]; len1 + 2];
-    score[0][0] = infinite;
-    for i in 0..len1 + 1 {
-        score[i + 1][0] = infinite;
-        score[i + 1][1] = i;
+    // try using a flat array instead of a 2d vec for speed
+    let mut score: Vec<usize> = vec![0; (len1 + 2) * (len2 + 2)];
+    let idx = |i: usize, j: usize| (len2 + 2) * i + j;
+    //let mut score: FastVec<FastVec<usize>> = smallvec![smallvec![0; len2 + 2]; len1 + 2];
+
+    score[0] = infinite;
+    for i in 0..=len1 {
+        score[idx(i + 1, 0)] = infinite;
+        score[idx(i + 1, 1)] = i;
     }
-    for i in 0..len2 + 1 {
-        score[0][i + 1] = infinite;
-        score[1][i + 1] = i;
+    for i in 0..=len2 {
+        score[idx(0, i + 1)] = infinite;
+        score[idx(1, i + 1)] = i;
     }
 
     for i in 1..len1 + 1 {
@@ -76,13 +80,13 @@ pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
             }
 
             // min of the four options
-            score[i + 1][j + 1] = cmp::min(
+            score[idx(i + 1, j + 1)] = cmp::min(
                 // substitution & insertion
-                cmp::min(score[i][j] + cost, score[i + 1][j] + 1),
+                cmp::min(score[idx(i, j)] + cost, score[idx(i + 1, j)] + 1),
                 cmp::min(
                     // deletion & transposition
-                    score[i][j + 1] + 1,
-                    score[*i1][j1] + (i - *i1 - 1) + 1 + (j - j1 - 1),
+                    score[idx(i, j + 1)] + 1,
+                    score[idx(*i1, j1)] + (i - *i1 - 1) + 1 + (j - j1 - 1),
                 ),
             )
         }
@@ -90,7 +94,7 @@ pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
         item_position.insert(&v1[i - 1], i);
     }
 
-    score[len1 + 1][len2 + 1]
+    score[idx(len1 + 1, len2 + 1)]
 }
 
 pub fn levenshtein_distance(s1: &str, s2: &str) -> usize {
