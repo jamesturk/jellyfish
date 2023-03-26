@@ -1,9 +1,16 @@
+pytest:
+    maturin develop
+    .venv/bin/pytest
+
+test: pytest
+    cargo test
+
 venv:
     rm -rf .venv
     python3 -m venv .venv
     . .venv/bin/activate
-    .venv/bin/pip install wheel 
-    .venv/bin/pip install jupyter matplotlib pandas
+    .venv/bin/pip install wheel pytest
+    .venv/bin/pip install jupyter pandas seaborn
 
 
 timedruns-old:
