@@ -37,7 +37,7 @@ def time_func(funcname, name, params, ftype):
     elif ftype == "c":
         path = "cjellyfish"
     elif ftype == "rust":
-        path = "rustyfish"
+        path = "_rustyfish"
 
     return (
         timeit.timeit(

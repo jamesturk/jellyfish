@@ -19,6 +19,6 @@ timedruns-old:
 
 timedruns-new:
     .venv/bin/pip uninstall jellyfish
-    #.venv/bin/pip install -e .
-    .venv/bin/pip install --pre jellyfish # latest Rust version
+    .venv/bin/pip install -e .
+    #.venv/bin/pip install --pre jellyfish # latest Rust version
     .venv/bin/python benchmarks/timedruns.py new >> benchmarks/timedruns-new.csv
