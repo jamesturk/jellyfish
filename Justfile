@@ -6,9 +6,12 @@ venv:
     .venv/bin/pip install jupyter matplotlib pandas
 
 
-timedruns:
+timedruns-old:
     .venv/bin/pip install jellyfish==0.10.0 # last C version
-    .venv/bin/python benchmarks/timedruns.py old > benchmarks/timedruns.csv
+    .venv/bin/python benchmarks/timedruns.py old > benchmarks/timedruns-old.csv
+
+timedruns-new:
     .venv/bin/pip uninstall jellyfish
-    .venv/bin/pip install -e .
-    .venv/bin/python benchmarks/timedruns.py new >> benchmarks/timedruns.csv
+    #.venv/bin/pip install -e .
+    .venv/bin/pip install --pre jellyfish # latest Rust version
+    .venv/bin/python benchmarks/timedruns.py new >> benchmarks/timedruns-new.csv

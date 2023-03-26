@@ -1,0 +1,10 @@
+3.10.7,0.11,rust,damerau_levenshtein_distance,2.955821124999602e-06
+3.10.7,0.11,rust,hamming_distance,2.637990829998671e-07
+3.10.7,0.11,rust,jaro_similarity,8.923487499996554e-07
+3.10.7,0.11,rust,jaro_winkler_similarity,5.265191250000499e-07
+3.10.7,0.11,rust,levenshtein_distance,5.327967920002266e-07
+3.10.7,0.11,rust,match_rating_codex,3.9641191699956834e-07
+3.10.7,0.11,rust,match_rating_comparison,7.64051959000426e-07
+3.10.7,0.11,rust,metaphone,4.791485000005196e-07
+3.10.7,0.11,rust,nysiis,6.270804579999094e-07
+3.10.7,0.11,rust,soundex,3.9677620900056354e-07
