@@ -16,7 +16,6 @@ name = "jellyfish"
 crate-type = ["cdylib"]
 
 [dependencies]
-jellyfish = "0.4.1"
 pyo3 = "0.18.1"
 unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
