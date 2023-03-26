@@ -11,7 +11,7 @@ Issues: [https://github.com/jamesturk/jellyfish/issues](https://github.com/james
 [![PyPI badge](https://badge.fury.io/py/jellyfish.svg)](https://badge.fury.io/py/jellyfish)
 [![Test badge](https://github.com/jamesturk/jellyfish/workflows/Python%20package/badge.svg)](https://github.com/jamesturk/jellyfish/actions?query=workflow%3A%22Python+package)
 [![Coveralls](https://coveralls.io/repos/jamesturk/jellyfish/badge.png?branch=master)](https://coveralls.io/r/jamesturk/jellyfish)
-
+![Test Rust](https://github.com/jamesturk/rust-jellyfish/workflows/Test%20Rust/badge.svg)
 
 ## Included Algorithms
 

@@ -18,7 +18,7 @@ def jf(request):
     if request.param == "python":
         import jellyfish._jellyfish as jf
     elif request.param == "rust":
-        from jellyfish import rustyfish as jf
+        from jellyfish import _rustyfish as jf
     return jf
 
 
