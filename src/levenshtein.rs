@@ -38,7 +38,7 @@ pub fn vec_levenshtein_distance<T: PartialEq>(v1: &Vec<T>, v2: &Vec<T>) -> usize
     }
 
     // last element of bottom row
-    return cur[cur.len() - 1];
+    return cur[cols - 1];
 }
 
 pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(

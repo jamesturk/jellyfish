@@ -17,7 +17,7 @@ fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVers
 
     let min_len = cmp::min(s1_len, s2_len);
     let mut search_range = cmp::max(s1_len, s2_len);
-    search_range = if search_range > 1 { (search_range / 2) - 1 } else { 0 };
+    search_range = (search_range / 2).saturating_sub(1);
 
     let mut s1_flags = vec![false; s1_len];
     let mut s2_flags = vec![false; s2_len];
@@ -26,11 +26,7 @@ fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVers
     // looking only within search range, count & flag matched pairs
     for (i, s1_ch) in s1.iter().enumerate() {
         // avoid underflow on i - search_range
-        let low = if search_range >= i {
-            0
-        } else {
-            i - search_range
-        };
+        let low = i.saturating_sub(search_range);
         let hi = cmp::min(i + search_range, s2_len - 1);
         for j in low..hi + 1 {
             if !s2_flags[j] && s2[j] == *s1_ch {
@@ -92,8 +88,9 @@ fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVers
             // TODO: also had s1[i] in Python, necessary?
             i += 1;
         }
+        let fi = i as f64;
         if i > 0 {
-            weight += (i as f64) * 0.1 * (1.0 - weight);
+            weight += fi * 0.1 * (1.0 - weight);
         }
 
         // optional adjustment for long strings
@@ -101,8 +98,8 @@ fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVers
         // and agreed items must be more than half of remaining items
         if long_tolerance && min_len > 4 && common_chars > i + 1 && 2 * common_chars >= min_len + i
         {
-            weight += (1.0 - weight) * (common_charsf - i as f64 - 1.0)
-                / (s1_lenf + s2_lenf - i as f64 * 2.0 + 2.0);
+            weight +=
+                (1.0 - weight) * (common_charsf - fi - 1.0) / (s1_lenf + s2_lenf - fi * 2.0 + 2.0);
         }
     }
 
