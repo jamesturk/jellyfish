@@ -1,7 +1,7 @@
 use unicode_normalization::UnicodeNormalization;
 
 pub fn soundex(s: &str) -> String {
-    if s.len() == 0 {
+    if s.is_empty() {
         return String::from("");
     }
 
@@ -46,7 +46,7 @@ pub fn soundex(s: &str) -> String {
     for k in result {
         str_key.push(k);
     }
-    return str_key;
+    str_key
 }
 
 #[cfg(test)]

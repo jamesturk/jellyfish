@@ -15,7 +15,7 @@ pub fn vec_hamming_distance<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> usize {
         }
     }
 
-    return distance;
+    distance
 }
 
 pub fn hamming_distance(s1: &str, s2: &str) -> usize {

@@ -12,7 +12,7 @@ pub fn match_rating_codex(s: &str) -> String {
         let vowel = *c == "A" || *c == "E" || *c == "I" || *c == "O" || *c == "U";
         // not a space || starting char & vowel || non-double consonant
         if *c != " " && (i == 0 && vowel) || (!vowel && *c != prev) {
-            codex.push_str(*c);
+            codex.push_str(c);
         }
         prev = c;
     }
@@ -24,7 +24,7 @@ pub fn match_rating_codex(s: &str) -> String {
         return newcodex;
     }
 
-    return codex;
+    codex
 }
 
 pub fn match_rating_comparison(s1: &str, s2: &str) -> Result<bool, String> {

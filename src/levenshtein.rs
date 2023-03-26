@@ -9,7 +9,7 @@ fn range_vec(size: usize) -> Vec<usize> {
         p += 1;
         p - 1
     });
-    return vec;
+    vec
 }
 
 pub fn vec_levenshtein_distance<T: PartialEq>(v1: &Vec<T>, v2: &Vec<T>) -> usize {
@@ -38,7 +38,7 @@ pub fn vec_levenshtein_distance<T: PartialEq>(v1: &Vec<T>, v2: &Vec<T>) -> usize
     }
 
     // last element of bottom row
-    return cur[cols - 1];
+    cur[cols - 1]
 }
 
 pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
@@ -88,7 +88,7 @@ pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
         item_position.insert(&v1[i - 1], i);
     }
 
-    return score[len1 + 1][len2 + 1];
+    score[len1 + 1][len2 + 1]
 }
 
 pub fn levenshtein_distance(s1: &str, s2: &str) -> usize {

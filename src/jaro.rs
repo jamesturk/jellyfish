@@ -103,7 +103,7 @@ fn vec_jaro_or_winkler<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>, version: JaroVers
         }
     }
 
-    return weight;
+    weight
 }
 
 pub fn vec_jaro_similarity<T: PartialEq>(s1: &Vec<T>, s2: &Vec<T>) -> f64 {

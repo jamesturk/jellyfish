@@ -1,21 +1,15 @@
 use unicode_normalization::UnicodeNormalization;
 
 pub fn isvowel(s: char) -> bool {
-    match s {
-        'A' | 'E' | 'I' | 'O' | 'U' => true,
-        _ => false,
-    }
+    matches!(s, 'A' | 'E' | 'I' | 'O' | 'U')
 }
 
 fn is_iey(s: char) -> bool {
-    match s {
-        'I' | 'E' | 'Y' => true,
-        _ => false,
-    }
+    matches!(s, 'I' | 'E' | 'Y')
 }
 
 pub fn metaphone(s: &str) -> String {
-    if s.len() == 0 {
+    if s.is_empty() {
         return String::from("");
     }
 
@@ -82,9 +76,9 @@ pub fn metaphone(s: &str) -> String {
             'G' => {
                 if is_iey(next) {
                     ret.push('J');
-                } else if next == 'H' && nextnext != '*' && !isvowel(nextnext) {
-                    i += 1;
-                } else if next == 'N' && nextnext == '*' {
+                } else if (next == 'H' && nextnext != '*' && !isvowel(nextnext))
+                    || (next == 'N' && nextnext == '*')
+                {
                     i += 1;
                 } else {
                     ret.push('K');
@@ -164,7 +158,7 @@ pub fn metaphone(s: &str) -> String {
                 ret.push('S');
             }
             ' ' => {
-                if ret.len() > 0 && ret[ret.len() - 1] != ' ' {
+                if !ret.is_empty() && ret[ret.len() - 1] != ' ' {
                     ret.push(' ');
                 }
             }
@@ -178,7 +172,7 @@ pub fn metaphone(s: &str) -> String {
         str_key.push(k);
     }
 
-    return str_key;
+    str_key
 }
 
 #[cfg(test)]

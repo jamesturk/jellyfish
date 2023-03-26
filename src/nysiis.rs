@@ -1,14 +1,11 @@
 use unicode_segmentation::UnicodeSegmentation;
 
 fn isvowel(s: &str) -> bool {
-    match s {
-        "A" | "E" | "I" | "O" | "U" => true,
-        _ => false,
-    }
+    matches!(s, "A" | "E" | "I" | "O" | "U")
 }
 
 pub fn nysiis(s: &str) -> String {
-    if s.len() == 0 {
+    if s.is_empty() {
         return String::from("");
     }
 
@@ -20,7 +17,7 @@ pub fn nysiis(s: &str) -> String {
         v[1] = "C"; // switch MAC to MCC
     } else if s.starts_with("KN") {
         v.remove(0); // strip leading K from KN
-    } else if s.starts_with("K") {
+    } else if s.starts_with('K') {
         v[0] = "C"; // switch K to C
     } else if s.starts_with("PH") || s.starts_with("PF") {
         v[0] = "F";
@@ -92,7 +89,7 @@ pub fn nysiis(s: &str) -> String {
             _ => vec![v[i]],
         };
 
-        if chars.len() > 0 && chars[chars.len() - 1] != key[key.len() - 1] {
+        if !chars.is_empty() && chars[chars.len() - 1] != key[key.len() - 1] {
             for c in chars {
                 key.push(c);
             }
@@ -121,7 +118,7 @@ pub fn nysiis(s: &str) -> String {
         str_key.push_str(k);
     }
 
-    return str_key;
+    str_key
 }
 
 #[cfg(test)]
