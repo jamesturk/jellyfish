@@ -74,7 +74,7 @@ def main():
         jf_version = "0.10"
         ftypes = ("c", "python")
     elif sys.argv[1] == "new":
-        jf_version = "0.11"
+        jf_version = "0.11-dev"
         ftypes = ("rust",)
 
     for ftype in ftypes:
