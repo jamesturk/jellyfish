@@ -1,3 +1,4 @@
+use crate::common::FastVec;
 use unicode_normalization::UnicodeNormalization;
 
 pub fn soundex(s: &str) -> String {
@@ -5,9 +6,9 @@ pub fn soundex(s: &str) -> String {
         return String::from("");
     }
 
-    let v = &s.to_uppercase().nfkd().collect::<Vec<char>>();
+    let v = &s.to_uppercase().nfkd().collect::<FastVec<char>>();
 
-    let mut result = Vec::new();
+    let mut result = FastVec::new();
     result.push(v[0]);
 
     let replacement = |ch| match ch {

@@ -1,3 +1,4 @@
+use crate::common::FastVec;
 use unicode_normalization::UnicodeNormalization;
 
 pub fn isvowel(s: char) -> bool {
@@ -14,8 +15,8 @@ pub fn metaphone(s: &str) -> String {
     }
 
     let s = &s.to_uppercase()[..];
-    let mut v = s.nfkd().collect::<Vec<char>>();
-    let mut ret = Vec::new();
+    let mut v = s.nfkd().collect::<FastVec<char>>();
+    let mut ret = FastVec::new();
 
     // skip first character if s starts with these
     if s.starts_with("KN")

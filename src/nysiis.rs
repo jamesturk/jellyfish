@@ -1,3 +1,5 @@
+use crate::common::FastVec;
+use smallvec::{smallvec, SmallVec};
 use unicode_segmentation::UnicodeSegmentation;
 
 fn isvowel(s: &str) -> bool {
@@ -10,7 +12,7 @@ pub fn nysiis(s: &str) -> String {
     }
 
     let s = &s.to_uppercase()[..];
-    let mut v = UnicodeSegmentation::graphemes(s, true).collect::<Vec<&str>>();
+    let mut v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
 
     // step 1: handle prefixes
     if s.starts_with("MAC") {
@@ -44,49 +46,49 @@ pub fn nysiis(s: &str) -> String {
     }
 
     // step 3: key starts with first character of name
-    let mut key = Vec::new();
+    let mut key = FastVec::new();
     key.push(v[0]);
 
     // step 4: translate remaining characters
     let mut i = 1;
 
     while i < v.len() {
-        let chars = match v[i] {
+        let chars: SmallVec<[&str; 3]> = match v[i] {
             "E" if i + 1 < v.len() && v[i + 1] == "V" => {
                 i += 1;
-                vec!["A", "F"]
+                smallvec!["A", "F"]
             }
-            "A" | "E" | "I" | "O" | "U" => vec!["A"],
-            "Q" => vec!["G"],
-            "Z" => vec!["S"],
-            "M" => vec!["N"],
+            "A" | "E" | "I" | "O" | "U" => smallvec!["A"],
+            "Q" => smallvec!["G"],
+            "Z" => smallvec!["S"],
+            "M" => smallvec!["N"],
             "K" => {
                 if i + 1 < v.len() && v[i + 1] == "N" {
-                    vec!["N"]
+                    smallvec!["N"]
                 } else {
-                    vec!["C"]
+                    smallvec!["C"]
                 }
             }
             "S" if i + 2 < v.len() && v[i + 1] == "C" && v[i + 2] == "H" => {
                 i += 2;
-                vec!["S", "S"]
+                smallvec!["S", "S"]
             }
             "P" if i + 1 < v.len() && v[i + 1] == "H" => {
                 i += 1;
-                vec!["F"]
+                smallvec!["F"]
             }
             "H" if !isvowel(v[i - 1])
                 || (i + 1 < v.len() && !isvowel(v[i + 1]))
                 || (i + 1 == v.len()) =>
             {
                 if isvowel(v[i - 1]) {
-                    vec!["A"]
+                    smallvec!["A"]
                 } else {
-                    vec![v[i - 1]]
+                    smallvec![v[i - 1]]
                 }
             }
-            "W" if isvowel(v[i - 1]) => vec![v[i - 1]],
-            _ => vec![v[i]],
+            "W" if isvowel(v[i - 1]) => smallvec![v[i - 1]],
+            _ => smallvec![v[i]],
         };
 
         if !chars.is_empty() && chars[chars.len() - 1] != key[key.len() - 1] {
