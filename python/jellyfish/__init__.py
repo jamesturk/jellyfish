@@ -1,6 +1,6 @@
 import warnings
 
-from .rustyfish import *
+from ._rustyfish import *
 from . import _jellyfish
 
 

@@ -37,7 +37,7 @@ def time_func(funcname, name, params, ftype):
     elif ftype == "c":
         path = "cjellyfish"
     elif ftype == "rust":
-        path = "rustyfish"
+        path = "_rustyfish"
 
     return (
         timeit.timeit(
@@ -74,7 +74,7 @@ def main():
         jf_version = "0.10"
         ftypes = ("c", "python")
     elif sys.argv[1] == "new":
-        jf_version = "0.11"
+        jf_version = "dev"
         ftypes = ("rust",)
 
     for ftype in ftypes:
