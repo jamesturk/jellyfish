@@ -20,6 +20,7 @@ pyo3 = "0.18.1"
 unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
 tinyvec = "1.6.0"
+smallvec = "1.10.0"
 
 [dev-dependencies]
 csv = "1.1"

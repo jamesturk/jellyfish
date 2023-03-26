@@ -1,3 +1,4 @@
+mod common;
 mod hamming;
 mod jaro;
 mod levenshtein;
@@ -6,6 +7,8 @@ mod metaphone;
 mod nysiis;
 mod rustyfish;
 mod soundex;
+mod testutils;
+
 pub use hamming::{hamming_distance, vec_hamming_distance};
 pub use jaro::{
     jaro_similarity, jaro_winkler_similarity, jaro_winkler_similarity_longtol, vec_jaro_similarity,
@@ -20,4 +23,3 @@ pub use metaphone::metaphone;
 pub use nysiis::nysiis;
 pub use rustyfish::_rustyfish;
 pub use soundex::soundex;
-mod testutils;
