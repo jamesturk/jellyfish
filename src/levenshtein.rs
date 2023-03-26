@@ -53,7 +53,7 @@ pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
 
     let mut item_position = HashMap::new();
     // distance matrix
-    let mut score = vec![vec![0; len2 + 2]; len1 + 2];
+    let mut score: FastVec<FastVec<usize>> = smallvec![smallvec![0; len2 + 2]; len1 + 2];
     score[0][0] = infinite;
     for i in 0..len1 + 1 {
         score[i + 1][0] = infinite;
