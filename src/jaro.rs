@@ -1,4 +1,5 @@
 use crate::common::FastVec;
+use smallvec::smallvec;
 use std::cmp;
 use unicode_segmentation::UnicodeSegmentation;
 
@@ -24,8 +25,8 @@ fn vec_jaro_or_winkler<T: PartialEq>(
     let mut search_range = cmp::max(s1_len, s2_len);
     search_range = (search_range / 2).saturating_sub(1);
 
-    let mut s1_flags = vec![false; s1_len];
-    let mut s2_flags = vec![false; s2_len];
+    let mut s1_flags: FastVec<bool> = smallvec![false; s1_len];
+    let mut s2_flags: FastVec<bool> = smallvec![false; s2_len];
     let mut common_chars = 0;
 
     // looking only within search range, count & flag matched pairs
