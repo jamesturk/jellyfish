@@ -5,7 +5,6 @@ mod levenshtein;
 mod match_rating;
 mod metaphone;
 mod nysiis;
-mod rustyfish;
 mod soundex;
 mod testutils;
 
@@ -21,5 +20,9 @@ pub use levenshtein::{
 pub use match_rating::{match_rating_codex, match_rating_comparison};
 pub use metaphone::metaphone;
 pub use nysiis::nysiis;
-pub use rustyfish::_rustyfish;
 pub use soundex::soundex;
+
+#[cfg(feature = "python")]
+mod rustyfish;
+#[cfg(feature = "python")]
+pub use rustyfish::_rustyfish;
