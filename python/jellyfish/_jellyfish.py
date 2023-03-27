@@ -3,18 +3,17 @@ from collections import defaultdict
 from itertools import zip_longest
 import warnings
 
-warnings.warn(
-    "The jellyfish._jellyfish module is deprecated and will be removed in jellyfish 1.0.",
-    DeprecationWarning,
-    stacklevel=2,
-)
-
 
 def _normalize(s):
     return unicodedata.normalize("NFKD", s)
 
 
 def _check_type(s):
+    # warn here since each function will call this
+    warnings.warn(
+        "The jellyfish._jellyfish module is deprecated and will be removed in jellyfish 1.0.",
+        DeprecationWarning,
+    )
     if not isinstance(s, str):
         raise TypeError("expected str or unicode, got %s" % type(s).__name__)
 
