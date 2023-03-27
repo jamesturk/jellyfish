@@ -41,7 +41,7 @@ jobs:
           cargo test
       - name: Run pytest
         run: |
-          just pytest
+          just venv pytest
   linux:
     runs-on: ubuntu-latest
     strategy:
