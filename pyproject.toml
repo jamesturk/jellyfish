@@ -9,7 +9,16 @@ classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
 ]
+
+[project.urls]
+homepage = "https://jamesturk.github.io/jellyfish/"
+documentation = "https://jamesturk.github.io/jellyfish/"
+repository = "https://github.com/jamesturk/jellyfish/"
 
 
 [tool.maturin]

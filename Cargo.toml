@@ -1,11 +1,13 @@
 [package]
 name = "jellyfish"
-version = "0.11.0-alpha.4"
+version = "0.11.0"
 edition = "2021"
 description = "Approximate and phonetic matching of strings."
 authors = ["James Turk <dev@jamesturk.net>"]
 repository = "https://github.com/jamesturk/jellyfish/"
 license = "MIT"
+readme = "README.md"
+
 
 [package.metadata.maturin]
 name = "jellyfish._rustyfish"
