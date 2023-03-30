@@ -46,7 +46,7 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     needs: lint_and_test
-    if: 0>1
+    if: false
     strategy:
       matrix:
         platform:
