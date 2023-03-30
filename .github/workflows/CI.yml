@@ -52,6 +52,8 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -77,6 +79,8 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -102,6 +106,8 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -122,6 +128,8 @@ jobs:
     needs: lint_and_test
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Build sdist
         uses: PyO3/maturin-action@v1
         with:
