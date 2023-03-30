@@ -80,7 +80,6 @@ jobs:
           # { target: "armv7-unknown-linux-musleabihf", image_tag: "armv7" },
           # { target: "powerpc64le-unknown-linux-musl", image_tag: "ppc64le" },
         ]
-        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
     steps:
       - uses: actions/checkout@v3
       - name: Setup QEMU
@@ -89,7 +88,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.platform.target }}
-          args: --release --out dist -i python${{ matrix.python-version }}
+          args: --release --out dist -i 3.8 3.9 3.10 3.11 pypy3.9
           sccache: 'true'
           manylinux: musllinux_1_1
       - name: Upload wheels
