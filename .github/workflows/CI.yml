@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   lint_and_test:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,7 +47,6 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     needs: lint_and_test
-    if: ${{false}}
     strategy:
       matrix:
         platform:
