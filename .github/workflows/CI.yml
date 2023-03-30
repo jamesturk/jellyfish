@@ -76,27 +76,30 @@ jobs:
     needs: lint_and_test
     strategy:
       matrix:
+      matrix:
+        platform:
+          - target: x86_64-unknown-linux-musl
+            arch: x86_64
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+          - target: i686-unknown-linux-musl
+            arch: x86
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
         # all values: [x86_64, x86, aarch64, armhf, armv7, ppc64le, riscv64, s390x]
-        platform: [
-          { target: "x86_64-unknown-linux-musl", arch: "x86_64" },
-          { target: "i686-unknown-linux-musl", arch: "x86" },
-          # { target: "aarch64-unknown-linux-musl", arch: "aarch64" },
-          # { target: "armv7-unknown-linux-musleabihf", image_tag: "armv7" },
-          # { target: "powerpc64le-unknown-linux-musl", image_tag: "ppc64le" },
-        ]
-        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
+        # { target: "aarch64-unknown-linux-musl", arch: "aarch64" },
+        # { target: "armv7-unknown-linux-musleabihf", image_tag: "armv7" },
+        # { target: "powerpc64le-unknown-linux-musl", image_tag: "ppc64le" },
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.11'
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v1
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.platform.target }}
-          args: --release --out dist -i ${{ matrix.python-version }}
+          args: --release --out dist -i ${{ matrix.platform.interpreter }}
           sccache: 'true'
           manylinux: musllinux_1_1
       - name: Upload wheels
