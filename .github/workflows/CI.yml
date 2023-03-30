@@ -118,7 +118,7 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+            interpreter: 3.7 3.8 3.9 3.10 3.11
           - target: x86
             interpreter: 3.7 3.8 3.9 3.10 3.11
     steps:
