@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.11.1 - 30 March 2023
+----------------------
+* fix missing testdata in packages
+
+0.11.0 - 27 March 2023
+----------------------
+* switched to using Rust implementation for all algorithms
+
 0.10.0 - 25 March 2023
 ---------------------
 * removed rarely-used `porter_stem` function, better implementations exist
