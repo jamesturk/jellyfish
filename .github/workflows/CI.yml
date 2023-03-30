@@ -78,7 +78,7 @@ jobs:
     steps:
       - uses: jirutka/setup-alpine@v1
         with:
-          arch:
+          arch: ${{ matrix.target }}
           branch: edge
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
