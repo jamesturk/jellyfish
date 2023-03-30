@@ -48,18 +48,22 @@ jobs:
     needs: lint_and_test
     strategy:
       matrix:
-        target: [x86_64, aarch64] # armv7?
-        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
+        platform:
+          - target: x64
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+          - target: aarch64
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+          # armv7?
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          target: ${{ matrix.target }}
-          args: --release --out dist -i ${{ matrix.python-version }}
+          target: ${{ matrix.platform.target }}
+          args: --release --out dist -i ${{ matrix.platform.interpreter }}
           sccache: 'true'
           manylinux: auto
       - name: Upload wheels
@@ -101,18 +105,21 @@ jobs:
     needs: lint_and_test
     strategy:
       matrix:
-        target: [x86_64, aarch64]
-        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
+        platform:
+          - target: x64
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+          - target: aarch64
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          target: ${{ matrix.target }}
-          args: --release --out dist -i ${{ matrix.python-version }}
+          target: ${{ matrix.platform.target }}
+          args: --release --out dist -i ${{ matrix.platform.interpreter }}
           sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v3
