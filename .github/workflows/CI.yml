@@ -76,7 +76,6 @@ jobs:
     needs: lint_and_test
     strategy:
       matrix:
-      matrix:
         platform:
           - target: x86_64-unknown-linux-musl
             arch: x86_64
