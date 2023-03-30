@@ -17,7 +17,6 @@ permissions:
 
 jobs:
   lint_and_test:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -38,6 +37,7 @@ jobs:
       - name: Install Just
         uses: extractions/setup-just@v1
       - name: Run Cargo Tests
+        if: ${{ false }}
         run: |
           cargo test
       - name: Run pytest
