@@ -6,7 +6,7 @@
 on:
   push:
     branches:
-      - main
+      - *
     tags:
       - '*'
   pull_request:
@@ -73,19 +73,22 @@ jobs:
     needs: lint_and_test
     strategy:
       matrix:
-        target: [x64, x86]
-        python-version: ['3.8', '3.9', '3.10', '3.11', 'pypy3.9']
+        platform:
+          - target: x64
+            interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+          - target: x86
+            interpreter: 3.7 3.8 3.9 3.10 3.11
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
-          architecture: ${{ matrix.target }}
+          python-version: '3.11'
+          architecture: ${{ matrix.platform.target }}
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist -i ${{ matrix.python-version }}
+          args: --release --out dist -i ${{ matrix.platform.interpreter }}
           sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v3
