@@ -32,7 +32,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --find-interpreter
+          args: --release --out dist -i {{ matrix.python-version }}
           sccache: 'true'
       - name: Install Just
         uses: extractions/setup-just@v1
