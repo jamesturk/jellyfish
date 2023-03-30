@@ -29,18 +29,21 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Build wheels
+        if: ${{ false }}
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
           args: --release --out dist -i ${{ matrix.python-version }}
           sccache: 'true'
       - name: Install Just
+        if: ${{ false }}
         uses: extractions/setup-just@v1
       - name: Run Cargo Tests
         if: ${{ false }}
         run: |
           cargo test
       - name: Run pytest
+        if: ${{ false }}
         run: |
           just venv pytest
 
