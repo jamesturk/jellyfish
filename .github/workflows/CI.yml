@@ -56,9 +56,6 @@ jobs:
           # armv7?
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -89,9 +86,6 @@ jobs:
         # { target: "powerpc64le-unknown-linux-musl", image_tag: "ppc64le" },
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v1
       - name: Build wheels
@@ -119,10 +113,6 @@ jobs:
             interpreter: 3.7 3.8 3.9 3.10 3.11
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          architecture: ${{ matrix.platform.target }}
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -147,9 +137,6 @@ jobs:
             interpreter: 3.7 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
