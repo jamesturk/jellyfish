@@ -1,7 +1,7 @@
 use crate::common::FastVec;
+use ahash::AHashMap;
 use smallvec::smallvec;
 use std::cmp;
-use std::collections::HashMap;
 use unicode_segmentation::UnicodeSegmentation;
 
 fn range_vec(size: usize) -> FastVec<usize> {
@@ -51,7 +51,7 @@ pub fn vec_damerau_levenshtein_distance<T: Eq + std::hash::Hash>(
     let len2 = v2.len();
     let infinite = len1 + len2;
 
-    let mut item_position = HashMap::new();
+    let mut item_position = AHashMap::with_capacity(cmp::max(len1, len2));
     // distance matrix
     // try using a flat array instead of a 2d vec for speed
     let mut score: Vec<usize> = vec![0; (len1 + 2) * (len2 + 2)];

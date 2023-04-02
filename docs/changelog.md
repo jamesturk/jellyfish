@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.11.2 - 2 April 2023
+---------------------
+* fix to Rust build process to build more wheels, thanks @MartinoMensio!
+
 0.11.1 - 30 March 2023
 ----------------------
 * fix missing testdata in packages
