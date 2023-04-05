@@ -5,11 +5,15 @@ pytest:
 test: pytest
     cargo test
 
+deploy-docs:
+		. .venv/bin/activate
+		mkdocs gh-deploy
+
 venv:
     rm -rf .venv
     python3 -m venv .venv
     . .venv/bin/activate
-    .venv/bin/pip install wheel pytest
+    .venv/bin/pip install wheel pytest mkdocs-material
     .venv/bin/pip install jupyter pandas seaborn
 
 
