@@ -4,6 +4,7 @@ Changelog
 0.11.2 - 2 April 2023
 ---------------------
 * fix to Rust build process to build more wheels, thanks @MartinoMensio!
+* switch to using `ahash` for Damerau-Levenshtein for speed gains
 
 0.11.1 - 30 March 2023
 ----------------------
