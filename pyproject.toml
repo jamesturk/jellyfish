@@ -24,3 +24,4 @@ repository = "https://github.com/jamesturk/jellyfish/"
 [tool.maturin]
 features = ["pyo3/extension-module", "python"]
 python-source = "python"
+module-name = "jellyfish._rustyfish"
