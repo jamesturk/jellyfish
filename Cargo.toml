@@ -9,9 +9,6 @@ license = "MIT"
 readme = "README.md"
 
 
-[package.metadata.maturin]
-name = "jellyfish._rustyfish"
-
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
 name = "jellyfish"
