@@ -39,22 +39,6 @@ def test_jaro_winkler_similarity_longtol(jf, s1, s2, value):
     assertAlmostEqual(jf.jaro_winkler_similarity(s1, s2, True), value, places=3)
 
 
-def test_jaro_winkler_deprecation(jf):
-    # backwards compatibility function
-    from jellyfish import jaro_winkler
-
-    with pytest.deprecated_call():
-        assert jaro_winkler("a", "a") == 1
-
-
-def test_jaro_distance_deprecation():
-    # backwards compatibility function
-    from jellyfish import jaro_distance
-
-    with pytest.deprecated_call():
-        assert jaro_distance("a", "a") == 1
-
-
 @pytest.mark.parametrize("s1,s2,value", _load_data("jaro_distance"), ids=str)
 def test_jaro_similarity(jf, s1, s2, value):
     value = float(value)
