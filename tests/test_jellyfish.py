@@ -23,8 +23,7 @@ def jf(request):
 
 def _load_data(name):
     with open("testdata/{}.csv".format(name), **open_kwargs) as f:
-        for data in csv.reader(f):
-            yield data
+        yield from csv.reader(f)
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data("jaro_winkler"), ids=str)
