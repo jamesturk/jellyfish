@@ -7,8 +7,7 @@ open_kwargs = {"encoding": "utf8"}
 
 def _load_data(name):
     with open("./testdata/{}.csv".format(name), **open_kwargs) as f:
-        for data in csv.reader(f):
-            yield data
+        yield from csv.reader(f)
 
 
 def _load_n(name, n):
