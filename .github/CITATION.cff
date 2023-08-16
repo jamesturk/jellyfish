@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Turk"
+  given-names: "James"
+  orcid: https://orcid.org/0000-0003-1762-1420
+title: "jellyfish"
+version: 1.0.0
+date-released: 2023-06-21
+url: "https://github.com/jamesturk/jellyfish"
