@@ -1,6 +1,6 @@
 [package]
 name = "jellyfish"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 description = "Approximate and phonetic matching of strings."
 authors = ["James Turk <dev@jamesturk.net>"]

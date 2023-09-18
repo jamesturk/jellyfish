@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.1 - 18 September 2023
+-------------------------
+* fully remove deprecated names
+* add armv7 linux builds
+* fully drop Python 3.7 support
+
 1.0.0 - 21 June 2023
 --------------------
 * bump to 1.0 (no notable changes from 0.11.2)
