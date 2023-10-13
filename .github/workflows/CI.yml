@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.11', 'pypy3.9']
+        python-version: ['3.8', '3.12', 'pypy3.9']
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,10 +79,10 @@ jobs:
         platform:
           - target: x86_64-unknown-linux-musl
             arch: x86_64
-            interpreter: 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9
           - target: i686-unknown-linux-musl
             arch: x86
-            interpreter: 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9
         # all values: [x86_64, x86, aarch64, armhf, armv7, ppc64le, riscv64, s390x]
         # { target: "aarch64-unknown-linux-musl", arch: "aarch64" },
         # { target: "armv7-unknown-linux-musleabihf", image_tag: "armv7" },
@@ -113,9 +113,9 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.8 3.9 3.10 3.11
+            interpreter: 3.8 3.9 3.10 3.11 3.12
           - target: x86
-            interpreter: 3.8 3.9 3.10 3.11
+            interpreter: 3.8 3.9 3.10 3.11 3.12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -139,9 +139,9 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9
           - target: aarch64
-            interpreter: 3.8 3.9 3.10 3.11 pypy3.8 pypy3.9
+            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9
     steps:
       - uses: actions/checkout@v4
         with:
