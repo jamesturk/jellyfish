@@ -6,8 +6,8 @@ test: pytest
     cargo test
 
 deploy-docs:
-		. .venv/bin/activate
-		mkdocs gh-deploy
+    . .venv/bin/activate
+    mkdocs gh-deploy
 
 venv:
     rm -rf .venv
