@@ -2,12 +2,17 @@ use crate::common::FastVec;
 use std::cmp;
 use unicode_segmentation::UnicodeSegmentation;
 
-pub fn match_rating_codex(s: &str) -> String {
+pub fn match_rating_codex(s: &str) -> Result<String, String> {
     // match rating only really makes sense on strings
     let s = &s.to_uppercase()[..];
     let v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
     let mut codex = String::new();
     let mut prev = "~tmp~";
+    let is_alpha = s.chars().all(|c| c.is_alphabetic());
+
+    if !is_alpha {
+        return Err(String::from("Strings must only contain alphabetical characters"));
+    }
 
     for (i, c) in v.iter().enumerate() {
         let vowel = *c == "A" || *c == "E" || *c == "I" || *c == "O" || *c == "U";
@@ -22,15 +27,15 @@ pub fn match_rating_codex(s: &str) -> String {
         let mut newcodex = String::new();
         newcodex.push_str(codex.get(..3).unwrap());
         newcodex.push_str(codex.get(codex.len() - 3..).unwrap());
-        return newcodex;
+        return Ok(newcodex);
     }
 
-    codex
+    Ok(codex)
 }
 
 pub fn match_rating_comparison(s1: &str, s2: &str) -> Result<bool, String> {
-    let codex1 = match_rating_codex(s1);
-    let codex2 = match_rating_codex(s2);
+    let codex1 = match_rating_codex(s1)?;
+    let codex2 = match_rating_codex(s2)?;
 
     // need to know which is longer for comparisons later
     let (longer, shorter) = if codex1.len() > codex2.len() {
@@ -97,9 +102,13 @@ pub fn match_rating_comparison(s1: &str, s2: &str) -> Result<bool, String> {
 mod test {
     use super::*;
     use crate::testutils::testutils;
+    pub fn mrc_unwrapped(s: &str) -> String {
+        return match_rating_codex(s).unwrap();
+    }
+
     #[test]
     fn test_match_rating() {
-        testutils::test_str_func("testdata/match_rating_codex.csv", match_rating_codex);
+        testutils::test_str_func("testdata/match_rating_codex.csv", mrc_unwrapped);
     }
 
     #[test]
@@ -115,6 +124,12 @@ mod test {
     #[test]
     fn test_match_rating_comparison_err() {
         let result = match_rating_comparison("Tim", "Timothy");
+        assert_eq!(result.is_err(), true);
+    }
+
+    #[test]
+    fn test_match_rating_codex_bad_str() {
+        let result = match_rating_codex("i’m going home");
         assert_eq!(result.is_err(), true);
     }
 }
