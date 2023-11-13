@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.2 - 12 October 2023
+-----------------------
+* adds prebuilt wheels for Python 3.12
+
 1.0.1 - 18 September 2023
 -------------------------
 * fully remove deprecated names
