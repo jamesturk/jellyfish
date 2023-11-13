@@ -62,8 +62,7 @@ Jaro distance is a string-edit distance that gives a floating point response in 
 
 !!! warning
 
-    Prior to 0.8.1 this function was named jaro_distance.  That name is still available, but is no longer recommended.
-    It will be replaced in 1.0 with a correct version.
+    Prior to 0.8.1 this function was named jaro_distance.  It was removed in 1.0.
 
 ### Jaro-Winkler Similarity
 

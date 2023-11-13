@@ -37,7 +37,7 @@ Phonetic encoding:
 >>> import jellyfish
 >>> jellyfish.levenshtein_distance('jellyfish', 'smellyfish')
 2
->>> jellyfish.jaro_distance('jellyfish', 'smellyfish')
+>>> jellyfish.jaro_similarity('jellyfish', 'smellyfish')
 0.89629629629629637
 >>> jellyfish.damerau_levenshtein_distance('jellyfish', 'jellyfihs')
 1
