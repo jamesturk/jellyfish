@@ -8,7 +8,7 @@ pub fn match_rating_codex(s: &str) -> Result<String, String> {
     let v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
     let mut codex = String::new();
     let mut prev = "~tmp~";
-    let is_alpha = s.chars().all(|c| c.is_alphabetic());
+    let is_alpha = s.chars().all(|c| c.is_alphabetic() || c == ' ');
 
     if !is_alpha {
         return Err(String::from("Strings must only contain alphabetical characters"));
@@ -130,6 +130,6 @@ mod test {
     #[test]
     fn test_match_rating_codex_bad_str() {
         let result = match_rating_codex("i’m going home");
-        assert_eq!(result.is_err(), true);
+        assert!(result.is_err());
     }
 }
