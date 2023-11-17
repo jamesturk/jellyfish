@@ -340,6 +340,10 @@ def match_rating_codex(s):
 
     # we ignore spaces
     s = s.upper().replace(" ", "")
+    # any remaining non-alphabetic characters are invalid
+    if not s.isalpha():
+        raise ValueError("string must be alphabetic")
+
     codex = []
 
     prev = None

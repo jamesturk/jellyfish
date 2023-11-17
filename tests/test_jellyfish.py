@@ -1,5 +1,4 @@
 import csv
-import platform
 import pytest
 
 open_kwargs = {"encoding": "utf8"}
@@ -158,3 +157,9 @@ def test_mr_codex_type(jf):
     assert jf.match_rating_codex("abc") == "ABC"
     with pytest.raises(TypeError) as exc:
         jf.match_rating_codex(b"abc")
+
+
+def test_mr_codex_bad_string(jf):
+    with pytest.raises(ValueError) as exc:
+        res = jf.match_rating_codex("i’m")
+        print(res)
