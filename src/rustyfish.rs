@@ -9,6 +9,7 @@ use crate::match_rating_comparison as _mr_comparison;
 use crate::metaphone as _metaphone;
 use crate::nysiis as _nysiis;
 use crate::soundex as _soundex;
+use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
 /// Calculates the Damerau-Levenshtein distance between two strings.
@@ -47,7 +48,8 @@ fn levenshtein_distance(a: &str, b: &str) -> PyResult<usize> {
 // Calculates the Match Rating Approach code for a string.
 #[pyfunction]
 fn match_rating_codex(a: &str) -> PyResult<String> {
-    Ok(_mr_codex(a))
+    // convert to ValueError
+    _mr_codex(a).map_err(|e| PyErr::new::<PyValueError, _>(format!("{}", e)))
 }
 
 // Calculates the Match Rating Approach comparison for two strings.
