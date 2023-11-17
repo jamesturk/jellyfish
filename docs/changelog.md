@@ -1,8 +1,9 @@
 Changelog
 =========
 
-1.0.2 - 12 October 2023
+1.0.3 - 17 November 2023
 -----------------------
+* `match_rating_codex` now raises a `ValueError` when passed non-alpha characters (#200)
 * adds prebuilt wheels for Python 3.12
 
 1.0.1 - 18 September 2023
