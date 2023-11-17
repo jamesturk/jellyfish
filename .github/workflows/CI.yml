@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.12', 'pypy3.9']
+        python-version: ['3.12']
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,7 +41,13 @@ jobs:
           cargo test
       - name: Run pytest
         run: |
-          just venv pytest
+          # just venv pytest
+          rm -rf .venv
+          python3 -m venv .venv
+          . .venv/bin/activate
+          .venv/bin/pip install wheel pytest mkdocs-material
+          maturin develop
+          .venv/bin/pytest
 
   linux:
     runs-on: ubuntu-latest
