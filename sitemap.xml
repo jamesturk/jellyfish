@@ -2,17 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://jamesturk.github.io/jellyfish/</loc>
-         <lastmod>2023-06-21</lastmod>
+         <lastmod>2023-11-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://jamesturk.github.io/jellyfish/changelog/</loc>
-         <lastmod>2023-06-21</lastmod>
+         <lastmod>2023-11-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://jamesturk.github.io/jellyfish/functions/</loc>
-         <lastmod>2023-06-21</lastmod>
+         <lastmod>2023-11-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
