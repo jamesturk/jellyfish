@@ -89,8 +89,10 @@ jobs:
           - target: i686-unknown-linux-musl
             arch: x86
             interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+          - target: aarch64-unknown-linux-musl
+            arch: aarch64
+            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
         # all values: [x86_64, x86, aarch64, armhf, armv7, ppc64le, riscv64, s390x]
-        # { target: "aarch64-unknown-linux-musl", arch: "aarch64" },
         # { target: "armv7-unknown-linux-musleabihf", image_tag: "armv7" },
         # { target: "powerpc64le-unknown-linux-musl", image_tag: "ppc64le" },
     steps:
