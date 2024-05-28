@@ -4,6 +4,7 @@ use unicode_segmentation::UnicodeSegmentation;
 
 pub fn match_rating_codex(s: &str) -> Result<String, String> {
     // match rating only really makes sense on strings
+
     let s = &s.to_uppercase()[..];
     let v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
     let mut codex = String::new();
@@ -24,10 +25,12 @@ pub fn match_rating_codex(s: &str) -> Result<String, String> {
     }
 
     if codex.len() > 6 {
-        let mut newcodex = String::new();
-        newcodex.push_str(codex.get(..3).unwrap());
-        newcodex.push_str(codex.get(codex.len() - 3..).unwrap());
-        return Ok(newcodex);
+        // not safe to take a slice without conversion to chars() since there
+        // can be unicode left, this implementation matches the Python one
+        // even though MRC really shouldn't be used with unicode chars
+        let first_three: String = codex.chars().take(3).collect();
+        let last_three: String = codex.chars().rev().take(3).collect::<String>().chars().rev().collect();
+        return Ok(first_three + &last_three);
     }
 
     Ok(codex)
