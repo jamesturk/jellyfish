@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.4 - 28 May 2024
+-----------------------
+* `match_rating_codex` now returns consistent results for Unicode characters regardless of position (#210)
+* adds prebuilt wheels for Alpine (#209)
+
 1.0.3 - 17 November 2023
 -----------------------
 * `match_rating_codex` now raises a `ValueError` when passed non-alpha characters (#200)
