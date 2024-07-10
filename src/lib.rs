@@ -1,5 +1,6 @@
 mod common;
 mod hamming;
+mod jaccard;
 mod jaro;
 mod levenshtein;
 mod match_rating;
@@ -9,6 +10,7 @@ mod soundex;
 mod testutils;
 
 pub use hamming::{hamming_distance, vec_hamming_distance};
+pub use jaccard::jaccard_similarity;
 pub use jaro::{
     jaro_similarity, jaro_winkler_similarity, jaro_winkler_similarity_longtol, vec_jaro_similarity,
     vec_jaro_winkler_similarity, vec_jaro_winkler_similarity_longtol,

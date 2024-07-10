@@ -1,5 +1,6 @@
 use crate::damerau_levenshtein_distance as _damerau;
 use crate::hamming_distance as _hamming;
+use crate::jaccard_similarity as _jaccard;
 use crate::jaro_similarity as _jaro;
 use crate::jaro_winkler_similarity as _jaro_winkler;
 use crate::jaro_winkler_similarity_longtol as _jaro_winkler_long;
@@ -22,6 +23,12 @@ fn damerau_levenshtein_distance(a: &str, b: &str) -> PyResult<usize> {
 #[pyfunction]
 fn hamming_distance(a: &str, b: &str) -> PyResult<usize> {
     Ok(_hamming(a, b))
+}
+
+// Calculates the Jaccard index between two strings.
+#[pyfunction]
+fn jaccard_similarity(a: &str, b: &str, ngram_size: Option<usize>) -> PyResult<f64> {
+    Ok(_jaccard(a, b, ngram_size))
 }
 
 // Calculates the Jaro similarity between two strings.
@@ -84,6 +91,7 @@ fn metaphone(a: &str) -> PyResult<String> {
 pub fn _rustyfish(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(damerau_levenshtein_distance, m)?)?;
     m.add_function(wrap_pyfunction!(hamming_distance, m)?)?;
+    m.add_function(wrap_pyfunction!(jaccard_similarity, m)?)?;
     m.add_function(wrap_pyfunction!(jaro_similarity, m)?)?;
     m.add_function(wrap_pyfunction!(jaro_winkler_similarity, m)?)?;
     m.add_function(wrap_pyfunction!(levenshtein_distance, m)?)?;

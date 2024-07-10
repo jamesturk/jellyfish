@@ -19,6 +19,7 @@ String comparison:
 
 * Levenshtein Distance
 * Damerau-Levenshtein Distance
+* Jaccard Index
 * Jaro Distance
 * Jaro-Winkler Distance
 * Match Rating Approach Comparison
