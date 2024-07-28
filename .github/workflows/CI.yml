@@ -6,9 +6,9 @@
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     tags:
-      - '*'
+      - "*"
   pull_request:
   workflow_dispatch:
 
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.12', 'pypy3.10']
+        python-version: ["3.9", "3.13", "pypy3.10"]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,7 +33,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: --release --out dist -i ${{ matrix.python-version }}
-          sccache: 'true'
+          sccache: "true"
       - name: Install Just
         uses: extractions/setup-just@v2
       - name: Run Cargo Tests
@@ -56,11 +56,11 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9 pypy3.10
           - target: aarch64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9 pypy3.10
           - target: armv7
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9 pypy3.10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -70,7 +70,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
           manylinux: auto
       - name: Upload wheels
         uses: actions/upload-artifact@v3
@@ -85,13 +85,13 @@ jobs:
         platform:
           - target: x86_64-unknown-linux-musl
             arch: x86_64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9 pypy3.10
           - target: i686-unknown-linux-musl
             arch: x86
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9 pypy3.10
           - target: aarch64-unknown-linux-musl
             arch: aarch64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9 pypy3.10
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9 pypy3.10
         # all values: [x86_64, x86, aarch64, armhf, armv7, ppc64le, riscv64, s390x]
         # { target: "armv7-unknown-linux-musleabihf", image_tag: "armv7" },
         # { target: "powerpc64le-unknown-linux-musl", image_tag: "ppc64le" },
@@ -106,7 +106,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
           manylinux: musllinux_1_1
       - name: Upload wheels
         uses: actions/upload-artifact@v3
@@ -121,9 +121,9 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.8 3.9 3.10 3.11 3.12
+            interpreter: 3.9 3.10 3.11 3.12 3.13
           - target: x86
-            interpreter: 3.8 3.9 3.10 3.11 3.12
+            interpreter: 3.9 3.10 3.11 3.12 3.13
     steps:
       - uses: actions/checkout@v4
         with:
@@ -133,7 +133,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
@@ -147,9 +147,9 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9
           - target: aarch64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 pypy3.8 pypy3.9
+            interpreter: 3.9 3.10 3.11 3.12 3.13 pypy3.8 pypy3.9
     steps:
       - uses: actions/checkout@v4
         with:
@@ -159,7 +159,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
