@@ -15,12 +15,12 @@ name = "jellyfish"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.22.2"
+pyo3 = { version = "0.22.2", features = ["gil-refs"] }
 unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
-smallvec = "1.10.0"
-ahash = "0.8.3"
-num-traits = "0.2"
+smallvec = "^1.13"
+ahash = "^0.8"
+num-traits = "0.2.19"
 
 [dev-dependencies]
 csv = "1.1"
