@@ -3,6 +3,7 @@
 ## 1.1.0 - 28 July 2024
 
 - add jaccard_similarity thanks to Niklas von Moers (@NiklasvonM) (#214)
+- update to PyO3 0.22
 
 ## 1.0.4 - 28 May 2024
 
