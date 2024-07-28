@@ -1,6 +1,6 @@
 [package]
 name = "jellyfish"
-version = "1.0.4"
+version = "1.1.0"
 edition = "2021"
 description = "Approximate and phonetic matching of strings."
 authors = ["James Turk <dev@jamesturk.net>"]
@@ -15,7 +15,7 @@ name = "jellyfish"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.20.0"
+pyo3 = "0.22.2"
 unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
 smallvec = "1.10.0"
