@@ -148,17 +148,17 @@ mod test {
     use crate::testutils::testutils;
     #[test]
     fn test_jaro() {
-        testutils::test_similarity_func("testdata/jaro_distance.csv", jaro_similarity);
+        testutils::test_similarity_func_two_args("testdata/jaro_distance.csv", jaro_similarity);
     }
 
     #[test]
     fn test_jaro_winkler() {
-        testutils::test_similarity_func("testdata/jaro_winkler.csv", jaro_winkler_similarity);
+        testutils::test_similarity_func_two_args("testdata/jaro_winkler.csv", jaro_winkler_similarity);
     }
 
     #[test]
     fn test_jaro_winkler_longtol() {
-        testutils::test_similarity_func(
+        testutils::test_similarity_func_two_args(
             "testdata/jaro_winkler_longtol.csv",
             jaro_winkler_similarity_longtol,
         );

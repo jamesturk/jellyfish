@@ -20,6 +20,7 @@ unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
 smallvec = "1.10.0"
 ahash = "0.8.3"
+num-traits = "0.2"
 
 [dev-dependencies]
 csv = "1.1"

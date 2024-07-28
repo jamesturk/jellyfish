@@ -50,6 +50,18 @@ considers extra characters as differing.  For example ``hamming_distance('abc', 
 
 See the [Hamming distance article at Wikipedia](http://en.wikipedia.org/wiki/Hamming_distance) for more details.
 
+### Jaccard Similarity
+
+``` python
+def jaccard_similarity(s1: str, s2: str, ngram_size: Optional[int] = None) -> float
+```
+
+Compute the Jaccard index between s1 and s2.
+
+The Jaccard index between two sets is defined as the number of elements of the intersection divided by the number of elements of the union of the two sets. The elements of the sets are ngrams (the substrings of length `ngram_size`) or words if `ngram_size` is `None`. The strings are split by whitespace.
+
+The Jaccard index does not consider order of words/ngrams. Hence "hello world" and "world hello" have a Jaccard similarity of 1.
+
 ### Jaro Similarity
 
 ``` python

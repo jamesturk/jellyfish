@@ -12,13 +12,13 @@ Issues: [https://github.com/jamesturk/jellyfish/issues](https://github.com/james
 [![Test badge](https://github.com/jamesturk/jellyfish/workflows/Python%20package/badge.svg)](https://github.com/jamesturk/jellyfish/actions?query=workflow%3A%22Python+package)
 [![Coveralls](https://coveralls.io/repos/jamesturk/jellyfish/badge.png?branch=master)](https://coveralls.io/r/jamesturk/jellyfish)
 
-
 ## Included Algorithms
 
 String comparison:
 
 * Levenshtein Distance
 * Damerau-Levenshtein Distance
+* Jaccard Similarity
 * Jaro Distance
 * Jaro-Winkler Distance
 * Match Rating Approach Comparison
@@ -36,7 +36,7 @@ Phonetic encoding:
 Each algorithm has Rust and Python implementations.
 
 The Rust implementations are used by default. The Python
-implementations are a remnant of an early version of 
+implementations are a remnant of an early version of
 the library and will probably be removed in 1.0.
 
 To explicitly use a specific implementation, refer to the appropriate module::
