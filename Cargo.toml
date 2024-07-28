@@ -15,7 +15,7 @@ name = "jellyfish"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.22.2", features = ["gil-refs"] }
+pyo3 = { version = "0.22.2", features = [] }
 unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
 smallvec = "^1.13"

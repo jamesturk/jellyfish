@@ -27,6 +27,7 @@ fn hamming_distance(a: &str, b: &str) -> PyResult<usize> {
 
 // Calculates the Jaccard index between two strings.
 #[pyfunction]
+#[pyo3(signature=(a, b, ngram_size=None))]
 fn jaccard_similarity(a: &str, b: &str, ngram_size: Option<usize>) -> PyResult<f64> {
     Ok(_jaccard(a, b, ngram_size))
 }
@@ -39,6 +40,7 @@ fn jaro_similarity(a: &str, b: &str) -> PyResult<f64> {
 
 // Calculates the Jaro-Winkler similarity between two strings.
 #[pyfunction]
+#[pyo3(signature=(a, b, long_tolerance=None))]
 fn jaro_winkler_similarity(a: &str, b: &str, long_tolerance: Option<bool>) -> PyResult<f64> {
     match long_tolerance {
         Some(true) => Ok(_jaro_winkler_long(a, b)),
@@ -88,7 +90,7 @@ fn metaphone(a: &str) -> PyResult<String> {
 
 /// A Python module implemented in Rust.
 #[pymodule]
-pub fn _rustyfish(_py: Python, m: &PyModule) -> PyResult<()> {
+pub fn _rustyfish(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(damerau_levenshtein_distance, m)?)?;
     m.add_function(wrap_pyfunction!(hamming_distance, m)?)?;
     m.add_function(wrap_pyfunction!(jaccard_similarity, m)?)?;
