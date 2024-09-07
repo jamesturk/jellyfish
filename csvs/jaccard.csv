@@ -1,0 +1,16 @@
+abc,xyz,0.0,
+abc,abc,1.0,
+abc,abcd,0.0,
+abcd,abce,0.0,
+abcd,abcde,0.0,
+french,quebec,0.0,
+france,quebec,0.0,
+france,france,1.0,
+The quick brown fox jumps over the lazy dog,The quick brown fox jumps over the lazy cat,0.8,
+The quick brown fox jumps over the lazy dog,The slow green turtle crawls under the lazy cat,0.2,
+John Smith,Smith; John,0.33333,
+John Smith,Smith John,1.0,
+John Smith,John Jacob Smith,0.666667,
+night,nacht,0.0,
+night,nacht,0.2,2
+night,nacht,0.33333,3
