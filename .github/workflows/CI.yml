@@ -6,9 +6,9 @@
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     tags:
-      - '*'
+      - "*"
   pull_request:
   workflow_dispatch:
 
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.12', '3.13', 'pypy3.10']
+        python-version: ["3.8", "3.12", "3.13", "pypy3.10"]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,7 +33,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: --release --out dist -i ${{ matrix.python-version }}
-          sccache: 'true'
+          sccache: "true"
       - name: Install Just
         uses: extractions/setup-just@v2
       - name: Run Cargo Tests
@@ -70,7 +70,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
           manylinux: auto
       - name: Upload wheels
         uses: actions/upload-artifact@v3
@@ -106,7 +106,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
           manylinux: musllinux_1_1
       - name: Upload wheels
         uses: actions/upload-artifact@v3
@@ -121,9 +121,9 @@ jobs:
       matrix:
         platform:
           - target: x64
-            interpreter: 3.8 3.9 3.10 3.11 3.12 3.13
+            interpreter: 3.8 3.9 3.10 3.11 3.12 #3.13
           - target: x86
-            interpreter: 3.8 3.9 3.10 3.11 3.12 3.13
+            interpreter: 3.8 3.9 3.10 3.11 3.12 #3.13
     steps:
       - uses: actions/checkout@v4
         with:
@@ -133,7 +133,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
@@ -159,7 +159,7 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i ${{ matrix.platform.interpreter }}
-          sccache: 'true'
+          sccache: "true"
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
