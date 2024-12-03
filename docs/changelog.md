@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2 - 3 December 2024
+
+- release that supports Python 3.13 on all supported platforms (thanks @energynumbers for help with Windows!)
+
 ## 1.1.0 - 28 July 2024
 
 - add jaccard_similarity thanks to Niklas von Moers (@NiklasvonM) (#214)
