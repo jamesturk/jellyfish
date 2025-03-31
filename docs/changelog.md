@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4 - 31 March 2025
+
+- release that supports PyPy 3.11 (via PyO3 0.24)
+
 ## 1.1.2 - 3 December 2024
 
 - release that supports Python 3.13 on all supported platforms (thanks @energynumbers for help with Windows!)
