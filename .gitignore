@@ -18,3 +18,5 @@ site/
 target/
 Cargo.lock
 .venv
+venv
+benchmarks/bytecode_pairs.csv

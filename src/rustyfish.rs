@@ -4,6 +4,7 @@ use crate::jaccard_similarity as _jaccard;
 use crate::jaro_similarity as _jaro;
 use crate::jaro_winkler_similarity as _jaro_winkler;
 use crate::jaro_winkler_similarity_longtol as _jaro_winkler_long;
+use crate::jaro_winkler_similarity_quick as _jaro_winkler_quick;
 use crate::levenshtein_distance as _lev;
 use crate::match_rating_codex as _mr_codex;
 use crate::match_rating_comparison as _mr_comparison;
@@ -46,6 +47,12 @@ fn jaro_winkler_similarity(a: &str, b: &str, long_tolerance: Option<bool>) -> Py
         Some(true) => Ok(_jaro_winkler_long(a, b)),
         _ => Ok(_jaro_winkler(a, b)),
     }
+}
+
+// Calculates the Jaro-Winkler similarity with a threshold for early termination.
+#[pyfunction]
+fn jaro_winkler_similarity_quick(a: &str, b: &str, threshold: f64) -> PyResult<f64> {
+    Ok(_jaro_winkler_quick(a, b, threshold))
 }
 
 // Calculates the Levenshtein distance between two strings.
@@ -96,6 +103,7 @@ pub fn _rustyfish(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(jaccard_similarity, m)?)?;
     m.add_function(wrap_pyfunction!(jaro_similarity, m)?)?;
     m.add_function(wrap_pyfunction!(jaro_winkler_similarity, m)?)?;
+    m.add_function(wrap_pyfunction!(jaro_winkler_similarity_quick, m)?)?;
     m.add_function(wrap_pyfunction!(levenshtein_distance, m)?)?;
     m.add_function(wrap_pyfunction!(match_rating_codex, m)?)?;
     m.add_function(wrap_pyfunction!(match_rating_comparison, m)?)?;

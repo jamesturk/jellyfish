@@ -12,8 +12,9 @@ mod testutils;
 pub use hamming::{hamming_distance, vec_hamming_distance};
 pub use jaccard::jaccard_similarity;
 pub use jaro::{
-    jaro_similarity, jaro_winkler_similarity, jaro_winkler_similarity_longtol, vec_jaro_similarity,
-    vec_jaro_winkler_similarity, vec_jaro_winkler_similarity_longtol,
+    jaro_similarity, jaro_winkler_similarity, jaro_winkler_similarity_longtol, jaro_winkler_similarity_quick,
+    vec_jaro_similarity, vec_jaro_winkler_similarity, vec_jaro_winkler_similarity_longtol,
+    vec_jaro_winkler_similarity_quick,
 };
 pub use levenshtein::{
     damerau_levenshtein_distance, levenshtein_distance, vec_damerau_levenshtein_distance,

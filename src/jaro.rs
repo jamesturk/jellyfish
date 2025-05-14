@@ -7,6 +7,7 @@ enum JaroVersion {
     Pure,
     Winkler,
     WinklerLongTolerance,
+    WinklerQuick(f64), // Includes a threshold parameter
 }
 
 fn vec_jaro_or_winkler<T: PartialEq>(
@@ -14,6 +15,11 @@ fn vec_jaro_or_winkler<T: PartialEq>(
     s2: &FastVec<T>,
     version: JaroVersion,
 ) -> f64 {
+    // Extract threshold early if we're using the quick version
+    let threshold = match version {
+        JaroVersion::WinklerQuick(t) => Some(t),
+        _ => None,
+    };
     let s1_len = s1.len();
     let s2_len = s2.len();
 
@@ -84,7 +90,17 @@ fn vec_jaro_or_winkler<T: PartialEq>(
         JaroVersion::Pure => (false, false),
         JaroVersion::Winkler => (true, false),
         JaroVersion::WinklerLongTolerance => (true, true),
+        JaroVersion::WinklerQuick(_) => (true, false),
     };
+
+    // Final check if we need to terminate based on threshold
+    if let Some(thresh) = threshold {
+        // Calculate maximum possible weight with Winkler boost (max 4 character prefix)
+        let max_possible_weight = weight + 0.1 * 4.0 * (1.0 - weight);
+        if max_possible_weight < thresh {
+            return 0.0; // Final early termination check
+        }
+    }
 
     // winkler modification: continue to boost similar strings
     if winklerize && weight > 0.7 {
@@ -142,6 +158,70 @@ pub fn jaro_winkler_similarity_longtol(s1: &str, s2: &str) -> f64 {
     vec_jaro_winkler_similarity_longtol(&us1, &us2)
 }
 
+pub fn vec_jaro_winkler_similarity_quick<T: PartialEq>(s1: &FastVec<T>, s2: &FastVec<T>, threshold: f64) -> f64 {
+    vec_jaro_or_winkler(s1, s2, JaroVersion::WinklerQuick(threshold))
+}
+
+use ahash::AHashMap;
+
+pub fn jaro_winkler_similarity_quick(s1: &str, s2: &str, threshold: f64) -> f64 {
+    // Quick length-based pre-filter
+    let s1_len = s1.chars().count();
+    let s2_len = s2.chars().count();
+
+    // If lengths are very different, similarity must be low
+    let max_len = s1_len.max(s2_len) as f64;
+    let min_len = s1_len.min(s2_len) as f64;
+
+    // Maximum possible match ratio based on length difference
+    // For Jaro similarity, even if all characters in the shorter string match,
+    // the similarity is limited by the length ratio
+    if min_len / max_len < threshold {
+        return 0.0; // Early termination based on length difference
+    }
+
+    // Character frequency analysis pre-filter
+    // Count character frequencies in both strings
+    let mut s1_freq = AHashMap::new();
+    let mut s2_freq = AHashMap::new();
+
+    for ch in s1.chars() {
+        *s1_freq.entry(ch).or_insert(0) += 1;
+    }
+
+    for ch in s2.chars() {
+        *s2_freq.entry(ch).or_insert(0) += 1;
+    }
+
+    // Calculate the maximum possible matches based on character frequencies
+    let mut max_possible_matches = 0;
+
+    for (ch, count1) in &s1_freq {
+        if let Some(count2) = s2_freq.get(ch) {
+            max_possible_matches += count1.min(count2);
+        }
+    }
+
+    // Calculate maximum possible Jaro similarity
+    let max_possible_jaro = (
+        max_possible_matches as f64 / s1_len as f64 +
+        max_possible_matches as f64 / s2_len as f64 +
+        1.0  // Assume no transpositions for upper bound
+    ) / 3.0;
+
+    // Calculate maximum possible Jaro-Winkler similarity with prefix boost
+    let max_possible_similarity = max_possible_jaro + 0.1 * (1.0 - max_possible_jaro);
+
+    if max_possible_similarity < threshold {
+        return 0.0; // Early termination based on character frequency analysis
+    }
+
+    // If pre-filters pass, proceed with full calculation
+    let us1 = UnicodeSegmentation::graphemes(s1, true).collect::<FastVec<&str>>();
+    let us2 = UnicodeSegmentation::graphemes(s2, true).collect::<FastVec<&str>>();
+    vec_jaro_winkler_similarity_quick(&us1, &us2, threshold)
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -154,6 +234,23 @@ mod test {
     #[test]
     fn test_jaro_winkler() {
         testutils::test_similarity_func_two_args("testdata/jaro_winkler.csv", jaro_winkler_similarity);
+    }
+
+    #[test]
+    fn test_jaro_winkler_quick() {
+        // Test with a high threshold that should cause early termination
+        assert_eq!(jaro_winkler_similarity_quick("jellyfish", "smellyfish", 0.99), 0.0);
+
+        // Test with a threshold that should be achievable
+        let normal = jaro_winkler_similarity("jellyfish", "smellyfish");
+        let quick = jaro_winkler_similarity_quick("jellyfish", "smellyfish", 0.8);
+        assert_eq!(normal, quick);
+
+        // Test with a threshold right at the boundary
+        let normal = jaro_winkler_similarity("abc", "abc");
+        assert_eq!(normal, 1.0);
+        let quick = jaro_winkler_similarity_quick("abc", "abc", 1.0);
+        assert_eq!(quick, 1.0);
     }
 
     #[test]
