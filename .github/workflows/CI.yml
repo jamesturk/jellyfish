@@ -32,7 +32,7 @@ jobs:
           args: --release --out dist -i ${{ matrix.python-version }}
           sccache: "true"
       - name: Install Just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v3
       - name: Run Cargo Tests
         run: |
           cargo test
