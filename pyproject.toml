@@ -19,7 +19,7 @@ classifiers = [
 [project.urls]
 homepage = "https://jamesturk.github.io/jellyfish/"
 documentation = "https://jamesturk.github.io/jellyfish/"
-repository = "https://github.com/jamesturk/jellyfish/"
+repository = "https://codeberg.org/jpt/jellyfish/"
 
 
 [tool.maturin]

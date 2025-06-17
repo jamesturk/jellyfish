@@ -3,8 +3,8 @@ name = "jellyfish"
 version = "1.2.0"
 edition = "2021"
 description = "Approximate and phonetic matching of strings."
-authors = ["James Turk <dev@jamesturk.net>"]
-repository = "https://github.com/jamesturk/jellyfish/"
+authors = ["james turk <dev@jpt.sh>"]
+repository = "https://codeberg.org/jpt/jellyfish/"
 license = "MIT"
 readme = "README.md"
 

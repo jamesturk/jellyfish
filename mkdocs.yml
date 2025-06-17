@@ -3,7 +3,7 @@ site_url: https://jamesturk.github.io/jellyfish/
 site_author: James Turk
 site_description: A python library for approximate and phonetic matching of strings.
 copyright: Copyright &copy; 2011 James Turk
-repo_url: https://github.com/jamesturk/jellyfish
+repo_url: https://codeberg.org/jpt/jellyfish
 repo_name: jamesturk/jellyfish
 edit_uri: edit/main/docs/
 
