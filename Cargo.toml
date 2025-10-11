@@ -15,7 +15,7 @@ name = "jellyfish"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.26.0", features = [] }
+pyo3 = { version = "0.26.0", features = ['generate-import-lib'] }
 unicode-segmentation = "^1.6.0"
 unicode-normalization = "^0.1"
 smallvec = "^1.13"
