@@ -6,8 +6,8 @@ test: pytest
     cargo test
 
 deploy-docs:
-    . .venv/bin/activate
-    mkdocs gh-deploy
+    .venv/bin/mkdocs build
+    netlify deploy --prod -s jellyfish-docs -d site
 
 venv:
     rm -rf .venv

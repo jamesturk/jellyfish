@@ -2,11 +2,11 @@
 
 **jellyfish** is a library for approximate & phonetic matching of strings.
 
-Source: [https://codeberg.org/jpt/jellyfish](https://codeberg.org/jpt/jellyfish)
+Source: <https://codeberg.org/jpt/jellyfish>
 
-Documentation: [https://jamesturk.github.io/jellyfish/](https://jamesturk.github.io/jellyfish/)
+Documentation: <https://jellyfish.jpt.sh>
 
-Issues: [https://codeberg.org/jpt/jellyfish/issues](https://codeberg.org/jpt/jellyfish/issues)
+Issues: <https://codeberg.org/jpt/jellyfish/issues>
 
 [![PyPI badge](https://badge.fury.io/py/jellyfish.svg)](https://badge.fury.io/py/jellyfish)
 
