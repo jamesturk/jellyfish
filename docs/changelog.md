@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 - 11 Oct 2025
+
+- add support for Python 3.14 (bump PyO3 to 0.26)
+
 ## 1.2.0 - 31 March 2025
 
 - drop support for Python 3.8, add support for Python 3.13 and PyPy 3.11 (PyO3 0.24 bump)
