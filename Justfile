@@ -7,11 +7,11 @@ test: pytest
 
 deploy-docs:
     .venv/bin/mkdocs build
-    netlify deploy --prod -s jellyfish-docs -d site
+    trifold publish
 
 venv:
     rm -rf .venv
-    python3 -m venv .venv
+    uv run python -m venv .venv
     . .venv/bin/activate
     .venv/bin/pip install wheel pytest mkdocs-material
     .venv/bin/pip install jupyter pandas seaborn

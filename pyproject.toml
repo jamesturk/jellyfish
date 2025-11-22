@@ -17,8 +17,8 @@ classifiers = [
 ]
 
 [project.urls]
-homepage = "https://jellyfish.jpt.sh/"
-documentation = "https://jellyfish.jpt.sh/"
+homepage = "https://jpt.sh/projects/jellyfish/"
+documentation = "https://jpt.sh/projects/jellyfish/"
 repository = "https://codeberg.org/jpt/jellyfish/"
 
 

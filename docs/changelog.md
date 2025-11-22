@@ -56,7 +56,6 @@
 
 ## 0.9.0 - 7 January 2021
 
-- updated documentation
 - support for Python 3.10+
 - handle spaces correctly in MRA algorithm
 

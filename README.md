@@ -4,7 +4,7 @@
 
 Source: <https://codeberg.org/jpt/jellyfish>
 
-Documentation: <https://jellyfish.jpt.sh>
+Documentation: <https://jpt.sh/projects/jellyfish/>
 
 Issues: <https://codeberg.org/jpt/jellyfish/issues>
 

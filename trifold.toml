@@ -1,0 +1,8 @@
+provider = "bunny"
+local_path = "site"
+remote_path = "/projects/jellyfish"
+ignore = []
+remote_ignore = []
+
+[bunny]
+storage_zone = "jptsh"
