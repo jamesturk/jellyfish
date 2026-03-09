@@ -97,7 +97,7 @@ jobs:
         with:
           submodules: recursive
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
