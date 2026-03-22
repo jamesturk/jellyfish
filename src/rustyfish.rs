@@ -89,7 +89,7 @@ fn metaphone(a: &str) -> PyResult<String> {
 }
 
 /// A Python module implemented in Rust.
-#[pymodule]
+#[pymodule(gil_used = false)]
 pub fn _rustyfish(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(damerau_levenshtein_distance, m)?)?;
     m.add_function(wrap_pyfunction!(hamming_distance, m)?)?;
