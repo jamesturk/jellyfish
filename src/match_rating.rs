@@ -6,19 +6,24 @@ pub fn match_rating_codex(s: &str) -> Result<String, String> {
     // match rating only really makes sense on strings
 
     let s = &s.to_uppercase()[..];
-    let v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
-    let mut codex = String::new();
-    let mut prev = "~tmp~";
     let is_alpha = s.chars().all(|c| c.is_alphabetic() || c == ' ');
 
     if !is_alpha {
         return Err(String::from("Strings must only contain alphabetical characters"));
     }
 
+    // spaces are ignored entirely (as if the input never had them), matching
+    // the pure-Python implementation which strips them before processing
+    let v = UnicodeSegmentation::graphemes(s, true)
+        .filter(|c| *c != " ")
+        .collect::<FastVec<&str>>();
+    let mut codex = String::new();
+    let mut prev = "~tmp~";
+
     for (i, c) in v.iter().enumerate() {
         let vowel = *c == "A" || *c == "E" || *c == "I" || *c == "O" || *c == "U";
-        // not a space || starting char & vowel || non-double consonant
-        if *c != " " && (i == 0 && vowel) || (!vowel && *c != prev) {
+        // starting char & vowel || non-double consonant
+        if (i == 0 && vowel) || (!vowel && *c != prev) {
             codex.push_str(c);
         }
         prev = c;
@@ -134,5 +139,15 @@ mod test {
     fn test_match_rating_codex_bad_str() {
         let result = match_rating_codex("i’m going home");
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_match_rating_codex_ignores_spaces() {
+        // Multi-word names must be codexed as if the spaces weren't there at
+        // all, not have the spaces themselves treated as consonants.
+        assert_eq!(mrc_unwrapped("VAN DE WET"), "VNDWT");
+        assert_eq!(mrc_unwrapped("DE WET"), "DWT");
+        assert_eq!(mrc_unwrapped("MC DONALD"), "MCDNLD");
+        assert_eq!(mrc_unwrapped("VAN DE WET"), mrc_unwrapped("VANDEWET"));
     }
 }
