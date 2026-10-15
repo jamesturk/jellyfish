@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- add support for Python 3.15 (bump PyO3 to 0.30)
+- drop PyPy 3.9 and 3.10 wheels: PyO3 0.27 and later no longer support them, as neither is supported upstream (PyPy 3.11 wheels continue)
+
 ## 1.2.1 - 11 Oct 2025
 
 - add support for Python 3.14 (bump PyO3 to 0.26)
