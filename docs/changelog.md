@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- fix metaphone emitting spurious  "KH" for word-final GH (@binggau1230) (#247
+
 ## 1.2.1 - 11 Oct 2025
 
 - add support for Python 3.14 (bump PyO3 to 0.26)
