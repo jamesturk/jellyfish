@@ -77,9 +77,8 @@ pub fn metaphone(s: &str) -> String {
             'G' => {
                 if is_iey(next) {
                     ret.push('J');
-                } else if (next == 'H' && nextnext != '*' && !isvowel(nextnext))
-                    || (next == 'N' && nextnext == '*')
-                {
+                // '*' (end of string) is not a vowel, so a trailing GH also silences the G
+                } else if (next == 'H' && !isvowel(nextnext)) || (next == 'N' && nextnext == '*') {
                     i += 1;
                 } else {
                     ret.push('K');
