@@ -5,7 +5,7 @@ build-backend = "maturin"
 [project]
 name = "jellyfish"
 dynamic = ["version"]
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 classifiers = [
   "Programming Language :: Rust",
   "Programming Language :: Python :: Implementation :: CPython",

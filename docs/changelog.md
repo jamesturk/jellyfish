@@ -3,7 +3,7 @@
 ## 1.3.0 - 15 Oct 2026
 
 - fix metaphone emitting spurious  "KH" for word-final GH (@binggau1230) (#247
-- add support for Python 3.15 (bump PyO3 to 0.30)
+- add support for Python 3.15 (bump PyO3 to 0.30) (@datalegion-jack)
 - drop support for Python 3.9 and 3.10
 - add support for Windows ARM
 
