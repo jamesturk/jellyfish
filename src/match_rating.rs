@@ -6,8 +6,11 @@ pub fn match_rating_codex(s: &str) -> Result<String, String> {
     // match rating only really makes sense on strings
 
     let s = &s.to_uppercase()[..];
-    let v = UnicodeSegmentation::graphemes(s, true).collect::<FastVec<&str>>();
-    let mut codex = String::new();
+    // spaces are ignored, matching the Python implementation
+    let v = UnicodeSegmentation::graphemes(s, true)
+        .filter(|g| *g != " ")
+        .collect::<FastVec<&str>>();
+    let mut codex = FastVec::new();
     let mut prev = "~tmp~";
     let is_alpha = s.chars().all(|c| c.is_alphabetic() || c == ' ');
 
@@ -17,23 +20,21 @@ pub fn match_rating_codex(s: &str) -> Result<String, String> {
 
     for (i, c) in v.iter().enumerate() {
         let vowel = *c == "A" || *c == "E" || *c == "I" || *c == "O" || *c == "U";
-        // not a space || starting char & vowel || non-double consonant
-        if *c != " " && (i == 0 && vowel) || (!vowel && *c != prev) {
-            codex.push_str(c);
+        // starting char || non-double consonant
+        if i == 0 || (!vowel && *c != prev) {
+            codex.push(*c);
         }
         prev = c;
     }
 
+    // count letters, not bytes, so non-ASCII codexes aren't truncated early
     if codex.len() > 6 {
-        // not safe to take a slice without conversion to chars() since there
-        // can be unicode left, this implementation matches the Python one
-        // even though MRC really shouldn't be used with unicode chars
-        let first_three: String = codex.chars().take(3).collect();
-        let last_three: String = codex.chars().rev().take(3).collect::<String>().chars().rev().collect();
-        return Ok(first_three + &last_three);
+        let mut short = codex[..3].concat();
+        short.push_str(&codex[codex.len() - 3..].concat());
+        return Ok(short);
     }
 
-    Ok(codex)
+    Ok(codex.concat())
 }
 
 pub fn match_rating_comparison(s1: &str, s2: &str) -> Result<bool, String> {
@@ -41,16 +42,18 @@ pub fn match_rating_comparison(s1: &str, s2: &str) -> Result<bool, String> {
     let codex2 = match_rating_codex(s2)?;
 
     // need to know which is longer for comparisons later
-    let (longer, shorter) = if codex1.len() > codex2.len() {
+    let len1 = codex1.chars().count();
+    let len2 = codex2.chars().count();
+    let (longer, shorter) = if len1 > len2 {
         (codex1, codex2)
     } else {
         (codex2, codex1)
     };
 
-    let lensum = longer.len() + shorter.len();
+    let lensum = len1 + len2;
 
     // can't do a comparison when difference is 3 or greater
-    if longer.len() - shorter.len() >= 3 {
+    if len1.abs_diff(len2) >= 3 {
         return Err(String::from("strings differ in length by more than 2"));
     }
 
