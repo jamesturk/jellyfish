@@ -426,6 +426,9 @@ def metaphone(s):
 
         # skip doubles except for cc
         if c == next and c != "c":
+            # keep a vowel that starts a word (aaron -> arn), the second copy is not initial
+            if c in "aeiou" and (i == 0 or s[i - 1] == " "):
+                result.append(c)
             i += 1
             continue
 

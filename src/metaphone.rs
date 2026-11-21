@@ -37,6 +37,10 @@ pub fn metaphone(s: &str) -> String {
 
         // skip doubles except for CC
         if c == next && c != 'C' {
+            // keep a vowel that starts a word (AARON -> ARN), the second copy is not initial
+            if isvowel(c) && (i == 0 || v[i - 1] == ' ') {
+                ret.push(c);
+            }
             i += 1;
             continue;
         }
